@@ -1,5 +1,5 @@
 ---
-output: html_document
+output: md_document
 ---
 [![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg)](https://github.com/orangemug/stability-badges)
 
@@ -31,3 +31,7 @@ https://github.com/duplisea/size/
 
 
 Please check back for progress
+
+### Present project contributors
+
+Hugues Benoît, Daniel Duplisea, Peter Galbraith, David Merette, Stéphane Plourde, Marie-Julie Roux, Bernard Sainte-Marie

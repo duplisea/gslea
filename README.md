@@ -28,3 +28,8 @@ package “size”:
 <a href="https://github.com/duplisea/size/" class="uri">https://github.com/duplisea/size/</a>
 
 Please check back for progress
+
+### Present project contributors
+
+Hugues Benoît, Daniel Duplisea, Peter Galbraith, David Merette, Stéphane
+Plourde, Marie-Julie Roux, Bernard Sainte-Marie
