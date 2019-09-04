@@ -1,0 +1,16 @@
+Package: gslea
+Type: Package
+Title: Gulf of St. Lawrence Ecosystem Analysis
+Version: 1.0
+Author: Hugues Benoît, Daniel Duplisea, Peter Galbraith, David Merette, Stéphane Plourde, Marie-Julie Roux, Bernard Sainte-Marie
+Maintainer: Daniel Duplisea <daniel.duplisea@dfo-mpo.gc.ca>
+Description: Biological and physical data and indices relevant to understanding the dynamics of the Gulf of St. 
+    Lawrence marine ecosystem as well as several kinds of ecosystem analyses.
+Licence: GPL-3
+Encoding: UTF-8
+Additional_repositories:
+        https://github.com/duplisea/size
+Depends:
+        size
+LazyData: true
+RoxygenNote: 6.1.1
