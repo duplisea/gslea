@@ -20,8 +20,7 @@ Functions in this package are placeholders at present. Please see the
 following for some of the planned functions that will be included in the
 package.
 
-<a href="https://github.com/duplisea/gslea/blob/master/Candidate_ecological_indicators_for_EGSL_mjr.html" class="uri">https://github.com/duplisea/gslea/blob/master/Candidate_ecological_indicators_for_EGSL_mjr.html</a>
-(right click and download this and then open locally in web browser)
+<a href="https://github.com/duplisea/gslea/blob/master/Candidate_ecological_indicators_for_EGSL_mjr.pdf" class="uri">https://github.com/duplisea/gslea/blob/master/Candidate_ecological_indicators_for_EGSL_mjr.pdf</a>
 
 Some functionality is presently available through gslea’s dependent
 package “size”:
