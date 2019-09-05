@@ -1,10 +1,9 @@
 ---
-output: md_document
+output: html_document
 ---
 [![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg)](https://github.com/orangemug/stability-badges)
 
-**This package is currently unverfied and incomplete and should not be used for any analysis at present**
-
+**This package is currently unverified and incomplete and should not be used for any analysis at present**
 
 # Gulf of St. Lawrence Ecosystem Approach
 
@@ -15,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r install, eval=FALSE}
-devtools::install_github(https://github.com/iml-assess/gslea)
+devtools::install_github(https://github.com/duplisea/gslea)
 library(gslea)
 ```
 
@@ -23,7 +22,8 @@ library(gslea)
 
 Functions in this package are placeholders at present. Please see the following for some of the planned functions that will be included in the package.
 
-https://github.com/duplisea/gslea/Candidate_ecological_indicators_for_EGSL_mjr.html
+https://github.com/duplisea/gslea/blob/master/Candidate_ecological_indicators_for_EGSL_mjr.html
+(right click and download this and then open locally in web browser)
 
 Some functionality is presently available through gslea's dependent package "size":
 
@@ -32,6 +32,6 @@ https://github.com/duplisea/size/
 
 Please check back for progress
 
-### Present project contributors
+### Project particpants
 
 Hugues Benoît, Daniel Duplisea, Peter Galbraith, David Merette, Stéphane Plourde, Marie-Julie Roux, Bernard Sainte-Marie
