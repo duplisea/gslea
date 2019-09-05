@@ -1,3 +1,7 @@
+---
+output: pdf_document
+---
+
 # Candidate ecological indicators for the Gulf of St. Lawrence
 **Marie-Julie Roux**
 
