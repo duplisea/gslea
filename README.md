@@ -29,6 +29,8 @@ oceanographic data for the Gulf Ecoregions.
 Map of the Gulf of St Lawrence with Ecoregions and fish survey stations
 -----------------------------------------------------------------------
 
+![](README_files/figure-markdown_strict/gslmap.plain-1.png)
+
 Data available
 --------------
 

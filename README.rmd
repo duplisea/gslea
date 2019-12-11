@@ -19,7 +19,7 @@ devtools::install_github(https://github.com/duplisea/gslea)
 library(gslea)
 ```
 
-```{r loadlibrary, include=FALSE}
+```{r ldlib, eval=TRUE, include=FALSE}
 library(gslea)
 ```
 
@@ -30,7 +30,7 @@ This database presently includes physical oceanographic and biological oceanogra
 
 ## Map of the Gulf of St Lawrence with Ecoregions and fish survey stations
 
-```{r gslmap.plain, eval=TRUE,include=FALSE}
+```{r gslmap.plain, eval=TRUE, echo=FALSE}
 gslea.map.f(bathymetry=F)
 ```
 
