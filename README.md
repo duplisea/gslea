@@ -46,6 +46,12 @@ Extracting data
 a scatterplot of all the different environmental variables
 ==========================================================
 
+State of development
+--------------------
+
+GSL data by ecoregions in available. A standard data extraction function
+is being developed.
+
 ### Project particpants
 
 Hugues Benoît, Daniel Duplisea, Peter Galbraith, David Merette, Stéphane

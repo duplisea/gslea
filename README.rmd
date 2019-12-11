@@ -53,6 +53,9 @@ Presently, gslea includes physical oceanographic, chemical oceanographic, plankt
 ```
 
 
+## State of development
+GSL data by ecoregions in available. A standard data extraction function is being developed.
+
 ### Project particpants
 
 Hugues Benoît, Daniel Duplisea, Peter Galbraith, David Merette, Stéphane Plourde, Marie-Julie Roux, Bernard Sainte-Marie
