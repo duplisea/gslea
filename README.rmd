@@ -19,6 +19,11 @@ devtools::install_github(https://github.com/duplisea/gslea)
 library(gslea)
 ```
 
+```{r loadlibrary, include=FALSE}
+library(gslea)
+```
+
+
 ## State of development
 
 This database presently includes physical oceanographic and biological oceanographic data for the Gulf Ecoregions.
@@ -26,12 +31,12 @@ This database presently includes physical oceanographic and biological oceanogra
 ## Map of the Gulf of St Lawrence with Ecoregions and fish survey stations
 
 ```{r gslmap.plain, eval=TRUE,include=FALSE}
-gslea.map.f(survey.points=F, bathymetry=F)
+gslea.map.f(bathymetry=F)
 ```
 
 ## Data available
 
-Presently, gslea includes only two kind of data, physical oceanographic and biological oceanographic for a total of 46 measured variable time series. These data are stored as a data.table called EA.data which is a long format table with one row per observation and which enables an efficient data extraction that can enable other analyses. Auxially datasets for mapping such as bathymetry are also included and descriptive table describing the ecosystem measured variables.
+Presently, gslea includes physical oceanographic, chemical oceanographic, planktonic and phenological data. These data are stored as a data.table called EA.data which is a long format table with one row per observation and which enables an efficient data extraction that can enable other analyses. Auxially datasets for mapping such as bathymetry are also included and descriptive table describing the ecosystem measured variables.
 
 ## Extracting data
 

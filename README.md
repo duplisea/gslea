@@ -1,14 +1,21 @@
 [![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg)](https://github.com/orangemug/stability-badges)
 
-**This package is currently unverified and incomplete and should not be
-used for any analysis at present**
+Gulf of St. Lawrence Ecosystem Approach package
+===============================================
 
-Gulf of St. Lawrence Ecosystem Approach
-=======================================
+This package offers a database of measured variables which can inform an
+ecosystem approach for the Gulf of St. Lawrence, Canada. In addition to
+a dataset at the ecoregion level, standard query functions are provided
+to extract relevant data series.
 
-This package is under development. It is intended to offer data and
-tools for analysis of the Gulf of St. Lawrence ecosystem which should
-aid in an ecosystem approach to fisheries.
+This package is intentionally kept small and aggregated to facilitate
+analyses that call it without breaking existing analyses that depend on
+it and to feed other analyses with only limited need to look at the guts
+of this package. The package does not provide data at a sample by sample
+level but always integrated to the ecoregion level. If you would like to
+have finer scale data it is suggested that you first consult the
+references in the dataset help files and then the individual responsble
+for that data.
 
     devtools::install_github(https://github.com/duplisea/gslea)
     library(gslea)
@@ -16,18 +23,28 @@ aid in an ecosystem approach to fisheries.
 State of development
 --------------------
 
-Functions in this package are placeholders at present. Please see the
-following for some of the planned functions that will be included in the
-package.
+This database presently includes physical oceanographic and biological
+oceanographic data for the Gulf Ecoregions.
 
-<a href="https://github.com/duplisea/gslea/blob/master/Candidate_ecological_indicators_for_EGSL_mjr.pdf" class="uri">https://github.com/duplisea/gslea/blob/master/Candidate_ecological_indicators_for_EGSL_mjr.pdf</a>
+Map of the Gulf of St Lawrence with Ecoregions and fish survey stations
+-----------------------------------------------------------------------
 
-Some functionality is presently available through gslea’s dependent
-package “size”:
+Data available
+--------------
 
-<a href="https://github.com/duplisea/size/" class="uri">https://github.com/duplisea/size/</a>
+Presently, gslea includes physical oceanographic, chemical
+oceanographic, planktonic and phenological data. These data are stored
+as a data.table called EA.data which is a long format table with one row
+per observation and which enables an efficient data extraction that can
+enable other analyses. Auxially datasets for mapping such as bathymetry
+are also included and descriptive table describing the ecosystem
+measured variables.
 
-Please check back for progress
+Extracting data
+---------------
+
+a scatterplot of all the different environmental variables
+==========================================================
 
 ### Project particpants
 
