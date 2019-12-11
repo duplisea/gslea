@@ -3,11 +3,12 @@ output: md_document
 ---
 [![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg)](https://github.com/orangemug/stability-badges)
 
-**This package is currently unverified and incomplete and should not be used for any analysis at present**
 
-# Gulf of St. Lawrence Ecosystem Approach
+# Gulf of St. Lawrence Ecosystem Approach package
 
-This package is under development. It is intended to offer data and tools for analysis of the Gulf of St. Lawrence ecosystem which should aid in an ecosystem approach to fisheries.
+This package offers a database of measured variables which can inform an ecosystem approach for the Gulf of St. Lawrence, Canada. In addition to a dataset at the ecoregion level, standard query functions are provided to extract relevant data series.
+
+This package is intentionally kept small and aggregated to facilitate analyses that call it without breaking existing analyses that depend on it and to feed other analyses with only limited need to look at the guts of this package. The package does not provide data at a sample by sample level but always integrated to the ecoregion level. If you would like to have finer scale data it is suggested that you first consult the references in the dataset help files and then the individual responsble for that data.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -20,17 +21,32 @@ library(gslea)
 
 ## State of development
 
-Functions in this package are placeholders at present. Please see the following for some of the planned functions that will be included in the package.
+This database presently includes physical oceanographic and biological oceanographic data for the Gulf Ecoregions.
 
-https://github.com/duplisea/gslea/blob/master/Candidate_ecological_indicators_for_EGSL_mjr.pdf
+## Map of the Gulf of St Lawrence with Ecoregions and fish survey stations
+
+```{r gslmap.plain, eval=TRUE,include=FALSE}
+gslea.map.f(survey.points=F, bathymetry=F)
+```
+
+## Data available
+
+Presently, gslea includes only two kind of data, physical oceanographic and biological oceanographic for a total of 46 measured variable time series. These data are stored as a data.table called EA.data which is a long format table with one row per observation and which enables an efficient data extraction that can enable other analyses. Auxially datasets for mapping such as bathymetry are also included and descriptive table describing the ecosystem measured variables.
+
+## Extracting data
 
 
-Some functionality is presently available through gslea's dependent package "size":
-
-https://github.com/duplisea/size/
+```{r dataextraction, eval=TRUE}
 
 
-Please check back for progress
+```
+
+# a scatterplot of all the different environmental variables
+
+```{r scatterplot}
+
+```
+
 
 ### Project particpants
 

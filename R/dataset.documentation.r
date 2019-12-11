@@ -1,59 +1,70 @@
 # dataset documentation
 
-#' physical.oceanographic.data
+
+#' Ecosystem Approach Data
 #'
-#' A list with physical oceanographic time series objects for the AE ecoregion of the Gulf of St. Lawrence.
-#' The list contains several sublists with descriptive names. The first element of each of these sublists is
-#' a descriptive header file including what it is, date of extraction, who to contact and column names. The
-#' second element of each sublist is a data frame with the time series data and descriptive (but very long)
-#' column names. An example of how to access and one of the data objects is shown. Missing value code is -99
+#' A data.table with all the ecosystem.approach data for the Gulf of St. Lawrence ecoregions. This includes data on
+#' physical oceanography (physical), chemical oceanographic (chemical), phyto and zooplankton abundance or biomass
+#' (planktonic) and timing of phyto and zooplankton dynamics (phenological).
 #'
 #' \itemize{
-#'   \item CIL_Volume_AE Volume of the Cold Intermediate Layer
+#'   \item year The year of data collection
+#'   \item EAR The Ecosystem Approach Region
+#'   \item variable The name of the measured variable
+#'   \item value The value of the measured variable
 #' }
 #'
 #' @docType data
-#' @keywords datasets
-#' @name physical.oceanographic.data
-#' @usage physical.oceanographic.data$CIL_Volume_AE$data
-#' @format A list with several elements
-#' @author Peter Galbraith <peter.galbraith@dfo-mpo.gc.ca>
+#' @keywords ecosystem approach data
+#' @seealso field.description
+#' @name EA.data
+#' @usage EA.data
+#' @format data.table
+#' @author Peter Galbraith, Marjolaine Blais
 NULL
 
 
-# dataset documentation
 
-#' biological.oceanographic.data
+#' Field description
 #'
-#' A list with biological oceanographic time series objects for the AE ecoregions of the Gulf of St. Lawrence.
-#' The list contains several data frame with descriptive names and named columns. An example of how to access
-#' and one of the data objects is shown. Missing value code is na
+#' A description of the fields in the EA.data dataset. Elaboration of the meaning of some of the fields is provided
+#' and these can be joined to the output of a data query if desired.
 #'
 #' \itemize{
-#'   \item Riki_Zoo_Mean_2018 annual mean abundance of zooplankton species or species group abundance at the
-#'        Rimouski station updated in 2018.
+#'   \item field the name of the field from the EA.data table
+#'   \item description A description of the EA.data field
+#'   \item elaboration Extra information on the field, for example what is the definition of "summer" used
 #' }
 #'
 #' @docType data
 #' @keywords datasets
-#' @name biological.oceanographic.data
-#' @usage biological.oceanographic.data$Riki_Zoo_Mean_2018
-#' @format A list with several elements
-#' @author Marjolaine Blais <marjolaine.blais@dfo-mpo.gc.ca>
+#' @name field.description
+#' @usage field.description
+#' @format data.table
+#' @author Daniel Duplisea
 NULL
 
-#' fish.survey.data
+
+
+#' Fish survey species
 #'
-#' A list with fish survey data. Imported from PACES outputs.
+#' The various species codes and names used in the fish survey data
 #'
 #' \itemize{
-#'   \item r
+#'   \item variable	The name of the variable in the EA.data table
+#'   \item species.code The species code from the Quebec region survey
+#'   \item english The common English name for the species
+#'   \item french The common French name for the species
+#'   \item latin The scientific latin name for the species
+#'   \item aphiaid The aphiaid that is used in WoRMS and Fishbase
 #' }
 #'
 #' @docType data
 #' @keywords datasets
-#' @name fish.survey.data
-#' @usage
-#' @format A list with several elements
-#' @author Denis Bernier <denis.bernier@dfo-mpo.gc.ca>
+#' @references Vandepitte, L., Vanhoorne, B., Decock, W., Dekeyzer, S., Trias Verbeeck, A., Bovit, L., Hernandez, F. and Mees, J., 2015. How Aphia—The platform behind several online and taxonomically oriented databases—can serve both the taxonomic community and the field of biodiversity informatics. Journal of Marine Science and Engineering, 3(4), pp.1448-1473.
+#'             Miller, R. et Chabot. D. 2014. Code list of marine plants, invertebrates and vertebrates used by the Quebec Region of DFO. Canadian Data Report of Fisheries and Aquatic Sciences 1254 : iv+ 115 p.
+#' @name field.description
+#' @usage field.description
+#' @format data.table
+#' @author Daniel Duplisea
 NULL
