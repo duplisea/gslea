@@ -4,7 +4,7 @@
 \name{field.description}
 \alias{field.description}
 \title{Field description}
-\format{data.table}
+\format{data.table, data.frame}
 \usage{
 field.description
 

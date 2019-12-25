@@ -4,7 +4,7 @@
 \name{EA.data}
 \alias{EA.data}
 \title{Ecosystem Approach Data}
-\format{data.table}
+\format{data.table, data.frame}
 \usage{
 EA.data
 }
@@ -21,11 +21,21 @@ physical oceanography (physical), chemical oceanographic (chemical), phyto and z
   \item value The value of the measured variable
 }
 }
+\references{
+Blais, M., Galbraith, P.S., Plourde, S., Scarratt, M., Devine, L. and Lehoux, C. 2019. Chemical and
+        Biological Oceanographic Conditions in the Estuary and Gulf of St. Lawrence during 2017. DFO Can. Sci.
+        Advis. Sec. Res. Doc. 2019/009. iv + 56 pp.
+
+        Galbraith, P.S., Chassé, J., Nicot, P., Caverhill, C., Gilbert, D., Pettigrew, B., Lefaivre,
+        D., Brickman, D., Devine, L., and Lafleur, C. 2015. Physical Oceanographic Conditions in the Gulf of
+        St. Lawrence in 2014. DFO Can. Sci. Advis. Sec. Res. Doc. 2015/032. v + 82 p
+        http://www.dfo-mpo.gc.ca/csas-sccs/Publications/ResDocs-DocRech/2015/2015_032-eng.html
+}
 \seealso{
 field.description
 }
 \author{
-Peter Galbraith, Marjolaine Blais
+Denis Bernier, Peter Galbraith, Marjolaine Blais
 }
 \keyword{approach}
 \keyword{data}

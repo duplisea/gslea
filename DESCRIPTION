@@ -4,11 +4,14 @@ Title: Gulf of St. Lawrence Ecosystem Approach data
 Version: 1.0
 Authors: Daniel Duplisea, Marie-Julie Roux, Marjolaine Blais, Peter Galbraith, David Merette, Hugues Benoît, Stéphane Plourde, Bernard Sainte-Marie
 Maintainer: Daniel Duplisea <daniel.duplisea@dfo-mpo.gc.ca>
-Description: Data for different measured ecosystem relevant variables to aid with the Gulf of St. Lawrence ecosystem approach.
+Description: Environmental and ecosystem variables for the Gulf of St. Lawrence ecosystem approach.
+             Use at your own discretion. The data have caveats associated with their range of applicability 
+             and uncertainty and one would do well to understand them before use. Please see references for
+             the datasets by typing ?dataset, e.g. ?EA.data. None of the authors, the maintainer nor DFO are
+             responsible for the use or misuse of this package.
 Licence: GPL-3
 Encoding: UTF-8
 Depends:
-        data.table,
-        PBSmapping
+        data.table
 LazyData: true
 RoxygenNote: 7.0.2
