@@ -1,5 +1,5 @@
 ---
-output: html_document
+output: md_document
 ---
 
 # Gulf of St. Lawrence Ecosystem Approach package
@@ -63,7 +63,8 @@ metadata.f(verbosity="low")
 Another perhaps more useful way to know what the database contains is with the function <b>var.f</b>. <b>var.f</b> accepts as an argument one of the data types with the default being “all”. It will give you the extact name of the variable, its description and units. The output can be long and the descriptions are sometimes quite wordy so it is difficult to read. I suggest you save the result of a large query to var.f as an object and then use the library formattable to make it into a more readable table. So for example formattable, e.g.:
 
 ```{r variables, eval=TRUE}
-vars.f(variable.type="physical")
+phys.var= vars.f(variable.type="physical")
+formattable::formattable(phys.var)
 ```
 
 ### Data extraction
@@ -78,6 +79,8 @@ You need to name all the variables you want to extract but you can access all th
 ```{r extraction2, eval=TRUE}
 EA.query.f(years=1900:2020, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:99)
 ```
+
+You may want to save the results of a query to an object and then export it to csv (<b>fwrite</b>) or some other format.
 
 ### Data plotting
 The data plotting function <b>EA.plot.f</b> just queries the EA.data with <b>EA.query.f</b> and then plots them. It puts all the plots on one page as a matrix of plots with each row being a variable and each column being an EAR:

@@ -149,58 +149,365 @@ difficult to read. I suggest you save the result of a large query to
 var.f as an object and then use the library formattable to make it into
 a more readable table. So for example formattable, e.g.:
 
-    vars.f(variable.type="physical")
+    phys.var= vars.f(variable.type="physical")
+    formattable::formattable(phys.var)
 
-    ##        variable     type                               description
-    ## 1           SST physical            sea surface temperature annual
-    ## 2   SST.anomaly physical anomaly in sea surface temperature annual
-    ## 3   SST.month10 physical        sea surface temperature in October
-    ## 4   SST.month11 physical       sea surface temperature in November
-    ## 5    SST.month5 physical            sea surface temperature in May
-    ## 6    SST.month6 physical           sea surface temperature in June
-    ## 7    SST.month7 physical           sea surface temperature in July
-    ## 8    SST.month8 physical         sea surface temperature in August
-    ## 9    SST.month9 physical      sea surface temperature in September
-    ## 10       T.deep physical  Bottom temperature in waters > 200m deep
-    ## 11    T.shallow physical  Bottom temperature in waters < 200m deep
-    ## 12         T150 physical                      Temperature at 150 m
-    ## 13         T200 physical                      Temperature at 200 m
-    ## 14         T250 physical                      Temperature at 250 m
-    ## 15         T300 physical                      Temperature at 300 m
-    ## 16  Tmax200.400 physical Maximum temperature between 200 and 400 m
-    ## 17  decrease.10 physical  Timing of when water first cools to 10 C
-    ## 18  decrease.12 physical  Timing of when water first cools to 12 C
-    ## 19    first.ice physical     Timing of the first appearance of ice
-    ## 20 ice.duration physical                Duration of the ice season
-    ## 21      ice.max physical               Day of maximum ice coverage
-    ## 22     last.ice physical      Timing of the last appearance of ice
-    ## 23     start.10 physical  Timing of when water first warms to 10 C
-    ## 24     start.12 physical  Timing of when water first warms to 12 C
-    ##              units
-    ## 1  degrees celsius
-    ## 2  degrees celsius
-    ## 3  degrees celsius
-    ## 4  degrees celsius
-    ## 5  degrees celsius
-    ## 6  degrees celsius
-    ## 7  degrees celsius
-    ## 8  degrees celsius
-    ## 9  degrees celsius
-    ## 10 degrees celsius
-    ## 11 degrees celsius
-    ## 12 degrees celsius
-    ## 13 degrees celsius
-    ## 14 degrees celsius
-    ## 15 degrees celsius
-    ## 16 degrees celsius
-    ## 17 day of the year
-    ## 18 day of the year
-    ## 19 day of the year
-    ## 20            days
-    ## 21 day of the year
-    ## 22 day of the year
-    ## 23 day of the year
-    ## 24 day of the year
+<table class="table table-condensed">
+<thead>
+<tr>
+<th style="text-align:right;">
+variable
+</th>
+<th style="text-align:right;">
+type
+</th>
+<th style="text-align:right;">
+description
+</th>
+<th style="text-align:right;">
+units
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+SST
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+sea surface temperature annual
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+SST.anomaly
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+anomaly in sea surface temperature annual
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+SST.month10
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+sea surface temperature in October
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+SST.month11
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+sea surface temperature in November
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+SST.month5
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+sea surface temperature in May
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+SST.month6
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+sea surface temperature in June
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+SST.month7
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+sea surface temperature in July
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+SST.month8
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+sea surface temperature in August
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+SST.month9
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+sea surface temperature in September
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+T.deep
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Bottom temperature in waters &gt; 200m deep
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+T.shallow
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Bottom temperature in waters &lt; 200m deep
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+T150
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Temperature at 150 m
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+T200
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Temperature at 200 m
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+T250
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Temperature at 250 m
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+T300
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Temperature at 300 m
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+Tmax200.400
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Maximum temperature between 200 and 400 m
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+decrease.10
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Timing of when water first cools to 10 C
+</td>
+<td style="text-align:right;">
+day of the year
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+decrease.12
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Timing of when water first cools to 12 C
+</td>
+<td style="text-align:right;">
+day of the year
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+first.ice
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Timing of the first appearance of ice
+</td>
+<td style="text-align:right;">
+day of the year
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+ice.duration
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Duration of the ice season
+</td>
+<td style="text-align:right;">
+days
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+ice.max
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Day of maximum ice coverage
+</td>
+<td style="text-align:right;">
+day of the year
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+last.ice
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Timing of the last appearance of ice
+</td>
+<td style="text-align:right;">
+day of the year
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+start.10
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Timing of when water first warms to 10 C
+</td>
+<td style="text-align:right;">
+day of the year
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+start.12
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Timing of when water first warms to 12 C
+</td>
+<td style="text-align:right;">
+day of the year
+</td>
+</tr>
+</tbody>
+</table>
 
 ### Data extraction
 
@@ -290,6 +597,9 @@ access all the years or all the EARs by putting a wide range on them:
     ## 293: 2016   5 ph_bot.fall 7.797067
     ## 294: 2017   5 ph_bot.fall 7.788932
     ## 295: 2018   5 ph_bot.fall 7.845360
+
+You may want to save the results of a query to an object and then export
+it to csv (<b>fwrite</b>) or some other format.
 
 ### Data plotting
 
