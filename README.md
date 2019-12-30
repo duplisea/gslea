@@ -40,6 +40,8 @@ generally cover the entire Gulf of St Lawrence but fish survey data
 cover only the northern portion as the southern portion of the Gulf is
 surveyed by the Gulf Region in Moncton and with a different survey gear.
 
+<img src="README_files/figure-markdown_strict/gslmap.plain-1.png" style="width:100.0%" />
+
 Design
 ------
 
@@ -114,12 +116,12 @@ Accessing the data
 ### Data content overviews
 
 A few minimal extraction functions are provided that should be fast and
-relatively generic. A function called metadata.f is provided with three
-levels of verbosity to give you an overview. “low” verbosity just gives
-a few stats on the size of the database and the number of variables and
-EARs. “med” verbosity will give you names of variables and units. “high”
-is not that useful because it pretty well outputs the entire content of
-the variable.description table.
+relatively generic. A function called <b>metadata.f</b> is provided with
+three levels of verbosity to give you an overview. “low” verbosity just
+gives a few stats on the size of the database and the number of
+variables and EARs. “med” verbosity will give you names of variables and
+units. “high” is not that useful because it pretty well outputs the
+entire content of the variable.description table.
 
     metadata.f(verbosity="low")
 
@@ -139,13 +141,13 @@ the variable.description table.
     ## [1] 15099
 
 Another perhaps more useful way to know what the database contains is
-with the function var.f. var.f accepts as an argument one of the data
-types with the default being “all”. It will give you the extact name of
-the variable, its description and units. The output can be long and the
-descriptions are sometimes quite wordy so it is difficult to read. I
-suggest you save the result of a large query to var.f as an object and
-then use the library formattable to make it into a more readable table.
-So for example formattable, e.g.:
+with the function <b>var.f</b>. <b>var.f</b> accepts as an argument one
+of the data types with the default being “all”. It will give you the
+extact name of the variable, its description and units. The output can
+be long and the descriptions are sometimes quite wordy so it is
+difficult to read. I suggest you save the result of a large query to
+var.f as an object and then use the library formattable to make it into
+a more readable table. So for example formattable, e.g.:
 
     vars.f(variable.type="physical")
 
@@ -202,9 +204,10 @@ So for example formattable, e.g.:
 
 ### Data extraction
 
-Extracting the data is done with a single function called EA.query.f.
-This query wants a character vector or scalar for variable, an integer
-vector or scalar for year and an integer vector or scalar for EAR:
+Extracting the data is done with a single function called
+<b>EA.query.f</b>. This query wants a character vector or scalar for
+variable, an integer vector or scalar for year and an integer vector or
+scalar for EAR:
 
     EA.query.f(years=1999:2012, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:2)
 
@@ -290,10 +293,10 @@ access all the years or all the EARs by putting a wide range on them:
 
 ### Data plotting
 
-The data plotting function EA.plot.f just queries the EA.data with
-EA.query.f and then plots them. It puts all the plots on one page as a
-matrix of plots with each row being a variable and each column being an
-EAR:
+The data plotting function <b>EA.plot.f</b> just queries the EA.data
+with <b>EA.query.f</b> and then plots them. It puts all the plots on one
+page as a matrix of plots with each row being a variable and each column
+being an EAR:
 
     EA.plot.f(years=1900:2020, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:4, smoothing=T)
 

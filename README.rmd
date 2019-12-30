@@ -22,6 +22,8 @@ The package has been developed to allow for easy and consistent updating via aut
 ## Data coverage
 Presently, this package consists of data for the Gulf of St Lawrence where collection and management of the data is done out of the Quebec Region. This means that physical, chemical and phenological data generally cover the entire Gulf of St Lawrence but fish survey data cover only the northern portion as the southern portion of the Gulf is surveyed by the Gulf Region in Moncton and with a different survey gear.
 
+![](README_files/figure-markdown_strict/gslmap.plain-1.png){width=100%}
+
 ## Design
 The package is GPL-3 licenced and thus is available globally without warranty. The package is designed to have as few data containers as possible and in a common and consistent format to allow generic extraction. The package has only one dependence which is the library data.table and data.table itself has no dependencies. The data.table library is used because of its very efficient use of computing resources making it very fast for processing data which would be important if in someone’s analysis they make queries to the data in loops or tried bootstrapping directly from the full database (https://h2oai.github.io/db-benchmark/). The data are structured in what has become termed “tidy data” for people in the tidyverse as opposed to dirty data I suppose. You can use your own tidyverse code with it if you like though but it will be slower. The data class data.table is what tidyverse people will call “tibbles” and they inherit a secondary class of data.frame, therefore they are compatible with base R. The R package should be consistent and should not break existing analyses when updated.
 
@@ -52,20 +54,20 @@ library(gslea)
 
 ## Accessing the data
 ### Data content overviews
-A few minimal extraction functions are provided that should be fast and relatively generic. A function called metadata.f is provided with three levels of verbosity to give you an overview. “low” verbosity just gives a few stats on the size of the database and the number of variables and EARs. “med” verbosity will give you names of variables and units. “high” is not that useful because it pretty well outputs the entire content of the variable.description table.
+A few minimal extraction functions are provided that should be fast and relatively generic. A function called <b>metadata.f</b> is provided with three levels of verbosity to give you an overview. “low” verbosity just gives a few stats on the size of the database and the number of variables and EARs. “med” verbosity will give you names of variables and units. “high” is not that useful because it pretty well outputs the entire content of the variable.description table.
 
 ```{r metadata, eval=TRUE}
 metadata.f(verbosity="low")
 ```
 
-Another perhaps more useful way to know what the database contains is with the function var.f. var.f accepts as an argument one of the data types with the default being “all”. It will give you the extact name of the variable, its description and units. The output can be long and the descriptions are sometimes quite wordy so it is difficult to read. I suggest you save the result of a large query to var.f as an object and then use the library formattable to make it into a more readable table. So for example formattable, e.g.:
+Another perhaps more useful way to know what the database contains is with the function <b>var.f</b>. <b>var.f</b> accepts as an argument one of the data types with the default being “all”. It will give you the extact name of the variable, its description and units. The output can be long and the descriptions are sometimes quite wordy so it is difficult to read. I suggest you save the result of a large query to var.f as an object and then use the library formattable to make it into a more readable table. So for example formattable, e.g.:
 
 ```{r variables, eval=TRUE}
 vars.f(variable.type="physical")
 ```
 
 ### Data extraction
-Extracting the data is done with a single function called EA.query.f. This query wants a character vector or scalar for variable, an integer vector or scalar for year and an integer vector or scalar for EAR:
+Extracting the data is done with a single function called <b>EA.query.f</b>. This query wants a character vector or scalar for variable, an integer vector or scalar for year and an integer vector or scalar for EAR:
 
 ```{r extraction1, eval=TRUE}
 EA.query.f(years=1999:2012, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:2)
@@ -78,7 +80,7 @@ EA.query.f(years=1900:2020, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:9
 ```
 
 ### Data plotting
-The data plotting function EA.plot.f just queries the EA.data with EA.query.f and then plots them. It puts all the plots on one page as a matrix of plots with each row being a variable and each column being an EAR:
+The data plotting function <b>EA.plot.f</b> just queries the EA.data with <b>EA.query.f</b> and then plots them. It puts all the plots on one page as a matrix of plots with each row being a variable and each column being an EAR:
 
 ```{r plotting1, eval=TRUE}
 EA.plot.f(years=1900:2020, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:4, smoothing=T)
