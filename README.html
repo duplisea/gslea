@@ -898,9 +898,12 @@ day of the year
 <h2>Updating the package</h2>
 <p>Unless you need to update this database, you do not need to read this.</p>
 <p>It is important that the database can be updated consistently and quickly. This is done through a series of system calls to bash while running R in linux using text processing programs like awk and sed and then manipulation in R.</p>
-<p>To update the package you will need the standard packages for doing it like roxygen and devtools. Computing requirements for updating</p>
+<p>To update the package you will need the standard packages for doing it like roxygen and devtools.</p>
+<div id="computing-requirements-for-updating" class="section level3">
+<h3>Computing requirements for updating</h3>
 <p>This package requires linux to update. The reason linux is needed is because it uses BASH system calls and programs like awk and sed to pre-process data to make names consisitent, e.g. “Year” to “year” or other inconsistencies between how raw data is provided by different people. If data gets provided by people differently between updates then this will require updating of these scripts.</p>
 <p>Once the data are processed and brought into the R package, then it should be useable by any platform that runs R but I would not know how to process the raw data in windows without days of clicking around and I would make lots of errors.</p>
+</div>
 <div id="raw-data" class="section level3">
 <h3>Raw data</h3>
 <p>Raw data has been provided in various forms by individual data providers. Sometimes it is in tabular format while other times it is in a long format. We need to turn it all into long format and this also involves standardising variable names.</p>

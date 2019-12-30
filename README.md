@@ -637,7 +637,9 @@ running R in linux using text processing programs like awk and sed and
 then manipulation in R.
 
 To update the package you will need the standard packages for doing it
-like roxygen and devtools. Computing requirements for updating
+like roxygen and devtools.
+
+### Computing requirements for updating
 
 This package requires linux to update. The reason linux is needed is
 because it uses BASH system calls and programs like awk and sed to
