@@ -1,6 +1,3 @@
-# dataset documentation
-
-
 #' Ecosystem Approach Data
 #'
 #' A data.table with all the ecosystem.approach data for the Gulf of St. Lawrence ecoregions. This includes data on
@@ -122,7 +119,7 @@ NULL
 #'
 #'              You may want to explore data with simple plots:
 #'
-#'                   EA.plot.f(years=1900:2030, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:4, type="b",pch=20)
+#'                   EA.plot.f(years=1900:2030, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:4, type="p",pch=20, smoothing=T)
 #'
 #'
 #'              You may just want to extract the data from the above plot:

@@ -23,7 +23,7 @@ To get started you probably want some kind of metadata description:
 
              You may want to explore data with simple plots:
 
-                  EA.plot.f(years=1900:2030, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:4, type="b",pch=20)
+                  EA.plot.f(years=1900:2030, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:4, type="p",pch=20, smoothing=T)
 
 
              You may just want to extract the data from the above plot:

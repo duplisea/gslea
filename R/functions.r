@@ -15,6 +15,7 @@ metadata.f= function(verbosity="low"){
       Number.of.variables= EA.data[,uniqueN(variable)],
       Number.of.EARS= EA.data[,uniqueN(EAR)],
       Number.of.years= EA.data[,uniqueN(year)],
+      First.and.last.year= range(EA.data$year),
       Number.of.observations= nrow(EA.data))
   }
   if(verbosity=="med"){
@@ -67,7 +68,7 @@ vars.f= function(variable.type="all"){
 #' @examples
 #' EA.query.f(years=1999:2012, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:2)
 EA.query.f= function(variables, years, EARs){
- warning("GENERAL WARNING ABOUT FISH SURVEY DATA: there were fish survey vessel and gear changes in 1990 and 2004. New survey strata were added in 2007 and biodiversity protocols were changed in 2006. Careful with fish data intepretation spanning these years.", noBreaks.=T,immediate.=T)
+ #warning("GENERAL WARNING ABOUT FISH SURVEY DATA: there were fish survey vessel and gear changes in 1990 and 2004. New survey strata were added in 2007 and biodiversity protocols were changed in 2006. Careful with fish data intepretation spanning these years.", noBreaks.=T,immediate.=T)
  out= EA.data[variable %in% variables & year %in% years & EAR %in% EARs]
  out
 }
@@ -79,6 +80,7 @@ EA.query.f= function(variables, years, EARs){
 #' @param variables variable vector
 #' @param years year vector
 #' @param EARs EAR vector
+#' @param smoothing if TRUE and n>5, then a smooth.spline is drawn through the data with df=n/3
 #' @param ... arguments to par for plotting
 #' @description  Plots a matrix of variables with EAR as columns and variable as rows. If no data then a blank graph
 #'               is plotted.
@@ -86,12 +88,12 @@ EA.query.f= function(variables, years, EARs){
 #' @export
 #' @examples
 #' EA.plot.f(years=1900:2030, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:4, type="b",pch=20)
-EA.plot.f= function(variables, years, EARs, ...){
+EA.plot.f= function(variables, years, EARs, smoothing=T, ...){
   dat= EA.query.f(variables=variables, years=years, EARs=EARs)
   actual.EARs= sort(as.numeric(dat[,unique(EAR)]))
   no.plots= length(variables)*length(actual.EARs)
-  if(no.plots>25) warning("this query generates more than 25 plots, consider fewer variables or EARs")
-  par(mfcol=c(length(variables), length(actual.EARs)),mar=c(1.3,2,3.2,1),omi=c(.1,.1,.1,.1))
+  if(no.plots>25) {par(mfcol=c(5, 5),mar=c(1.3,2,3.2,1),omi=c(.1,.1,.1,.1))}
+  if(no.plots<=25){ par(mfcol=c(length(variables), length(actual.EARs)),mar=c(1.3,2,3.2,1),omi=c(.1,.1,.1,.1))}
   counter=1
   for(i in actual.EARs){
     ear.dat= dat[EAR==i]
@@ -99,10 +101,31 @@ EA.plot.f= function(variables, years, EARs, ...){
       var.dat= ear.dat[variable==variables[ii]]
       if(nrow(var.dat)<1) plot(0, xlab="", ylab="", xaxt="n",yaxt="n",main=paste("EAR",i,variables[ii]), ...)
       if(nrow(var.dat)>0) plot(var.dat$year, var.dat$value, xlab="", ylab="", main=paste("EAR",i,variables[ii]), ...)
+      if(nrow(var.dat)>5 && smoothing==T) lines(predict(smooth.spline(var.dat$year, var.dat$value,df=length(var.dat$value)/3)))
+      #if(nrow(var.dat)>5 && smoothing==T) lines(lowess(var.dat$year, var.dat$value))
     }
     counter= counter+1
   }
 }
+#
+# EA.cors.f= function(variables, years, EARs){
+#   dat= EA.query.f(variables=variables, years=years, EARs=EARs)
+#   actual.EARs= sort(as.numeric(dat[,unique(EAR)]))
+#   counter=1
+#   out= data.table(ncol=2, nrow=actual.EARs*length(variables))
+#   for(i in actual.EARs){
+#     ear.dat= dat[EAR==i]
+#     for(ii in 1:length(variables)){
+#       var.dat= ear.dat[variable==variables[ii]]
+#       out[ii,1]= paste("EAR",i,variables[ii]))
+#       if(nrow(var.dat)<1) out[counter,2]= cor.val=NA
+#       if(nrow(var.dat)>0) out[counter,2]= cor.val=cor(var.dat$year, var.dat$value)
+#     }
+#     counter= counter+1
+#   }
+# }
+
+
 
 #EA.plot.f(years=1900:2030, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:4, type="b",pch=20)
 
@@ -111,6 +134,25 @@ EA.plot.f= function(variables, years, EARs, ...){
 #EA.plot.f(years=1900:2030, variables=c("T150", "ph_bot.fall", "T250","ice.max","chl0_100.annual","chl0_100.early_summer"),EARs=1:50, type="b",pch=20,cex.main=.8)
 
 
-
-#one will want to query by data type
-# create a multipage plot option
+# Join ecoregion descriptions and locations to EA.data
+#' Plot data time series
+#'
+#' @description  Joins the English names of the ecoregions to the EA.data to aid graph descriptions. It also joins
+#'               columns for  the longitude (- degrees from prime meridian) and latitude (+ degrees from equator)
+#'               of the centre of each ecoregion polygon.
+#' @author Daniel Duplisea
+#' @export
+#' @examples EA.data2= EAR.name.location.f()
+EAR.name.location.f=function(){
+  tmp= EA.data
+  tmp[EAR==1, ":=" (EAR.name="Northwest", EAR.lon= -66.35653, EAR.lat= 49.48379)]
+  tmp[EAR==2, ":=" (EAR.name = "Northeast", EAR.lon= -59.98879, EAR.lat= 49.79361)]
+  tmp[EAR==3, ":=" (EAR.name = "Centre", EAR.lon= -60.81041, EAR.lat= 48.38774)]
+  tmp[EAR==4, ":=" (EAR.name = "Mecatina", EAR.lon= -57.68665, EAR.lat= 51.23615)]
+  tmp[EAR==5, ":=" (EAR.name = "Magdallen Shallows", EAR.lon= -63.54881, EAR.lat= 47.51097)]
+  tmp[EAR==6, ":=" (EAR.name = "Northumberland Strait", EAR.lon= -63.60993, EAR.lat= 46.21545)]
+  tmp[EAR==7, ":=" (EAR.name = "Laurentian-Heritage", EAR.lon= -58.41857, EAR.lat= 46.86941)]
+  tmp[EAR==10, ":=" (EAR.name = "Estuary", EAR.lon= -68.52829, EAR.lat= 48.69118)]
+  tmp[EAR==50, ":=" (EAR.name = "Baie-des-Chaleurs", EAR.lon= -65.78367, EAR.lat= 48.02761)]
+  tmp
+}

@@ -4,7 +4,7 @@
 \alias{EA.plot.f}
 \title{Plot data time series}
 \usage{
-EA.plot.f(variables, years, EARs, ...)
+EA.plot.f(variables, years, EARs, smoothing = T, ...)
 }
 \arguments{
 \item{variables}{variable vector}
@@ -12,6 +12,8 @@ EA.plot.f(variables, years, EARs, ...)
 \item{years}{year vector}
 
 \item{EARs}{EAR vector}
+
+\item{smoothing}{if TRUE and n>5, then a smooth.spline is drawn through the data with df=n/3}
 
 \item{...}{arguments to par for plotting}
 }
