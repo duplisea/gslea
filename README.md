@@ -300,7 +300,7 @@ being an EAR:
 
     EA.plot.f(years=1900:2020, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:4, smoothing=T)
 
-![](README_files/figure-markdown_strict/plotting1-1.png)
+<img src="README_files/figure-markdown_strict/plotting1-1.png" style="width:70.0%" />
 
 It will plot a maximum of 25 plots per page. What you might want to do
 is call pdf(“EA.plots.pdf”) xxx dev.off() when doing this and it will
@@ -311,7 +311,7 @@ parameters:
 
     EA.plot.f(years=1900:2020, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:4, smoothing=F, pch=20, lwd=2, col="blue", type="b")
 
-![](README_files/figure-markdown_strict/plotting2-1.png)
+<img src="README_files/figure-markdown_strict/plotting2-1.png" style="width:70.0%" />
 
 You can see that if there are no data for the variable by EAR
 combination, a blank plot is produced in the plot matrix.
