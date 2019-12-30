@@ -1,5 +1,5 @@
 ---
-output: md_document
+output: html_document
 ---
 
 # Gulf of St. Lawrence Ecosystem Approach package
