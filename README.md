@@ -24,15 +24,6 @@
 -   [If you have issues](#if-you-have-issues)
 -   [Citation](#citation)
 
-<style type="text/css">
-div#TOC li {
-    list-style:none;
-    background-image:none;
-    background-repeat:none;
-    background-position:0; 
-}
-</style>
-
 Quick start
 ===========
 

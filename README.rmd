@@ -1,17 +1,9 @@
 ---
 title: "Gulf of St. Lawrence Ecosystem Approach package (gslea)"
 output: 
-  md_document: 
+  html_document: 
     toc: yes
 ---
-<style type="text/css">
-div#TOC li {
-    list-style:none;
-    background-image:none;
-    background-repeat:none;
-    background-position:0; 
-}
-</style>
 
 
 
