@@ -95,6 +95,7 @@ EA.plot.f= function(variables, years, EARs, smoothing=T, ...){
   if(no.plots>25) {par(mfcol=c(5, 5),mar=c(1.3,2,3.2,1),omi=c(.1,.1,.1,.1))}
   if(no.plots<=25){ par(mfcol=c(length(variables), length(actual.EARs)),mar=c(1.3,2,3.2,1),omi=c(.1,.1,.1,.1))}
   counter=1
+
   for(i in actual.EARs){
     ear.dat= dat[EAR==i]
     for(ii in 1:length(variables)){
@@ -106,6 +107,7 @@ EA.plot.f= function(variables, years, EARs, smoothing=T, ...){
     }
     counter= counter+1
   }
+  par(omi=c(0,0,0,0),mar= c(5.1, 4.1, 4.1, 2.1))
 }
 #
 # EA.cors.f= function(variables, years, EARs){
