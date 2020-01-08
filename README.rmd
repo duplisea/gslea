@@ -77,7 +77,7 @@ A few minimal extraction functions are provided that should be fast and relative
 metadata.f(verbosity="low")
 ```
 
-Another perhaps more useful way to know what the database contains is with the function <b>var.f</b>. <b>var.f</b> accepts as an argument one of the data types with the default being “all”. The options are the adjectives for a data type: "physical", "chemical", "planktonic", "phenological" which for some data types seems awkward but it is consistent. It will give you the extact name of the variable, its description and units. The output can be long and the descriptions are sometimes quite wordy so it is difficult to read. I suggest you save the result of a large query to var.f as an object and then use the library formattable to make it into a more readable table. So for example formattable, e.g.:
+Another perhaps more useful way to know what the database contains is with the function <b>var.f</b>. <b>var.f</b> accepts as an argument one of the data types with the default being “all”. The options are the adjectives for a data type: "physical", "chemical", "planktonic", "phenological" which for some data types seems awkward but it is consistent. It will give you the exact name of the variable, its description and units. The output can be long and the descriptions are sometimes quite wordy so it is difficult to read. I suggest you save the result of a large query to var.f as an object and then use the library formattable to make it into a more readable table. So for example formattable, e.g.:
 
 ```{r variables, eval=TRUE}
 phys.var= vars.f(variable.type="physical")
