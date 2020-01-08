@@ -221,14 +221,14 @@ entire content of the variable.description table.
     ## [1] 1964 2019
     ## 
     ## $Number.of.observations
-    ## [1] 15099
+    ## [1] 15193
 
 Another perhaps more useful way to know what the database contains is
 with the function <b>var.f</b>. <b>var.f</b> accepts as an argument one
 of the data types with the default being “all”. The options are the
 adjectives for a data type: “physical”, “chemical”, “planktonic”,
 “phenological” which for some data types seems awkward but it is
-consistent. It will give you the extact name of the variable, its
+consistent. It will give you the exact name of the variable, its
 description and units. The output can be long and the descriptions are
 sometimes quite wordy so it is difficult to read. I suggest you save the
 result of a large query to var.f as an object and then use the library
@@ -679,11 +679,11 @@ access all the years or all the EARs by putting a wide range on them:
     ##   4: 1974   1        T150 2.970000
     ##   5: 1979   1        T150 4.330000
     ##  ---                              
-    ## 291: 2014   5 ph_bot.fall 7.779244
-    ## 292: 2015   5 ph_bot.fall 7.744043
-    ## 293: 2016   5 ph_bot.fall 7.797067
-    ## 294: 2017   5 ph_bot.fall 7.788932
-    ## 295: 2018   5 ph_bot.fall 7.845360
+    ## 298: 2014   5 ph_bot.fall 7.779244
+    ## 299: 2015   5 ph_bot.fall 7.744043
+    ## 300: 2016   5 ph_bot.fall 7.797067
+    ## 301: 2017   5 ph_bot.fall 7.788932
+    ## 302: 2018   5 ph_bot.fall 7.845360
 
 You may want to save the results of a query to an object and then export
 it to csv (<b>fwrite</b>) or some other format.
@@ -750,24 +750,23 @@ then you can widen the data using the “dcast” function from data.table
     ## 47: 2015 4.19    9.12                      77.00939    7.666830
     ## 48: 2016 4.26    3.06                      73.53504    7.633863
     ## 49: 2017 3.81    3.81                      76.16029    7.612828
-    ## 50: 2018 3.26    6.08                      82.21718    7.640820
-    ## 51: 2019   NA    4.76                            NA          NA
+    ## 50: 2018 3.24    6.08                      82.21718    7.640820
+    ## 51: 2019 3.64    4.76                            NA          NA
     ##     year T150 ice.max O2.Late_summer.sat.mean50_100 ph_bot.fall
 
 This puts each variable as a separate column, it preserves all the years
 where at least one of the variables had an observation and it puts NA
 for variable x year combinations where there was no observation.
 
-It is important to know that when you do this as above, you are
-effectively make a table of year x variable, i.e. you make it two
-dimensional. So if you have more than 1 EAR, your initial data are three
-dimensional and when you cast the data to two dimensions, a decision
-needs to made to know how to reduce the dimensionality. This is done
-with a “group by” function. by default, dcast will do a group-by as
-count. This is both dangerous and convenient because then you can do
-other group by functions like sum or mean. You can however also cast
-data into two dimensions but it will repeat the columns for each EAR
-(note that “EAR” is now in the right hand side of the formula)
+It is important to know that when you do this as above, you are making
+2-dimensional table data which is fine if your data are two dimensional.
+If you have more than one EAR, then your initial data are 3-dimensional
+and when you cast the data to 2-dimensions, a decision needs to made on
+how to reduce it to 2-dimensions. This is done with a “group by”
+function. By default, dcast will do a group-by as count but you can also
+specify other groub-by functions such as sum or mean. You can also,
+however, cast data into 2-dimensions but it will repeat the columns for
+each EAR (note that “EAR” is now in the right hand side of the formula)
 
     dat= EA.query.f(years=2015:2020, variables=c("T150","ph_bot.fall","ice.max","O2.Late_summer.sat.mean50_100"), EARs=1:100)
     dcast(dat, year~ variable+EAR)
@@ -776,8 +775,8 @@ data into two dimensions but it will repeat the columns for each EAR
     ## 1: 2015   4.19   3.69   4.01   0.33      9.12       1.85     15.42     12.98
     ## 2: 2016   4.26   3.60   4.03  -0.21      3.06       0.74      2.22      1.21
     ## 3: 2017   3.81   2.16   3.35  -0.92      3.81       0.94      5.98      1.41
-    ## 4: 2018   3.26   2.32   2.69  -0.19      6.08       1.25      4.62      5.67
-    ## 5: 2019     NA     NA     NA     NA      4.76       1.15     18.94     13.83
+    ## 4: 2018   3.24   2.32   2.72  -0.19      6.08       1.25      4.62      5.67
+    ## 5: 2019   3.64   3.14   3.66  -0.32      4.76       1.15     18.94     13.83
     ##    ice.max_4 ice.max_5 ice.max_50 ice.max_6 ice.max_7
     ## 1:      7.39     29.53       1.32      4.76     11.41
     ## 2:      1.90      8.27       0.54      1.26      0.03
@@ -811,7 +810,7 @@ data into two dimensions but it will repeat the columns for each EAR
 
 This wide data now has as many rows as years and as many columns as
 variable x EAR. The columns are named with the variable followed by
-"\_EAR".
+"\_EAR" to identify the EAR it represents.
 
 Data plotting
 -------------
@@ -873,12 +872,11 @@ this will require updating of these scripts.
 
 Once the data are processed and brought into the R package, then it
 should be useable by any platform that runs R but I would not know how
-to process the raw data in windows without days of clicking around and I
-would make lots of errors. You may be able to do this in windows10
-powershell but I have never tried it so I cannot say it will work. I do
-note that powershell does not have “sed” installed by default and you
-cannot run R from powershell so I am not sure you could send R
-systemcalls to the powershell and if you could the script will will fail
+to process the raw data in windows. You may be able to do this in
+windows10 powershell but I have never tried it so I cannot say it will
+work. I do note that powershell does not have “sed” installed by default
+and you cannot run R from powershell so I am not sure you could send R
+systemcalls to the powershell and if you can the script will fail
 without “sed”.
 
 Raw data
