@@ -9,6 +9,7 @@
 #' @examples
 #' metadata.f("low")
 #' data.desc= metadata.f("med"); library(formattable); formattable(data.desc$Descriptions, align="l")
+#' metadata.f("vangogh")
 metadata.f= function(verbosity="low"){
   if(verbosity=="low"){
     desc= list(
@@ -158,3 +159,19 @@ EAR.name.location.f=function(){
   tmp[EAR==50, ":=" (EAR.name = "Baie-des-Chaleurs", EAR.lon= -65.78367, EAR.lat= 48.02761)]
   tmp
 }
+
+#' Sources and references for each variable
+#' @description  creates a three column data.table with variable, source and reference columns. Please cite the authors if you use their data.
+#' @author Daniel Duplisea
+#' @export
+#' @examples sources.f()
+sources.f= function(variable.name=NULL){
+  if (is.null(variable.name)){
+    v= variable.description[,.(variable, source, reference)]
+  }
+  if (!is.null(variable.name)){
+    v= variable.description[variable %in% variable.name, .(variable, source, reference)]
+  }
+  v
+}
+

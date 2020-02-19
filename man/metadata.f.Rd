@@ -17,6 +17,7 @@ Pulls out metadata from the various datasets to give an overview. "med" and "hig
 \examples{
 metadata.f("low")
 data.desc= metadata.f("med"); library(formattable); formattable(data.desc$Descriptions, align="l")
+metadata.f("vangogh")
 }
 \author{
 Daniel Duplisea
