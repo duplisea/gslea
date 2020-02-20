@@ -1,7 +1,7 @@
 Package: gslea
 Type: Package
 Title: Gulf of St. Lawrence Ecosystem Approach data
-Version: 1.0
+Version: 0.1
 Authors: Daniel Duplisea, Marie-Julie Roux, Marjolaine Blais, Peter Galbraith, David Merette, Hugues Benoît, Stéphane Plourde, Bernard Sainte-Marie
 Maintainer: Daniel Duplisea <daniel.duplisea@dfo-mpo.gc.ca>
 Description: Environmental and ecosystem variables for the Gulf of St. Lawrence ecosystem approach.

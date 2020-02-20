@@ -3,6 +3,7 @@
 export(EA.plot.f)
 export(EA.query.f)
 export(EAR.name.location.f)
+export(find.vars.f)
 export(gslea)
 export(metadata.f)
 export(sources.f)

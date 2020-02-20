@@ -144,7 +144,7 @@ include “early summer”. <b>field</b> is the key variable.
 Functions
 ---------
 
-The package consists of just four functions:
+The package consists of limited number of functions:
 
 <ins>
 metadata.f(verbosity)
@@ -161,6 +161,12 @@ vars.f(variable.type)
 shows the variables available in a particular <b>variable.type</b>
 (“physical”, “chemical”, “planktonic”, “phenologic”), gives a
 description of each and its units.
+
+<ins>
+find.vars.f(search.term)
+</ins>
+
+finds variable names based on partial matches.
 
 <ins>
 EA.query.f(variables, years, EARs)
@@ -186,6 +192,14 @@ only try to smooth if the data has more than 5 observations. <b>….</b>
 will accept parameters to par for plotting. This is mostly for quick
 exploration of the data rather than for making good quality graphics.
 
+<ins>
+sources.f(variable.name)
+</ins>
+
+gives a source and reference for any variable in the database. If NULL
+then it returns the full list of sources and references. Please cite
+these references if using the data.
+
 Installing gslea
 ================
 
@@ -209,19 +223,19 @@ entire content of the variable.description table.
     metadata.f(verbosity="low")
 
     ## $Number.of.variables
-    ## [1] 110
+    ## [1] 207
     ## 
     ## $Number.of.EARS
-    ## [1] 9
+    ## [1] 10
     ## 
     ## $Number.of.years
-    ## [1] 56
+    ## [1] 165
     ## 
     ## $First.and.last.year
-    ## [1] 1964 2019
+    ## [1] 1856 2020
     ## 
     ## $Number.of.observations
-    ## [1] 15193
+    ## [1] 21921
 
 Another perhaps more useful way to know what the database contains is
 with the function <b>var.f</b>. <b>var.f</b> accepts as an argument one
@@ -491,7 +505,7 @@ physical
 Timing of when water first cools to 10 C
 </td>
 <td style="text-align:right;">
-day of the year
+week of the year
 </td>
 </tr>
 <tr>
@@ -505,7 +519,7 @@ physical
 Timing of when water first cools to 12 C
 </td>
 <td style="text-align:right;">
-day of the year
+week of the year
 </td>
 </tr>
 <tr>
@@ -575,7 +589,7 @@ physical
 Timing of when water first warms to 10 C
 </td>
 <td style="text-align:right;">
-day of the year
+week of the year
 </td>
 </tr>
 <tr>
@@ -589,11 +603,36 @@ physical
 Timing of when water first warms to 12 C
 </td>
 <td style="text-align:right;">
-day of the year
+week of the year
 </td>
 </tr>
 </tbody>
 </table>
+
+You can also try to find a variable through partial matching of a term
+(case insensitive). So for example if you were interested in just
+temperature you might search “temp”. Or anything that is from 300m deep
+then search “300”. It will then give you a list of variable that have
+that term in their description.
+
+    find.vars.f(search.term= "200")
+
+    ##  [1] "T.deep"      "T.shallow"   "T200"        "Tmax200.400" "AMO.month1" 
+    ##  [6] "AMO.month10" "AMO.month11" "AMO.month12" "AMO.month2"  "AMO.month3" 
+    ## [11] "AMO.month4"  "AMO.month5"  "AMO.month6"  "AMO.month7"  "AMO.month8" 
+    ## [16] "AMO.month9"
+
+You will see that T.deep and T.shallow come up in this because in their
+descriptions, the distinction between shallow and deep waters is 200m.
+You will also see AMO variable coming up and this is because the
+reference for the AMO was published in 2001 and 200 is a substring of
+that. So you can see it will find things fairly broadly
+
+This search function will search most of the main fields of the
+variable.description table. So for example you may be interested in
+products which Peter Galbraith was involved with so you could try
+find.vars.f(search.term= “galbra”) or say something to do with plankon
+blooms find.vars.f(“bloom”).
 
 Data extraction
 ---------------
@@ -668,7 +707,7 @@ scalar for EAR:
     ##     year EAR    variable    value
 
 You need to name all the variables you want to extract but you can
-access all the years or all the EARs by putting a wide range on them:
+access all the years or all the EARs by putting a wide range on them
 
     EA.query.f(years=1900:2020, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:99)
 
@@ -771,42 +810,42 @@ each EAR (note that “EAR” is now in the right hand side of the formula)
     dat= EA.query.f(years=2015:2020, variables=c("T150","ph_bot.fall","ice.max","O2.Late_summer.sat.mean50_100"), EARs=1:100)
     dcast(dat, year~ variable+EAR)
 
-    ##    year T150_1 T150_2 T150_3 T150_4 ice.max_1 ice.max_10 ice.max_2 ice.max_3
-    ## 1: 2015   4.19   3.69   4.01   0.33      9.12       1.85     15.42     12.98
-    ## 2: 2016   4.26   3.60   4.03  -0.21      3.06       0.74      2.22      1.21
-    ## 3: 2017   3.81   2.16   3.35  -0.92      3.81       0.94      5.98      1.41
-    ## 4: 2018   3.24   2.32   2.72  -0.19      6.08       1.25      4.62      5.67
-    ## 5: 2019   3.64   3.14   3.66  -0.32      4.76       1.15     18.94     13.83
-    ##    ice.max_4 ice.max_5 ice.max_50 ice.max_6 ice.max_7
-    ## 1:      7.39     29.53       1.32      4.76     11.41
-    ## 2:      1.90      8.27       0.54      1.26      0.03
-    ## 3:     12.17      9.28       0.79      2.73      0.99
-    ## 4:      5.04     16.18       1.07      2.76      1.29
-    ## 5:      4.93     27.17       1.14      3.63      4.14
-    ##    O2.Late_summer.sat.mean50_100_1 O2.Late_summer.sat.mean50_100_10
-    ## 1:                        77.00939                         78.11792
-    ## 2:                        73.53504                         70.87260
-    ## 3:                        76.16029                         77.69411
-    ## 4:                        82.21718                         83.13097
-    ## 5:                              NA                               NA
-    ##    O2.Late_summer.sat.mean50_100_2 O2.Late_summer.sat.mean50_100_3
-    ## 1:                        88.50907                        85.78378
-    ## 2:                        89.20817                        86.30571
-    ## 3:                        88.95445                        86.48652
-    ## 4:                        91.13842                        88.21394
+    ##    year T150_1 T150_2 T150_3 T150_4 ice.max_1 ice.max_2 ice.max_3 ice.max_4
+    ## 1: 2015   4.19   3.69   4.01   0.33      9.12     15.42     12.98      7.39
+    ## 2: 2016   4.26   3.60   4.03  -0.21      3.06      2.22      1.21      1.90
+    ## 3: 2017   3.81   2.16   3.35  -0.92      3.81      5.98      1.41     12.17
+    ## 4: 2018   3.24   2.32   2.72  -0.19      6.08      4.62      5.67      5.04
+    ## 5: 2019   3.64   3.14   3.66  -0.32      4.76     18.94     13.83      4.93
+    ##    ice.max_5 ice.max_6 ice.max_7 ice.max_10 ice.max_50
+    ## 1:     29.53      4.76     11.41       1.85       1.32
+    ## 2:      8.27      1.26      0.03       0.74       0.54
+    ## 3:      9.28      2.73      0.99       0.94       0.79
+    ## 4:     16.18      2.76      1.29       1.25       1.07
+    ## 5:     27.17      3.63      4.14       1.15       1.14
+    ##    O2.Late_summer.sat.mean50_100_1 O2.Late_summer.sat.mean50_100_2
+    ## 1:                        77.00939                        88.50907
+    ## 2:                        73.53504                        89.20817
+    ## 3:                        76.16029                        88.95445
+    ## 4:                        82.21718                        91.13842
     ## 5:                              NA                              NA
-    ##    O2.Late_summer.sat.mean50_100_4 ph_bot.fall_1 ph_bot.fall_10 ph_bot.fall_2
-    ## 1:                        90.53384      7.666830       7.584211      7.816374
-    ## 2:                        91.21765      7.633863       7.572334      7.761814
-    ## 3:                        90.02184      7.612828       7.561805      7.733547
-    ## 4:                        93.54802      7.640820       7.592093      7.734545
-    ## 5:                              NA            NA             NA            NA
-    ##    ph_bot.fall_3 ph_bot.fall_5
-    ## 1:      7.763617      7.744043
-    ## 2:      7.744903      7.797067
-    ## 3:      7.753033      7.788932
-    ## 4:      7.766139      7.845360
-    ## 5:            NA            NA
+    ##    O2.Late_summer.sat.mean50_100_3 O2.Late_summer.sat.mean50_100_4
+    ## 1:                        85.78378                        90.53384
+    ## 2:                        86.30571                        91.21765
+    ## 3:                        86.48652                        90.02184
+    ## 4:                        88.21394                        93.54802
+    ## 5:                              NA                              NA
+    ##    O2.Late_summer.sat.mean50_100_10 ph_bot.fall_1 ph_bot.fall_2 ph_bot.fall_3
+    ## 1:                         78.11792      7.666830      7.816374      7.763617
+    ## 2:                         70.87260      7.633863      7.761814      7.744903
+    ## 3:                         77.69411      7.612828      7.733547      7.753033
+    ## 4:                         83.13097      7.640820      7.734545      7.766139
+    ## 5:                               NA            NA            NA            NA
+    ##    ph_bot.fall_5 ph_bot.fall_10
+    ## 1:      7.744043       7.584211
+    ## 2:      7.797067       7.572334
+    ## 3:      7.788932       7.561805
+    ## 4:      7.845360       7.592093
+    ## 5:            NA             NA
 
 This wide data now has as many rows as years and as many columns as
 variable x EAR. The columns are named with the variable followed by
@@ -845,6 +884,31 @@ the <b>variable</b> column from its output using “$”
     EA.plot.f(years=1900:2020, variables=vars.f(variable.type="phenological")$variable, EARs=1:2, smoothing=T)
 
 ![](README_files/figure-markdown_strict/plotting3-1.png)
+
+You might be interested in anything to do with large scale oscillation
+indices, e.g. North Atlantic Oscillation. These all have an EAR=0
+indicating that the they are measures at scales larger than the EA
+regions. You can do search for them with a key word or partial string
+and then with that information select the NAO monthly data.
+
+    find.vars.f("oscilla")
+
+    ##  [1] "AMO.month1"  "AMO.month10" "AMO.month11" "AMO.month12" "AMO.month2" 
+    ##  [6] "AMO.month3"  "AMO.month4"  "AMO.month5"  "AMO.month6"  "AMO.month7" 
+    ## [11] "AMO.month8"  "AMO.month9"  "AO.month1"   "AO.month10"  "AO.month11" 
+    ## [16] "AO.month12"  "AO.month2"   "AO.month3"   "AO.month4"   "AO.month5"  
+    ## [21] "AO.month6"   "AO.month7"   "AO.month8"   "AO.month9"   "H.NAO"      
+    ## [26] "NAO.month1"  "NAO.month10" "NAO.month11" "NAO.month12" "NAO.month2" 
+    ## [31] "NAO.month3"  "NAO.month4"  "NAO.month5"  "NAO.month6"  "NAO.month7" 
+    ## [36] "NAO.month8"  "NAO.month9"
+
+    # ah ha, seems that something like "NAO.mon" will do it for us but you don't need to worry about the case
+    NAO.vars= find.vars.f("nao.mon")
+    #but because variable names are character and you may want them ordered by month you need to sort the names vector
+    NAO.vars= NAO.vars[order(nchar(NAO.vars), NAO.vars)]
+    EA.plot.f(years=1800:2020, variables=NAO.vars[1:5], EARs=0, smoothing=T,pch=20)
+
+![](README_files/figure-markdown_strict/plotting4-1.png)
 
 Updating the package
 ====================
@@ -947,6 +1011,6 @@ or file a bug report or issue on github.
 Citation
 ========
 
-Duplisea, DE. 2020. gslea: Gulf of St Lawrence ecosystem approach. R
-package version 1.0
-<a href="https://github.com/duplisea/gslea" class="uri">https://github.com/duplisea/gslea</a>
+gslea: Gulf of St Lawrence ecosystem approach. R package version 0.1
+<a href="https://github.com/duplisea/gslea" class="uri">https://github.com/duplisea/gslea</a>.
+2020.

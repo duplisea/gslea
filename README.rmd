@@ -1,7 +1,7 @@
 ---
 title: "Gulf of St. Lawrence Ecosystem Approach package (gslea)"
 output: 
-  md_document: 
+  html_document: 
     toc: yes
 ---
 
@@ -43,15 +43,19 @@ Some of the variables are not just single measures per year but monthly measures
 
 ## Functions
 
-The package consists of just four functions:
+The package consists of limited number of functions:
 
 <ins>metadata.f(verbosity)</ins> a description of the data available with three levels of <b>verbosity</b> ("low" "med", "high") or information on everyone's favourite Dutch post-impressionist (lowercase no spaces).
 
 <ins>vars.f(variable.type)</ins> shows the variables available in a particular <b>variable.type</b> ("physical", "chemical", "planktonic", "phenologic"), gives a description of each and its units.
 
+<ins>find.vars.f(search.term)</ins> finds variable names based on partial matches.
+
 <ins>EA.query.f(variables, years, EARs) </ins> the function you use to query the data and the output is in long data format. <b>variables</b> (e.g. "T150","SST") is a character vector, <b>years</b> is a numeric vector (e.g. 2002:2012), <b>EARs</b> is the ecoregion and is a numeric vector (e.g. 1:3).
 
 <ins>EA.plot.f(variables, years, EARs, ...)</ins> this will plot the variables over time. It will make a matrix of variable x EAR with up to 25 plots per page (i.e. 25 variable*EAR combinations). <b>variables</b> (e.g. "T150") is a character vector, <b>years</b> is a numeric vector (e.g. 2002:2012), <b>EARs</b> is the ecoregion and is a numeric vector (e.g. 1:3), <b>smoothing</b> is a logical on whether the smooth.spline should be run through the data series to help give a general idea of the tendencies in time. It will only try to smooth if the data has more than 5 observations. <b>....</b> will accept parameters to par for plotting. This is mostly for quick exploration of the data rather than for making good quality graphics.
+
+<ins>sources.f(variable.name)</ins> gives a source and reference for any variable in the database. If NULL then it returns the full list of sources and references. Please cite these references if using the data.
 
 # Installing gslea
 
@@ -83,6 +87,16 @@ phys.var= vars.f(variable.type="physical")
 formattable::formattable(phys.var)
 ```
 
+You can also try to find a variable through partial matching of a term (case insensitive). So for example if you were interested in just temperature you might search "temp". Or anything that is from 300m deep then search "300". It will then give you a list of variable that have that term in their description.
+
+```{r vargrep, eval=TRUE}
+find.vars.f(search.term= "200")
+```
+
+You will see that T.deep and T.shallow come up in this because in their descriptions, the distinction between shallow and deep waters is 200m. You will also see AMO variable coming up and this is because the reference for the AMO was published in 2001 and 200 is a substring of that. So you can see it will find things fairly broadly
+
+This search function will search most of the main fields of the variable.description table. So for example you may be interested in products which Peter Galbraith was involved with so you could try find.vars.f(search.term= "galbra") or say something to do with plankon blooms find.vars.f("bloom").
+
 ## Data extraction
 Extracting the data is done with a single function called <b>EA.query.f</b>. This query wants a character vector or scalar for variable, an integer vector or scalar for year and an integer vector or scalar for EAR:
 
@@ -90,14 +104,13 @@ Extracting the data is done with a single function called <b>EA.query.f</b>. Thi
 EA.query.f(years=1999:2012, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:2)
 ```
 
-You need to name all the variables you want to extract but you can access all the years or all the EARs by putting a wide range on them:
+You need to name all the variables you want to extract but you can access all the years or all the EARs by putting a wide range on them
 
 ```{r extraction2, eval=TRUE}
 EA.query.f(years=1900:2020, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:99)
 ```
 
 You may want to save the results of a query to an object and then export it to csv (<b>fwrite</b>) or some other format.
-
 
 ### Recasting data and showing when there were no observations
 The data are in long format (tidyverse speak = "tidy data") which is the common way to store data in databases. It means that for a variable x year x EAR comination where there is no observation, there is not a row in the database either. If you want tabular data (wide) to show when say and observation was not made for a particular year and variable and EAR, then you can widen the data using the "dcast" function from data.table
@@ -138,6 +151,18 @@ You may want to plot all variables of a particular type. You can do this by sele
 ```{r plotting3, eval=TRUE}
 EA.plot.f(years=1900:2020, variables=vars.f(variable.type="phenological")$variable, EARs=1:2, smoothing=T)
 ```
+
+You might be interested in anything to do with large scale oscillation indices, e.g. North Atlantic Oscillation. These all have an EAR=0 indicating that the they are measures at scales larger than the EA regions. You can do search for them with a key word or partial string and then with that information select the NAO monthly data.
+
+```{r plotting4, eval=TRUE}
+find.vars.f("oscilla")
+# ah ha, seems that something like "NAO.mon" will do it for us but you don't need to worry about the case
+NAO.vars= find.vars.f("nao.mon")
+#but because variable names are character and you may want them ordered by month you need to sort the names vector
+NAO.vars= NAO.vars[order(nchar(NAO.vars), NAO.vars)]
+EA.plot.f(years=1800:2020, variables=NAO.vars[1:5], EARs=0, smoothing=T,pch=20)
+```
+
 
 # Updating the package
 <mark>Unless you need to update this database, you do not need to read this</mark>
@@ -181,4 +206,4 @@ For comments, questions, bugs etc, you can send this to the package maintainer, 
 
 # Citation
 
-Duplisea, DE. 2020. gslea: Gulf of St Lawrence ecosystem approach. R package version 1.0 https://github.com/duplisea/gslea
+gslea: Gulf of St Lawrence ecosystem approach. R package version 0.1 https://github.com/duplisea/gslea. 2020.
