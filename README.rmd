@@ -1,7 +1,7 @@
 ---
 title: "Gulf of St. Lawrence Ecosystem Approach package (gslea)"
 output: 
-  html_document: 
+  md_document: 
     toc: yes
 ---
 
@@ -163,6 +163,16 @@ NAO.vars= NAO.vars[order(nchar(NAO.vars), NAO.vars)]
 EA.plot.f(years=1800:2020, variables=NAO.vars[1:5], EARs=0, smoothing=T,pch=20)
 ```
 
+# Source and references
+It is important to acknowledge to the individuals and organisation who collected the data and or processed it to come up with the indices that are presented here. In some cases, this downstream acknowledgement may be the primary means of showing efficacy of their work so please be diligent about including citations and acknowledgements in your work.
+
+The function sources.f accept a variable name as an argument. It will give you the name and or link to the person or organisation responsible for the data represented by that variable. It will also provide the main citation for that variable.
+
+```{r sources, eval=TRUE}
+formattable::formattable(sources.f(c("T200","H.NAO","O2.Fall.DOXY2.bottom")))
+```
+
+If you just type source.f() you will get the person/organisation responsible and main reference for all variables in the database.
 
 # Updating the package
 <mark>Unless you need to update this database, you do not need to read this</mark>

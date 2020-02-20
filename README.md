@@ -12,6 +12,7 @@
         -   [Recasting data and showing when there were no
             observations](#recasting-data-and-showing-when-there-were-no-observations)
     -   [Data plotting](#data-plotting)
+-   [Source and references](#source-and-references)
 -   [Updating the package](#updating-the-package)
     -   [Computing requirements for
         updating](#computing-requirements-for-updating)
@@ -909,6 +910,84 @@ and then with that information select the NAO monthly data.
     EA.plot.f(years=1800:2020, variables=NAO.vars[1:5], EARs=0, smoothing=T,pch=20)
 
 ![](README_files/figure-markdown_strict/plotting4-1.png)
+
+Source and references
+=====================
+
+It is important to acknowledge to the individuals and organisation who
+collected the data and or processed it to come up with the indices that
+are presented here. In some cases, this downstream acknowledgement may
+be the primary means of showing efficacy of their work so please be
+diligent about including citations and acknowledgements in your work.
+
+The function sources.f accept a variable name as an argument. It will
+give you the name and or link to the person or organisation responsible
+for the data represented by that variable. It will also provide the main
+citation for that variable.
+
+    formattable::formattable(sources.f(c("T200","H.NAO","O2.Fall.DOXY2.bottom")))
+
+<table class="table table-condensed">
+<thead>
+<tr>
+<th style="text-align:right;">
+variable
+</th>
+<th style="text-align:right;">
+source
+</th>
+<th style="text-align:right;">
+reference
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+H.NAO
+</td>
+<td style="text-align:right;">
+<a href="https://climatedataguide.ucar.edu/sites/default/files/nao_station_annual.txt" class="uri">https://climatedataguide.ucar.edu/sites/default/files/nao_station_annual.txt</a>
+</td>
+<td style="text-align:right;">
+Hurrell, J.W., 1995: Decadal trends in the North Atlantic Oscillation
+and relationships to regional temperature and precipitation. Science
+269, 676-679.
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+O2.Fall.DOXY2.bottom
+</td>
+<td style="text-align:right;">
+Marjolaine Blais
+</td>
+<td style="text-align:right;">
+Blais, M., Galbraith, P.S., Plourde, S., Scarratt, M., Devine, L. and
+Lehoux, C. 2019. Chemical and Biological Oceanographic Conditions in the
+Estuary and Gulf of St. Lawrence during 2017. DFO Can. Sci. Advis. Sec.
+Res. Doc. 2019/009. iv + 56 pp. 
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+T200
+</td>
+<td style="text-align:right;">
+Peter Galbraith
+</td>
+<td style="text-align:right;">
+Galbraith, P.S., Chassé, J., Caverhill, C., Nicot, P., Gilbert, D.,
+Lefaivre, D. and Lafleur, C. 2018. Physical Oceanographic Conditions in
+the Gulf of St. Lawrence during 2017. DFO Can. Sci. Advis. Sec. Res.
+Doc. 2018/050. v + 79 p. 
+</td>
+</tr>
+</tbody>
+</table>
+
+If you just type source.f() you will get the person/organisation
+responsible and main reference for all variables in the database.
 
 Updating the package
 ====================
