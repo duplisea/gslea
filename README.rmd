@@ -1,7 +1,7 @@
 ---
 title: "Gulf of St. Lawrence Ecosystem Approach package (gslea)"
 output: 
-  md_document: 
+    md_document: 
     toc: yes
 ---
 

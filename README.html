@@ -505,7 +505,7 @@ library(gslea)</code></pre>
 <p>A few minimal extraction functions are provided that should be fast and relatively generic. A function called <b>metadata.f</b> is provided with three levels of verbosity to give you an overview. “low” verbosity just gives a few stats on the size of the database and the number of variables and EARs. “med” verbosity will give you names of variables and units. “high” is not that useful because it pretty well outputs the entire content of the variable.description table.</p>
 <pre class="r"><code>metadata.f(verbosity=&quot;low&quot;)</code></pre>
 <pre><code>## $Number.of.variables
-## [1] 207
+## [1] 212
 ## 
 ## $Number.of.EARS
 ## [1] 10
@@ -517,7 +517,7 @@ library(gslea)</code></pre>
 ## [1] 1856 2020
 ## 
 ## $Number.of.observations
-## [1] 21921</code></pre>
+## [1] 22235</code></pre>
 <p>Another perhaps more useful way to know what the database contains is with the function <b>var.f</b>. <b>var.f</b> accepts as an argument one of the data types with the default being “all”. The options are the adjectives for a data type: “physical”, “chemical”, “planktonic”, “phenological” which for some data types seems awkward but it is consistent. It will give you the exact name of the variable, its description and units. The output can be long and the descriptions are sometimes quite wordy so it is difficult to read. I suggest you save the result of a large query to var.f as an object and then use the library formattable to make it into a more readable table. So for example formattable, e.g.:</p>
 <pre class="r"><code>phys.var= vars.f(variable.type=&quot;physical&quot;)
 formattable::formattable(phys.var)</code></pre>
@@ -879,10 +879,10 @@ week of the year
 </table>
 <p>You can also try to find a variable through partial matching of a term (case insensitive). So for example if you were interested in just temperature you might search “temp”. Or anything that is from 300m deep then search “300”. It will then give you a list of variable that have that term in their description.</p>
 <pre class="r"><code>find.vars.f(search.term= &quot;200&quot;)</code></pre>
-<pre><code>##  [1] &quot;T.deep&quot;      &quot;T.shallow&quot;   &quot;T200&quot;        &quot;Tmax200.400&quot; &quot;AMO.month1&quot; 
-##  [6] &quot;AMO.month10&quot; &quot;AMO.month11&quot; &quot;AMO.month12&quot; &quot;AMO.month2&quot;  &quot;AMO.month3&quot; 
-## [11] &quot;AMO.month4&quot;  &quot;AMO.month5&quot;  &quot;AMO.month6&quot;  &quot;AMO.month7&quot;  &quot;AMO.month8&quot; 
-## [16] &quot;AMO.month9&quot;</code></pre>
+<pre><code>##  [1] &quot;J.GSNW.Q1&quot;   &quot;J.GSNW.Q2&quot;   &quot;J.GSNW.Q3&quot;   &quot;J.GSNW.Q4&quot;   &quot;T.deep&quot;     
+##  [6] &quot;T.shallow&quot;   &quot;T200&quot;        &quot;Tmax200.400&quot; &quot;AMO.month1&quot;  &quot;AMO.month10&quot;
+## [11] &quot;AMO.month11&quot; &quot;AMO.month12&quot; &quot;AMO.month2&quot;  &quot;AMO.month3&quot;  &quot;AMO.month4&quot; 
+## [16] &quot;AMO.month5&quot;  &quot;AMO.month6&quot;  &quot;AMO.month7&quot;  &quot;AMO.month8&quot;  &quot;AMO.month9&quot;</code></pre>
 <p>You will see that T.deep and T.shallow come up in this because in their descriptions, the distinction between shallow and deep waters is 200m. You will also see AMO variable coming up and this is because the reference for the AMO was published in 2001 and 200 is a substring of that. So you can see it will find things fairly broadly</p>
 <p>This search function will search most of the main fields of the variable.description table. So for example you may be interested in products which Peter Galbraith was involved with so you could try find.vars.f(search.term= “galbra”) or say something to do with plankon blooms find.vars.f(“bloom”).</p>
 </div>
@@ -1134,7 +1134,7 @@ Hurrell, J.W., 1995: Decadal trends in the North Atlantic Oscillation and relati
 O2.Fall.DOXY2.bottom
 </td>
 <td style="text-align:right;">
-Marjolaine Blais
+Marjolaine Blais (<a href="mailto:marjolaine.blais@dfo-mpo.gc.ca" class="email">marjolaine.blais@dfo-mpo.gc.ca</a>)
 </td>
 <td style="text-align:right;">
 Blais, M., Galbraith, P.S., Plourde, S., Scarratt, M., Devine, L. and Lehoux, C. 2019. Chemical and Biological Oceanographic Conditions in the Estuary and Gulf of St. Lawrence during 2017. DFO Can. Sci. Advis. Sec. Res. Doc. 2019/009. iv + 56 pp. 
@@ -1145,7 +1145,7 @@ Blais, M., Galbraith, P.S., Plourde, S., Scarratt, M., Devine, L. and Lehoux, C.
 T200
 </td>
 <td style="text-align:right;">
-Peter Galbraith
+Peter Galbraith (<a href="mailto:peter.galbraith@dfo-mpo.gc.ca" class="email">peter.galbraith@dfo-mpo.gc.ca</a>)
 </td>
 <td style="text-align:right;">
 Galbraith, P.S., Chassé, J., Caverhill, C., Nicot, P., Gilbert, D., Lefaivre, D. and Lafleur, C. 2018. Physical Oceanographic Conditions in the Gulf of St. Lawrence during 2017. DFO Can. Sci. Advis. Sec. Res. Doc. 2018/050. v + 79 p. 

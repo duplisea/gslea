@@ -1,30 +1,3 @@
--   [Quick start](#quick-start)
--   [Purpose](#purpose)
--   [Data coverage](#data-coverage)
--   [Design](#design)
--   [Components of gslea](#components-of-gslea)
-    -   [Data objects](#data-objects)
-    -   [Functions](#functions)
--   [Installing gslea](#installing-gslea)
--   [Accessing the data](#accessing-the-data)
-    -   [Data content overviews](#data-content-overviews)
-    -   [Data extraction](#data-extraction)
-        -   [Recasting data and showing when there were no
-            observations](#recasting-data-and-showing-when-there-were-no-observations)
-    -   [Data plotting](#data-plotting)
--   [Source and references](#source-and-references)
--   [Updating the package](#updating-the-package)
-    -   [Computing requirements for
-        updating](#computing-requirements-for-updating)
-    -   [Raw data](#raw-data)
-    -   [Running the update script](#running-the-update-script)
-    -   [Updating the R package](#updating-the-r-package)
-        -   [Compiling documentation](#compiling-documentation)
-        -   [Making the R package](#making-the-r-package)
--   [Project participants](#project-participants)
--   [If you have issues](#if-you-have-issues)
--   [Citation](#citation)
-
 Quick start
 ===========
 
@@ -961,6 +934,7 @@ O2.Fall.DOXY2.bottom
 </td>
 <td style="text-align:right;">
 Marjolaine Blais
+(<a href="mailto:marjolaine.blais@dfo-mpo.gc.ca" class="email">marjolaine.blais@dfo-mpo.gc.ca</a>)
 </td>
 <td style="text-align:right;">
 Blais, M., Galbraith, P.S., Plourde, S., Scarratt, M., Devine, L. and
@@ -975,6 +949,7 @@ T200
 </td>
 <td style="text-align:right;">
 Peter Galbraith
+(<a href="mailto:peter.galbraith@dfo-mpo.gc.ca" class="email">peter.galbraith@dfo-mpo.gc.ca</a>)
 </td>
 <td style="text-align:right;">
 Galbraith, P.S., Chassé, J., Caverhill, C., Nicot, P., Gilbert, D.,
