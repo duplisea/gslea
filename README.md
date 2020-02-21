@@ -224,7 +224,7 @@ entire content of the variable.description table.
     metadata.f(verbosity="low")
 
     ## $Number.of.variables
-    ## [1] 207
+    ## [1] 212
     ## 
     ## $Number.of.EARS
     ## [1] 10
@@ -236,7 +236,7 @@ entire content of the variable.description table.
     ## [1] 1856 2020
     ## 
     ## $Number.of.observations
-    ## [1] 21921
+    ## [1] 22235
 
 Another perhaps more useful way to know what the database contains is
 with the function <b>var.f</b>. <b>var.f</b> accepts as an argument one
@@ -618,10 +618,10 @@ that term in their description.
 
     find.vars.f(search.term= "200")
 
-    ##  [1] "T.deep"      "T.shallow"   "T200"        "Tmax200.400" "AMO.month1" 
-    ##  [6] "AMO.month10" "AMO.month11" "AMO.month12" "AMO.month2"  "AMO.month3" 
-    ## [11] "AMO.month4"  "AMO.month5"  "AMO.month6"  "AMO.month7"  "AMO.month8" 
-    ## [16] "AMO.month9"
+    ##  [1] "J.GSNW.Q1"   "J.GSNW.Q2"   "J.GSNW.Q3"   "J.GSNW.Q4"   "T.deep"     
+    ##  [6] "T.shallow"   "T200"        "Tmax200.400" "AMO.month1"  "AMO.month10"
+    ## [11] "AMO.month11" "AMO.month12" "AMO.month2"  "AMO.month3"  "AMO.month4" 
+    ## [16] "AMO.month5"  "AMO.month6"  "AMO.month7"  "AMO.month8"  "AMO.month9"
 
 You will see that T.deep and T.shallow come up in this because in their
 descriptions, the distinction between shallow and deep waters is 200m.
