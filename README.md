@@ -15,8 +15,9 @@ This describes the building of, the structure of and the use of an R
 package that gathers up physical, chemical, planktonic, plankton
 phenological and fish survey data into one place. This is a standalone R
 package that can be called from scripts or other packages for use. The
-data are provided spatially by the GSL ecoregions determined in Quebec
-Region in Spring 2019 (Fig. 1).
+data are provided spatially by the GSL ecosystem approach regions (EAR)
+determined in Quebec Region in Spring 2019 (Fig. 1). Some data indices
+that cover areas larger than EARs are provided.
 
 The package has been developed to allow for easy and consistent updating
 via automated scripts from tables provides by several individuals. This
@@ -38,6 +39,10 @@ in the database yet) cover only the northern portion as the southern
 portion of the Gulf is surveyed by the Gulf Region in Moncton and with a
 different survey gear.
 
+There are also some broad climatirc, oceangraphic and atmospheric
+indices in the database (coded with EAR=0) such as the North Atlantic
+Osciallation.
+
 <img src="README_files/figure-markdown_strict/gslmap.plain-1.png" style="width:100.0%" />
 
 Design
@@ -56,9 +61,9 @@ to the data in loops or in bootstrapping directly from the full
 database. The data are structured in what has become termed “tidy data”
 for people in the tidyverse as opposed to dirty data I suppose. You can
 use your own tidyverse code on it. The data class “data.table” inherit a
-secondary class of data.frame, therefore they are compatible with all
-the base R data.frame operations. The package is designed such that it
-is consistent, should be scalable to when new data types become
+secondary class of data.frame, therefore they are compatible with most
+of the base R data.frame operations. The package is designed such that
+it is consistent, should be scalable to when new data types become
 available and should not break existing analyses when updated (I hope).
 
 Components of gslea
@@ -133,14 +138,15 @@ vars.f(variable.type)
 </ins>
 
 shows the variables available in a particular <b>variable.type</b>
-(“physical”, “chemical”, “planktonic”, “phenologic”), gives a
-description of each and its units.
+(“physical”, “chemical”, “planktonic”, “phenologic”, “climatic”), gives
+a description of each and its units.
 
 <ins>
 find.vars.f(search.term)
 </ins>
 
-finds variable names based on partial matches.
+finds variable names based on partial matches. It search not just the
+variable names but also their descriptions, sources and references.
 
 <ins>
 EA.query.f(variables, years, EARs)
@@ -165,6 +171,15 @@ series to help give a general idea of the tendencies in time. It will
 only try to smooth if the data has more than 5 observations. <b>….</b>
 will accept parameters to par for plotting. This is mostly for quick
 exploration of the data rather than for making good quality graphics.
+
+<ins>
+EA.cor.f
+</ins>
+
+commputes the cross corelation between two variables with lags. It has
+the option of differencing the variables to make them stationary and
+therefore correlate on the how the values of each of the variables
+changes from year to year as opposed to their absolute values.
 
 <ins>
 sources.f(variable.name)
@@ -778,8 +793,9 @@ and when you cast the data to 2-dimensions, a decision needs to made on
 how to reduce it to 2-dimensions. This is done with a “group by”
 function. By default, dcast will do a group-by as count but you can also
 specify other groub-by functions such as sum or mean. You can also,
-however, cast data into 2-dimensions but it will repeat the columns for
-each EAR (note that “EAR” is now in the right hand side of the formula)
+however, cast multidimension data into a table but it will repeat the
+columns for each EAR (note that “EAR” is now in the right hand side of
+the formula)
 
     dat= EA.query.f(years=2015:2020, variables=c("T150","ph_bot.fall","ice.max","O2.Late_summer.sat.mean50_100"), EARs=1:100)
     dcast(dat, year~ variable+EAR)
@@ -883,6 +899,70 @@ and then with that information select the NAO monthly data.
     EA.plot.f(years=1800:2020, variables=NAO.vars[1:5], EARs=0, smoothing=T,pch=20)
 
 ![](README_files/figure-markdown_strict/plotting4-1.png)
+
+Discovering relationship between variables in the database
+==========================================================
+
+If you have a hunch that one variable may be driving another, you can do
+a fairly simple analysis to at least give you a first crack at testing
+your hypothesis by using cross correlation (ccf). ccf is a base R
+function that looks at the correlation between two variables at
+different time lags. It has been repackaged here to query the data from
+the EA.data table with the function <b>EA.cor.f</b>.
+
+So let’s assume for this example that you think that sea surface
+temperature in the central Gulf (EAR 3) is related to the North Atlantic
+Oscillation at some earlier time (<b>climatic</b> variables always have
+EAR=0) but you are not sure what time lag might be most appropriate
+
+    EA.plot.f(variables=c("H.NAO","SST"), years=1900:2020, EARs=c(0,3), smoothing=T,pch=20)
+
+![](README_files/figure-markdown_strict/crosscor1-1.png)
+
+It is hard to say from just plotting the data because the length of the
+time series are quite different. The cross correlation testing at
+various temporal lags will probably help you formulate your hypotheses
+better.
+
+    EA.cor.f(c("H.NAO","SST"), 1900:2020, c(0,3))
+
+![](README_files/figure-markdown_strict/crosscor2-1.png)
+
+It is a bit of a downer because your best correlations is between NAO
+and SST in the same year (0 lag) and the relationship is not that strong
+(a bit stronger than -0.3). So let’s try an easy one by choosing two
+variable you know must be related: SST in EAR 3 (central Gulf) and SST
+in EAR 1 (NW Gulf).
+
+    EA.cor.f("SST", 1900:2020, c(1,3))
+
+![](README_files/figure-markdown_strict/crosscor3-1.png)
+
+Differencing before correlation
+-------------------------------
+
+You might also want to difference the variables before correlating. This
+is like asking the question if the magnitude of change in one variable
+from one time period to the next is related to the manitude of change in
+another variables from one period to the next. This of course can be
+lagged too which brings forward the idea of causality in your
+hypothesis. Let’s try the NAO and SST again but this time on the
+differences
+
+    EA.cor.f(c("H.NAO","SST"), 1900:2020, c(0,3), diff=T)
+
+![](README_files/figure-markdown_strict/crosscor4-1.png)
+
+You can see now that there are significant correlations at several
+different lags. You will note from the plot title that SST is the
+leading variable (i.e. it is the causal variable and the one that is
+lagged). This means that in order to be consistent with your causal
+hypothesis implicit in doing lagged correlation, you should be looking
+at negative lags. You will find a significant positive correlation at
+lag -3 and significant negative one at lag -4. This is like saying that
+positive changes in NAO lead to positive changes in SST three years
+later (correlation about 0.4) and that the magnitude of the changes are
+proportional.
 
 Source and references
 =====================

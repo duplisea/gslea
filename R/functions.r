@@ -119,30 +119,57 @@ EA.plot.f= function(variables, years, EARs, smoothing=T, ...){
       var.dat= ear.dat[variable==variables[ii]]
       if(nrow(var.dat)<1) plot(0, xlab="", ylab="", xaxt="n",yaxt="n",main=paste("EAR",i,variables[ii]), ...)
       if(nrow(var.dat)>0) plot(var.dat$year, var.dat$value, xlab="", ylab="", main=paste("EAR",i,variables[ii]), ...)
-      if(nrow(var.dat)>5 && smoothing==T) lines(predict(smooth.spline(var.dat$year, var.dat$value,df=length(var.dat$value)/3)))
+      if(nrow(var.dat)>5 && smoothing==T) lines(predict(smooth.spline(var.dat$year, var.dat$value,df=length(var.dat$value)/3)), ...)
       #if(nrow(var.dat)>5 && smoothing==T) lines(lowess(var.dat$year, var.dat$value))
     }
     counter= counter+1
   }
   par(omi=c(0,0,0,0),mar= c(5.1, 4.1, 4.1, 2.1))
 }
-#
-# EA.cors.f= function(variables, years, EARs){
-#   dat= EA.query.f(variables=variables, years=years, EARs=EARs)
-#   actual.EARs= sort(as.numeric(dat[,unique(EAR)]))
-#   counter=1
-#   out= data.table(ncol=2, nrow=actual.EARs*length(variables))
-#   for(i in actual.EARs){
-#     ear.dat= dat[EAR==i]
-#     for(ii in 1:length(variables)){
-#       var.dat= ear.dat[variable==variables[ii]]
-#       out[ii,1]= paste("EAR",i,variables[ii]))
-#       if(nrow(var.dat)<1) out[counter,2]= cor.val=NA
-#       if(nrow(var.dat)>0) out[counter,2]= cor.val=cor(var.dat$year, var.dat$value)
-#     }
-#     counter= counter+1
-#   }
-# }
+
+#' Compute and plot the cross correlation with lags between two E variables
+#'
+#' @param variables variable vector must be 2 or less variables
+#' @param years year vector
+#' @param EARs EAR vector
+#' @param diff logical whether or not the variables should be differenced (removes non-stationarity)
+#' @param ... other arguments to ccf function for plotting in base R (type ?ccf)
+#' @description  Computes the cross correlation between two selected variables with different lags. Your
+#'              variable X EAR combination must = 2. See examples for clarification. Not that the lagged
+#'              variable is the one leading, i.e. the cause. So if the ccf plot title has reversed what you
+#'              think is the wrong cause and effect variables then just look at the - lags. This function
+#'              automatically differences the variables to make them stationary. The differencing leads to
+#'              a slightly different question. For example with NAO causing SST:
+#'              -without differencing your question is: does the state of the NAO affect SST at some later
+#'              point in time?
+#'              -with differencing your question is: does the magnitude of change in the NAO from one year
+#'              to the next affect the magnitude of change in SST from one year to the next at a later time?
+#' @author Daniel Duplisea
+#' @export
+#' @examples
+#' EA.cor.f(c("SST","NAO.month7"),1900:2020,c(0,3)) #SST not in EAR 0, NAO not in EAR 3, i.e. two vars
+#' EA.cor.f("SST",1900:2020,c(1,3)) # SST in EAR 1 vs EAR 3
+EA.cor.f= function(variables, years, EARs, diff=F, ...){
+  if (length(variables)>2) stop("you can only correlate two variables against each other at a time")
+  E1= EA.query.f(variables=variables, years=years, EARs=EARs)
+  uniq.vars= unique(paste(E1$EAR,E1$variable))
+  if (length(uniq.vars)>2) stop("have more than two variables in your variable and EAR combination")
+  E2= dcast(E1, year~ variable+EAR)
+  E3= na.omit(E2)
+  if(max(diff(E3$year))>1) stop("your two series are not contiguous in time")
+  iv.name=names(E3[,2])
+  dv.name=names(E3[,3])
+  if (diff){
+    ind.var= diff(as.data.frame(E3)[,2])
+    dep.var= diff(as.data.frame(E3)[,3])
+  }
+  if (!diff){
+    ind.var= as.data.frame(E3)[,2]
+    dep.var= as.data.frame(E3)[,3]
+  }
+  # the first variable is lagged, e.g. if there is sig + correlation at lag +3 it means the x variable causes the y 3 years later
+  ccf(x=ind.var, y=dep.var,main=paste0(iv.name," (lagged), " ,dv.name, " (dependent)"), ...)
+}
 
 
 
