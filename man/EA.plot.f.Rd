@@ -22,7 +22,7 @@ Plots a matrix of variables with EAR as columns and variable as rows. If no data
               is plotted.
 }
 \examples{
-EA.plot.f(years=1900:2030, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:4, type="b",pch=20)
+EA.plot.f(variables=c("T150", "ph_bot.fall", "T250"), years=1900:2030, EARs=1:4, type="b",pch=20)
 }
 \author{
 Daniel Duplisea

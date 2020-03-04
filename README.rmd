@@ -164,7 +164,7 @@ find.vars.f("oscilla")
 NAO.vars= find.vars.f("nao.mon")
 #but because variable names are character and you may want them ordered by month you need to sort the names vector
 NAO.vars= NAO.vars[order(nchar(NAO.vars), NAO.vars)]
-EA.plot.f(years=1800:2020, variables=NAO.vars[1:5], EARs=0, smoothing=T,pch=20)
+EA.plot.f(years=1800:2020, variables=NAO.vars[1:5], EARs=-1, smoothing=T,pch=20)
 ```
 
 # Discovering relationship between variables in the database
@@ -173,13 +173,13 @@ If you have a hunch that one variable may be driving another, you can do a fairl
 So let's assume for this example that you think that sea surface temperature in the central Gulf (EAR 3) is related to the North Atlantic Oscillation at some earlier time (<b>climatic</b> variables always have EAR=0) but you are not sure what time lag might be most appropriate
 
 ```{r crosscor1, eval=TRUE}
-EA.plot.f(variables=c("H.NAO","SST"), years=1900:2020, EARs=c(0,3), smoothing=T,pch=20)
+EA.plot.f(variables=c("H.NAO","SST"), years=1900:2020, EARs=c(-1,3), smoothing=T,pch=20)
 ```
 
 It is hard to say from just plotting the data because the length of the time series are quite different. The cross correlation testing at various temporal lags will probably help you formulate your hypotheses better.
 
 ```{r crosscor2, eval=TRUE}
-EA.cor.f(c("H.NAO","SST"), 1900:2020, c(0,3))
+EA.cor.f(c("H.NAO","SST"), 1900:2020, c(-1,3))
 ```
 
 It is a bit of a downer because your best correlations is between NAO and SST in the same year (0 lag) and the relationship is not that strong (a bit stronger than -0.3). So let's try an easy one by choosing two variable you know must be related: SST in EAR 3 (central Gulf) and SST in EAR 1 (NW Gulf).
@@ -192,7 +192,7 @@ EA.cor.f("SST", 1900:2020, c(1,3))
 You might also want to difference the variables before correlating. This is like asking the question if the magnitude of change in one variable from one time period to the next is related to the manitude of change in another variables from one period to the next. This of course can be lagged too which brings forward the idea of causality in your hypothesis. Let's try the NAO and SST again but this time on the differences
 
 ```{r crosscor4, eval=TRUE}
-EA.cor.f(c("H.NAO","SST"), 1900:2020, c(0,3), diff=T)
+EA.cor.f(c("H.NAO","SST"), 1900:2020, c(-1,3), diff=T)
 ```
 
 You can see now that there are significant correlations at several different lags. You will note from the plot title that SST is the leading variable (i.e. it is the causal variable and the one that is lagged). This means that in order to be consistent with your causal hypothesis implicit in doing lagged correlation, you should be looking at negative lags. You will find a significant positive correlation at lag -3 and significant negative one at lag -4. This is like saying that positive changes in NAO lead to positive changes in SST three years later (correlation about 0.4) and that the magnitude of the changes are proportional.

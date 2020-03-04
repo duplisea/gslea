@@ -4,7 +4,7 @@
 \alias{EA.query.f}
 \title{Query the data}
 \usage{
-EA.query.f(variables, years, EARs)
+EA.query.f(variables, years, EARs, crosstab = F)
 }
 \arguments{
 \item{variables}{variable vector}
@@ -12,12 +12,18 @@ EA.query.f(variables, years, EARs)
 \item{years}{year vector}
 
 \item{EARs}{EAR vector}
+
+\item{crosstab}{logical. This will crosstabulate and show the NAs. For excel plotting you likely want it as cross tabulated
+data. Cross-tabulated data has somehow become known as "wide" data since data mining analytics has become such a huge
+field beginning in the first decade of the 2000s.}
 }
 \description{
-creates a data.table based on the variables you selected. data.tables inherit data.frame
+creates a data.table based on the variables you selected. data.tables inherit data.frame. Cross-tabulated data
+       will have the year as the first column and the variables in the columns thereafter. It will append _x to that variable
+       to represent EAR x.
 }
 \examples{
-EA.query.f(years=1999:2012, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:2)
+EA.query.f(variables=c("T150", "ph_bot.fall", "T250"), years=1999:2012, EARs=1:2)
 }
 \author{
 Daniel Duplisea

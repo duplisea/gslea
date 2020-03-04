@@ -69,7 +69,8 @@ find.vars.f= function(search.term){
   vars2= variable.description[grep(search.term, variable.description$variable, ignore.case=T),]$variable
   vars3= variable.description[grep(search.term, variable.description$source, ignore.case=T),]$variable
   vars4= variable.description[grep(search.term, variable.description$reference, ignore.case=T),]$variable
-  vars= unique(c(vars1,vars2,vars3,vars4))
+  vars5= variable.description[grep(search.term, variable.description$type, ignore.case=T),]$variable
+  vars= unique(c(vars1,vars2,vars3,vars4,vars5))
   vars
 }
 
@@ -78,15 +79,19 @@ find.vars.f= function(search.term){
 #' @param variables variable vector
 #' @param years year vector
 #' @param EARs EAR vector
-#' @tabular do you want the data output with few colums and repeated rows or a a more tabular format (often what you want for plotting in excel)
-#' @description  creates a data.table based on the variables you selected. data.tables inherit data.frame
+#' @param crosstab logical. This will crosstabulate and show the NAs. For excel plotting you likely want it as cross tabulated
+#'        data. Cross-tabulated data has somehow become known as "wide" data since data mining analytics has become such a huge
+#'        field beginning in the first decade of the 2000s.
+#' @description  creates a data.table based on the variables you selected. data.tables inherit data.frame. Cross-tabulated data
+#'        will have the year as the first column and the variables in the columns thereafter. It will append _x to that variable
+#'        to represent EAR x.
 #' @author Daniel Duplisea
 #' @export
 #' @examples
-#' EA.query.f(years=1999:2012, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:2)
-EA.query.f= function(variables, years, EARs){
- #warning("GENERAL WARNING ABOUT FISH SURVEY DATA: there were fish survey vessel and gear changes in 1990 and 2004. New survey strata were added in 2007 and biodiversity protocols were changed in 2006. Careful with fish data intepretation spanning these years.", noBreaks.=T,immediate.=T)
+#' EA.query.f(variables=c("T150", "ph_bot.fall", "T250"), years=1999:2012, EARs=1:2)
+EA.query.f= function(variables, years, EARs, crosstab=F){
  out= EA.data[variable %in% variables & year %in% years & EAR %in% EARs]
+ if(crosstab) out= dcast(out, year~ variable+EAR)
  out
 }
 
@@ -104,7 +109,7 @@ EA.query.f= function(variables, years, EARs){
 #' @author Daniel Duplisea
 #' @export
 #' @examples
-#' EA.plot.f(years=1900:2030, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:4, type="b",pch=20)
+#' EA.plot.f(variables=c("T150", "ph_bot.fall", "T250"), years=1900:2030, EARs=1:4, type="b",pch=20)
 EA.plot.f= function(variables, years, EARs, smoothing=T, ...){
   dat= EA.query.f(variables=variables, years=years, EARs=EARs)
   actual.EARs= sort(as.numeric(dat[,unique(EAR)]))
