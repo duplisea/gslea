@@ -2,8 +2,13 @@
 title: "Gulf of St. Lawrence Ecosystem Approach package (gslea)"
 output: 
     md_document: 
-    toc: yes
+      toc: true
 ---
+# What is it?
+
+An R package to house Gulf of St Lawrence environment and ecosystem data to promote ecosystem research and analysis in the Gulf of St Lawrence and move us closer to an ecosystem approach to fisheries. It should be readily understandable to a large swath of the research community who have extensive or minimal R skills.
+
+Currently version 0.1 - beta. It will not be fixed until version 1 afterwhich updates should not break existing analyses. That could still happen now with updates.
 
 
 # Quick start
@@ -24,7 +29,7 @@ The package has been developed to allow for easy and consistent updating via aut
 # Data coverage
 Presently, this package consists of data for the Gulf of St Lawrence where collection and management of the data is done out of the Quebec Region. This means that physical, chemical and phenological data generally cover the entire Gulf of St Lawrence but fish survey data (not in the database yet) cover only the northern portion as the southern portion of the Gulf is surveyed by the Gulf Region in Moncton and with a different survey gear.
 
-There are also some broad climatirc, oceangraphic and atmospheric indices in the database (coded with EAR=0) such as the North Atlantic Osciallation.
+There are also some broad climatirc, oceangraphic and atmospheric indices in the database (coded with EAR=-1) such as the North Atlantic Osciallation. We have presently reserved EAR=0 for GSL scale indices even though there are none in the database yet.
 
 ![](README_files/figure-markdown_strict/gslmap.plain-1.png){width=100%}
 
@@ -34,7 +39,7 @@ The package is GPL-3 licenced and thus is available globally without warranty. T
 # Components of gslea
 
 ## Data objects
-The package consists of three tables presently:
+The package consists of three main tables presently:
 
 <ins>EA.data</ins> This is where all the measurements reside. The data.table (inherits data.frame as second choice) has four columns: <b>year</b>, <b>EAR</b>, <b>variable</b>, <b>value</b>. Where year is the year (integer) of data collection, <b>EAR</b> is the ecosystem approach region (see fig 1) (character), <b>variable</b> is the name of the variable (character), <b>value</b> is the measured values (numeric). <b>variable</b> is set as the key variable
 
@@ -42,6 +47,8 @@ The package consists of three tables presently:
 Some of the variables are not just single measures per year but monthly measures. It was a conscious decision not to make a sub-year time column in these cases which makes the extraction result more difficult since often people want data in two-dimensional tabular format. So for example some of the plankton data are available by month. In these cases, there is a separate variable for each month and if it were for September it would end in ...month9.
 
 <ins>field.descriptions</ins> this gives a description of the field names in the EA.data especially as these might need elaboration in some cases. The table contains three columns: <b>field</b> which is the field name in the EA.data table, <b>description</b> which describes what is represented by that column, <b>elaboration</b> which provides more details on the column when needed. So the elaboration column for <b>EAR</b> describes the areas represented by each ecoregion code. Elaboration for variable describes specifically what is meant by a variable containing a name that may include “early summer”. <b>field</b> is the key variable.
+
+Another data table describes the coordinates of the EAR boundaries in decimal degrees but you never see that here.
 
 ## Functions
 
@@ -57,7 +64,7 @@ The package consists of limited number of functions:
 
 <ins>EA.plot.f(variables, years, EARs, ...)</ins> this will plot the variables over time. It will make a matrix of variable x EAR with up to 25 plots per page (i.e. 25 variable*EAR combinations). <b>variables</b> (e.g. "T150") is a character vector, <b>years</b> is a numeric vector (e.g. 2002:2012), <b>EARs</b> is the ecoregion and is a numeric vector (e.g. 1:3), <b>smoothing</b> is a logical on whether the smooth.spline should be run through the data series to help give a general idea of the tendencies in time. It will only try to smooth if the data has more than 5 observations. <b>....</b> will accept parameters to par for plotting. This is mostly for quick exploration of the data rather than for making good quality graphics.
 
-<ins>EA.cor.f</ins> commputes the cross corelation between two variables with lags. It has the option of differencing the variables to make them stationary and therefore correlate on the how the values of each of the variables changes from year to year as opposed to their absolute values.
+<ins>EA.cor.f(variables, years, EARs, ...)</ins> commputes the cross corelation between two variables with lags. It has the option of differencing the variables to make them stationary and therefore correlate on the how the values of each of the variables changes from year to year as opposed to their absolute values. ... gives arguments to the <b>ccf</b> function.
 
 <ins>sources.f(variable.name)</ins> gives a source and reference for any variable in the database. If NULL then it returns the full list of sources and references. Please cite these references if using the data.
 
@@ -197,7 +204,7 @@ EA.cor.f(c("H.NAO","SST"), 1900:2020, c(-1,3), diff=T)
 
 You can see now that there are significant correlations at several different lags. You will note from the plot title that SST is the leading variable (i.e. it is the causal variable and the one that is lagged). This means that in order to be consistent with your causal hypothesis implicit in doing lagged correlation, you should be looking at negative lags. You will find a significant positive correlation at lag -3 and significant negative one at lag -4. This is like saying that positive changes in NAO lead to positive changes in SST three years later (correlation about 0.4) and that the magnitude of the changes are proportional.
 
-# Source and references
+# Source and references for data
 It is important to acknowledge to the individuals and organisation who collected the data and or processed it to come up with the indices that are presented here. In some cases, this downstream acknowledgement may be the primary means of showing efficacy of their work so please be diligent about including citations and acknowledgements in your work.
 
 The function sources.f accept a variable name as an argument. It will give you the name and or link to the person or organisation responsible for the data represented by that variable. It will also provide the main citation for that variable.
@@ -207,6 +214,11 @@ formattable::formattable(sources.f(c("T200","H.NAO","O2.Fall.DOXY2.bottom")))
 ```
 
 If you just type source.f() you will get the person/organisation responsible and main reference for all variables in the database.
+
+# Forget the R-package, I just want the data
+You are not obliged to use this R-package if you want the data. The data table and variable description table have been merged and written to an excel file sheet. The field descriptions have been written to another sheet in the same excel file. This will be downloaded as part of the R package from github but you can access just that file directly from the gslea github root directory if you do not want to download the R package. It is call "<b>EAdata.dump.xlsx</b>". You might just download it and filter the variable column or other columns to choose the data you want from excel. This file is automatically updated everytime the gslea library is updated so there should be no discrepency in the data from the two places.
+
+Please do not forget to acknowledge the sources of the data and cite the appropriate references that are included in the excel file.
 
 # Updating the package
 <mark>Unless you need to update this database, you do not need to read this</mark>
@@ -250,4 +262,4 @@ For comments, questions, bugs etc, you can send this to the package maintainer, 
 
 # Citation
 
-gslea: Gulf of St Lawrence ecosystem approach. R package version 0.1 https://github.com/duplisea/gslea. 2020.
+Duplisea, DE. 2020. Gulf of St Lawrence ecosystem approach: gslea. R package version 0.1 https://github.com/duplisea/gslea.

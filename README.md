@@ -1,3 +1,50 @@
+-   [What is it?](#what-is-it)
+-   [Quick start](#quick-start)
+-   [Purpose](#purpose)
+-   [Data coverage](#data-coverage)
+-   [Design](#design)
+-   [Components of gslea](#components-of-gslea)
+    -   [Data objects](#data-objects)
+    -   [Functions](#functions)
+-   [Installing gslea](#installing-gslea)
+-   [Accessing the data](#accessing-the-data)
+    -   [Data content overviews](#data-content-overviews)
+    -   [Data extraction](#data-extraction)
+        -   [Recasting data and showing when there were no
+            observations](#recasting-data-and-showing-when-there-were-no-observations)
+    -   [Data plotting](#data-plotting)
+-   [Discovering relationship between variables in the
+    database](#discovering-relationship-between-variables-in-the-database)
+    -   [Differencing before
+        correlation](#differencing-before-correlation)
+-   [Source and references for data](#source-and-references-for-data)
+-   [Forget the R-package, I just want the
+    data](#forget-the-r-package-i-just-want-the-data)
+-   [Updating the package](#updating-the-package)
+    -   [Computing requirements for
+        updating](#computing-requirements-for-updating)
+    -   [Raw data](#raw-data)
+    -   [Running the update script](#running-the-update-script)
+    -   [Updating the R package](#updating-the-r-package)
+        -   [Compiling documentation](#compiling-documentation)
+        -   [Making the R package](#making-the-r-package)
+-   [Project participants](#project-participants)
+-   [If you have issues](#if-you-have-issues)
+-   [Citation](#citation)
+
+What is it?
+===========
+
+An R package to house Gulf of St Lawrence environment and ecosystem data
+to promote ecosystem research and analysis in the Gulf of St Lawrence
+and move us closer to an ecosystem approach to fisheries. It should be
+readily understandable to a large swath of the research community who
+have extensive or minimal R skills.
+
+Currently version 0.1 - beta. It will not be fixed until version 1
+afterwhich updates should not break existing analyses. That could still
+happen now with updates.
+
 Quick start
 ===========
 
@@ -40,8 +87,9 @@ portion of the Gulf is surveyed by the Gulf Region in Moncton and with a
 different survey gear.
 
 There are also some broad climatirc, oceangraphic and atmospheric
-indices in the database (coded with EAR=0) such as the North Atlantic
-Osciallation.
+indices in the database (coded with EAR=-1) such as the North Atlantic
+Osciallation. We have presently reserved EAR=0 for GSL scale indices
+even though there are none in the database yet.
 
 <img src="README_files/figure-markdown_strict/gslmap.plain-1.png" style="width:100.0%" />
 
@@ -72,7 +120,7 @@ Components of gslea
 Data objects
 ------------
 
-The package consists of three tables presently:
+The package consists of three main tables presently:
 
 <ins>
 EA.data
@@ -119,6 +167,9 @@ needed. So the elaboration column for <b>EAR</b> describes the areas
 represented by each ecoregion code. Elaboration for variable describes
 specifically what is meant by a variable containing a name that may
 include “early summer”. <b>field</b> is the key variable.
+
+Another data table describes the coordinates of the EAR boundaries in
+decimal degrees but you never see that here.
 
 Functions
 ---------
@@ -173,13 +224,14 @@ will accept parameters to par for plotting. This is mostly for quick
 exploration of the data rather than for making good quality graphics.
 
 <ins>
-EA.cor.f
+EA.cor.f(variables, years, EARs, …)
 </ins>
 
 commputes the cross corelation between two variables with lags. It has
 the option of differencing the variables to make them stationary and
 therefore correlate on the how the values of each of the variables
-changes from year to year as opposed to their absolute values.
+changes from year to year as opposed to their absolute values. … gives
+arguments to the <b>ccf</b> function.
 
 <ins>
 sources.f(variable.name)
@@ -224,7 +276,7 @@ entire content of the variable.description table.
     ## [1] 1856 2020
     ## 
     ## $Number.of.observations
-    ## [1] 22235
+    ## [1] 22248
 
 Another perhaps more useful way to know what the database contains is
 with the function <b>var.f</b>. <b>var.f</b> accepts as an argument one
@@ -896,7 +948,7 @@ and then with that information select the NAO monthly data.
     NAO.vars= find.vars.f("nao.mon")
     #but because variable names are character and you may want them ordered by month you need to sort the names vector
     NAO.vars= NAO.vars[order(nchar(NAO.vars), NAO.vars)]
-    EA.plot.f(years=1800:2020, variables=NAO.vars[1:5], EARs=0, smoothing=T,pch=20)
+    EA.plot.f(years=1800:2020, variables=NAO.vars[1:5], EARs=-1, smoothing=T,pch=20)
 
 ![](README_files/figure-markdown_strict/plotting4-1.png)
 
@@ -915,7 +967,7 @@ temperature in the central Gulf (EAR 3) is related to the North Atlantic
 Oscillation at some earlier time (<b>climatic</b> variables always have
 EAR=0) but you are not sure what time lag might be most appropriate
 
-    EA.plot.f(variables=c("H.NAO","SST"), years=1900:2020, EARs=c(0,3), smoothing=T,pch=20)
+    EA.plot.f(variables=c("H.NAO","SST"), years=1900:2020, EARs=c(-1,3), smoothing=T,pch=20)
 
 ![](README_files/figure-markdown_strict/crosscor1-1.png)
 
@@ -924,7 +976,7 @@ time series are quite different. The cross correlation testing at
 various temporal lags will probably help you formulate your hypotheses
 better.
 
-    EA.cor.f(c("H.NAO","SST"), 1900:2020, c(0,3))
+    EA.cor.f(c("H.NAO","SST"), 1900:2020, c(-1,3))
 
 ![](README_files/figure-markdown_strict/crosscor2-1.png)
 
@@ -949,7 +1001,7 @@ lagged too which brings forward the idea of causality in your
 hypothesis. Let’s try the NAO and SST again but this time on the
 differences
 
-    EA.cor.f(c("H.NAO","SST"), 1900:2020, c(0,3), diff=T)
+    EA.cor.f(c("H.NAO","SST"), 1900:2020, c(-1,3), diff=T)
 
 ![](README_files/figure-markdown_strict/crosscor4-1.png)
 
@@ -964,8 +1016,8 @@ positive changes in NAO lead to positive changes in SST three years
 later (correlation about 0.4) and that the magnitude of the changes are
 proportional.
 
-Source and references
-=====================
+Source and references for data
+==============================
 
 It is important to acknowledge to the individuals and organisation who
 collected the data and or processed it to come up with the indices that
@@ -1043,6 +1095,24 @@ Doc. 2018/050. v + 79 p. 
 
 If you just type source.f() you will get the person/organisation
 responsible and main reference for all variables in the database.
+
+Forget the R-package, I just want the data
+==========================================
+
+You are not obliged to use this R-package if you want the data. The data
+table and variable description table have been merged and written to an
+excel file sheet. The field descriptions have been written to another
+sheet in the same excel file. This will be downloaded as part of the R
+package from github but you can access just that file directly from the
+gslea github root directory if you do not want to download the R
+package. It is call “<b>EAdata.dump.xlsx</b>”. You might just download
+it and filter the variable column or other columns to choose the data
+you want from excel. This file is automatically updated everytime the
+gslea library is updated so there should be no discrepency in the data
+from the two places.
+
+Please do not forget to acknowledge the sources of the data and cite the
+appropriate references that are included in the excel file.
 
 Updating the package
 ====================
@@ -1145,6 +1215,6 @@ or file a bug report or issue on github.
 Citation
 ========
 
-gslea: Gulf of St Lawrence ecosystem approach. R package version 0.1
+Duplisea, DE. 2020. Gulf of St Lawrence ecosystem approach: gslea. R
+package version 0.1
 <a href="https://github.com/duplisea/gslea" class="uri">https://github.com/duplisea/gslea</a>.
-2020.
