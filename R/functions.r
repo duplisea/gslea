@@ -74,7 +74,7 @@ find.vars.f= function(search.term){
   vars
 }
 
-#' Query the data
+  #' Query the data
 #'
 #' @param variables variable vector
 #' @param years year vector
