@@ -1,8 +1,10 @@
 #' Ecosystem Approach Data
 #'
 #' A data.table with all the ecosystem.approach data for the Gulf of St. Lawrence ecoregions. This includes data on
-#' physical oceanography (physical), chemical oceanographic (chemical), phyto and zooplankton abundance or biomass
-#' (planktonic) and timing of phyto and zooplankton dynamics (phenological).
+#' physical oceanography (physical); chemical oceanographic (chemical); phyto and zooplankton abundance or biomass
+#' (planktonic); timing of phyto and zooplankton dynamics (phenological); large scale indices of oceanography, atmosphere
+#' at broad scales (climatic); atmospheric projections from the climateatlas.ca website that brings together predictions from
+#' 24 global climate models.
 #'
 #' \itemize{
 #'   \item year The year of data collection
@@ -17,20 +19,7 @@
 #' @name EA.data
 #' @usage EA.data
 #' @format data.table, data.frame
-#' @author Denis Bernier, Peter Galbraith, Marjolaine Blais
-#' @references
-#'         Blais, M., Galbraith, P.S., Plourde, S., Scarratt, M., Devine, L. and Lehoux, C. 2019. Chemical and
-#'         Biological Oceanographic Conditions in the Estuary and Gulf of St. Lawrence during 2017. DFO Can. Sci.
-#'         Advis. Sec. Res. Doc. 2019/009. iv + 56 pp.
-#'
-#'         Galbraith, P.S., Chassé, J., Nicot, P., Caverhill, C., Gilbert, D., Pettigrew, B., Lefaivre,
-#'         D., Brickman, D., Devine, L., and Lafleur, C. 2015. Physical Oceanographic Conditions in the Gulf of
-#'         St. Lawrence in 2014. DFO Can. Sci. Advis. Sec. Res. Doc. 2015/032. v + 82 p
-#'         http://www.dfo-mpo.gc.ca/csas-sccs/Publications/ResDocs-DocRech/2015/2015_032-eng.html
-#'
-
 NULL
-
 
 #' Variable descriptions in EA.data
 #'
@@ -41,7 +30,7 @@ NULL
 #'   \item description A description of the variable
 #'   \item units The units of measure for the value of the variable
 #'   \item contact The name of the contact person for each variable
-#'   \item type The broad category of the variabl, e.g. "physical", "chemical", "planktonic", "phenological"
+#'   \item type The broad category of the variabl, e.g. "physical", "chemical", "planktonic", "phenological", "climatic", "projection.atmospheric"
 #'   \item extraction.date The date which the data were extracted from the parent data base by the person named as the contact
 #' }
 #'

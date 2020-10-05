@@ -129,51 +129,59 @@ EA.plot.f= function(variables, years, EARs, smoothing=T, ...){
     }
     counter= counter+1
   }
-  par(omi=c(0,0,0,0),mar= c(5.1, 4.1, 4.1, 2.1))
+  par(mfcol=c(1,1),omi=c(0,0,0,0),mar= c(5.1, 4.1, 4.1, 2.1))
 }
 
 #' Compute and plot the cross correlation with lags between two E variables
 #'
-#' @param variables variable vector must be 2 or less variables
-#' @param years year vector
-#' @param EARs EAR vector
+#' @param x independent variable. E.g. "SST"
+#' @param y dependent variable E.g. "T.deep"
+#' @param years a vector of years you want to consider (the largest contiguous block in these years will be chosen)
+#' @param x.EAR the ecosystem approach region for the independent variables
+#' @param y.EAR the ecosystem approach region for the dependent variables
 #' @param diff logical whether or not the variables should be differenced (removes non-stationarity)
 #' @param ... other arguments to ccf function for plotting in base R (type ?ccf)
-#' @description  Computes the cross correlation between two selected variables with different lags. Your
-#'              variable X EAR combination must = 2. See examples for clarification. Not that the lagged
-#'              variable is the one leading, i.e. the cause. So if the ccf plot title has reversed what you
-#'              think is the wrong cause and effect variables then just look at the - lags. This function
-#'              automatically differences the variables to make them stationary. The differencing leads to
-#'              a slightly different question. For example with NAO causing SST:
-#'              -without differencing your question is: does the state of the NAO affect SST at some later
-#'              point in time?
-#'              -with differencing your question is: does the magnitude of change in the NAO from one year
-#'              to the next affect the magnitude of change in SST from one year to the next at a later time?
+#' @description  Computes the cross correlation between two selected variables with different lags. Given that you specify
+#'    the independent and dependent variables, you are interested in negative or zero lags as an test of your hypothesis.
+#'    If you selected years where data are not available, they are pairwise deleted before correlation and because of the
+#'    hypothesis involved in lagged correlation analysis, only contiguous points (in time) are used. The largest of these
+#'    contiguous blocks is selected as the data input for the analysis.
 #' @author Daniel Duplisea
 #' @export
 #' @examples
-#' EA.cor.f(c("SST","NAO.month7"),1900:2020,c(0,3)) #SST not in EAR 0, NAO not in EAR 3, i.e. two vars
-#' EA.cor.f("SST",1900:2020,c(1,3)) # SST in EAR 1 vs EAR 3
-EA.cor.f= function(variables, years, EARs, diff=F, ...){
-  if (length(variables)>2) stop("you can only correlate two variables against each other at a time")
-  E1= EA.query.f(variables=variables, years=years, EARs=EARs)
-  uniq.vars= unique(paste(E1$EAR,E1$variable))
-  if (length(uniq.vars)>2) stop("have more than two variables in your variable and EAR combination")
-  E2= dcast(E1, year~ variable+EAR)
-  E3= na.omit(E2)
-  if(max(diff(E3$year))>1) stop("your two series are not contiguous in time")
-  iv.name=names(E3[,2])
-  dv.name=names(E3[,3])
+#'       EA.cor.f("J.GSNW.Q3","T.deep",1800:2019,x.EAR=-1,y.EAR=1)
+EA.cor.f= function(x, y, years, x.EAR, y.EAR, diff=F, ...){
+  E1= EA.query.f(variables=x, years=years, EARs=x.EAR)
+  E2= EA.query.f(variables=y, years=years, EARs=y.EAR)
+  E1= dcast(year~variable,data=E1)
+  E2= dcast(year~variable,data=E2)
+  E= E1[E2]
+
+  # remove any year where NA and choose the longest contiguous block of years to perform ccf
+    E= na.omit(E)
+    E[, contiguous.years := paste0("x", cumsum(c(TRUE, diff(year) != 1)))]
+    Emax= E[, .N, by=contiguous.years]
+    longest.contiguous.group= Emax$contiguous.years[match(max(Emax$N),Emax$N)]
+    E= E[contiguous.years==longest.contiguous.group]
+
+  iv.name=names(E[,2])
+  dv.name=names(E[,3])
   if (diff){
-    ind.var= diff(as.data.frame(E3)[,2])
-    dep.var= diff(as.data.frame(E3)[,3])
+    ind.var= diff(as.data.frame(E)[,2])
+    dep.var= diff(as.data.frame(E)[,3])
   }
   if (!diff){
-    ind.var= as.data.frame(E3)[,2]
-    dep.var= as.data.frame(E3)[,3]
+    ind.var= as.data.frame(E)[,2]
+    dep.var= as.data.frame(E)[,3]
   }
   # the first variable is lagged, e.g. if there is sig + correlation at lag +3 it means the x variable causes the y 3 years later
-  ccf(x=ind.var, y=dep.var,main=paste0(iv.name," (lagged), " ,dv.name, " (dependent)"), ...)
+  tmp= ccf(x=ind.var, y=dep.var,main="", ...)
+  best.pos= match(max(abs(tmp$acf)),abs(tmp$acf))
+  points(tmp$lag[best.pos],tmp$acf[best.pos],pch=20,col="red")
+  text(tmp$lag[best.pos],tmp$acf[best.pos],round(tmp$acf[best.pos],2),cex=0.7, pos=4)
+  statement= paste0("The best explanation of ", y, " is the ", x, " value ", tmp$lag[best.pos], " years from ", y)
+  title(main=statement,cex.main=0.9)
+  legend("bottomright",legend=paste0("Year block used ", min(E$year),":",max(E$year)),bty="n",cex=0.7)
 }
 
 

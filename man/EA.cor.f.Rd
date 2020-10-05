@@ -4,34 +4,32 @@
 \alias{EA.cor.f}
 \title{Compute and plot the cross correlation with lags between two E variables}
 \usage{
-EA.cor.f(variables, years, EARs, diff = F, ...)
+EA.cor.f(x, y, years, x.EAR, y.EAR, diff = F, ...)
 }
 \arguments{
-\item{variables}{variable vector must be 2 or less variables}
+\item{x}{independent variable. E.g. "SST"}
 
-\item{years}{year vector}
+\item{y}{dependent variable E.g. "T.deep"}
 
-\item{EARs}{EAR vector}
+\item{years}{a vector of years you want to consider (the largest contiguous block in these years will be chosen)}
+
+\item{x.EAR}{the ecosystem approach region for the independent variables}
+
+\item{y.EAR}{the ecosystem approach region for the dependent variables}
 
 \item{diff}{logical whether or not the variables should be differenced (removes non-stationarity)}
 
 \item{...}{other arguments to ccf function for plotting in base R (type ?ccf)}
 }
 \description{
-Computes the cross correlation between two selected variables with different lags. Your
-             variable X EAR combination must = 2. See examples for clarification. Not that the lagged
-             variable is the one leading, i.e. the cause. So if the ccf plot title has reversed what you
-             think is the wrong cause and effect variables then just look at the - lags. This function
-             automatically differences the variables to make them stationary. The differencing leads to
-             a slightly different question. For example with NAO causing SST:
-             -without differencing your question is: does the state of the NAO affect SST at some later
-             point in time?
-             -with differencing your question is: does the magnitude of change in the NAO from one year
-             to the next affect the magnitude of change in SST from one year to the next at a later time?
+Computes the cross correlation between two selected variables with different lags. Given that you specify
+   the independent and dependent variables, you are interested in negative or zero lags as an test of your hypothesis.
+   If you selected years where data are not available, they are pairwise deleted before correlation and because of the
+   hypothesis involved in lagged correlation analysis, only contiguous points (in time) are used. The largest of these
+   contiguous blocks is selected as the data input for the analysis.
 }
 \examples{
-EA.cor.f(c("SST","NAO.month7"),1900:2020,c(0,3)) #SST not in EAR 0, NAO not in EAR 3, i.e. two vars
-EA.cor.f("SST",1900:2020,c(1,3)) # SST in EAR 1 vs EAR 3
+      EA.cor.f("J.GSNW.Q3","T.deep",1800:2019,x.EAR=-1,y.EAR=1)
 }
 \author{
 Daniel Duplisea

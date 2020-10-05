@@ -13,10 +13,14 @@
         -   [Recasting data and showing when there were no
             observations](#recasting-data-and-showing-when-there-were-no-observations)
     -   [Data plotting](#data-plotting)
--   [Discovering relationship between variables in the
-    database](#discovering-relationship-between-variables-in-the-database)
-    -   [Differencing before
-        correlation](#differencing-before-correlation)
+    -   [Finding variables and data](#finding-variables-and-data)
+    -   [Discovering relationship between variables in the
+        database](#discovering-relationship-between-variables-in-the-database)
+        -   [Differencing before
+            correlation](#differencing-before-correlation)
+    -   [Using down-scaled atmospheric climate projections to predict
+        oceanographic
+        variables](#using-down-scaled-atmospheric-climate-projections-to-predict-oceanographic-variables)
 -   [Source and references for data](#source-and-references-for-data)
 -   [Forget the R-package, I just want the
     data](#forget-the-r-package-i-just-want-the-data)
@@ -28,7 +32,8 @@
     -   [Updating the R package](#updating-the-r-package)
         -   [Compiling documentation](#compiling-documentation)
         -   [Making the R package](#making-the-r-package)
--   [Project participants](#project-participants)
+-   [Project participants (past and
+    present)](#project-participants-past-and-present)
 -   [If you have issues](#if-you-have-issues)
 -   [Citation](#citation)
 
@@ -264,19 +269,19 @@ entire content of the variable.description table.
     metadata.f(verbosity="low")
 
     ## $Number.of.variables
-    ## [1] 212
+    ## [1] 304
     ## 
     ## $Number.of.EARS
     ## [1] 10
     ## 
     ## $Number.of.years
-    ## [1] 165
+    ## [1] 244
     ## 
     ## $First.and.last.year
-    ## [1] 1856 2020
+    ## [1] NA NA
     ## 
     ## $Number.of.observations
-    ## [1] 22248
+    ## [1] 129376
 
 Another perhaps more useful way to know what the database contains is
 with the function <b>var.f</b>. <b>var.f</b> accepts as an argument one
@@ -311,6 +316,20 @@ units
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:right;">
+CIL.vol.LT.1
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Volume of water in CIL defined by the &lt;1 C boundary
+</td>
+<td style="text-align:right;">
+km cubed
+</td>
+</tr>
 <tr>
 <td style="text-align:right;">
 SST
@@ -588,7 +607,7 @@ physical
 Duration of the ice season
 </td>
 <td style="text-align:right;">
-days
+number of days
 </td>
 </tr>
 <tr>
@@ -661,7 +680,10 @@ that term in their description.
     ##  [1] "J.GSNW.Q1"   "J.GSNW.Q2"   "J.GSNW.Q3"   "J.GSNW.Q4"   "T.deep"     
     ##  [6] "T.shallow"   "T200"        "Tmax200.400" "AMO.month1"  "AMO.month10"
     ## [11] "AMO.month11" "AMO.month12" "AMO.month2"  "AMO.month3"  "AMO.month4" 
-    ## [16] "AMO.month5"  "AMO.month6"  "AMO.month7"  "AMO.month8"  "AMO.month9"
+    ## [16] "AMO.month5"  "AMO.month6"  "AMO.month7"  "AMO.month8"  "AMO.month9" 
+    ## [21] "PDO.month1"  "PDO.month10" "PDO.month11" "PDO.month12" "PDO.month2" 
+    ## [26] "PDO.month3"  "PDO.month4"  "PDO.month5"  "PDO.month6"  "PDO.month7" 
+    ## [31] "PDO.month8"  "PDO.month9"
 
 You will see that T.deep and T.shallow come up in this because in their
 descriptions, the distinction between shallow and deep waters is 200m.
@@ -927,8 +949,11 @@ the <b>variable</b> column from its output using “$”
 
 ![](README_files/figure-markdown_strict/plotting3-1.png)
 
+Finding variables and data
+--------------------------
+
 You might be interested in anything to do with large scale oscillation
-indices, e.g. North Atlantic Oscillation. These all have an EAR=0
+indices, e.g. North Atlantic Oscillation. These all have an EAR=-1
 indicating that the they are measures at scales larger than the EA
 regions. You can do search for them with a key word or partial string
 and then with that information select the NAO monthly data.
@@ -942,7 +967,9 @@ and then with that information select the NAO monthly data.
     ## [21] "AO.month6"   "AO.month7"   "AO.month8"   "AO.month9"   "H.NAO"      
     ## [26] "NAO.month1"  "NAO.month10" "NAO.month11" "NAO.month12" "NAO.month2" 
     ## [31] "NAO.month3"  "NAO.month4"  "NAO.month5"  "NAO.month6"  "NAO.month7" 
-    ## [36] "NAO.month8"  "NAO.month9"
+    ## [36] "NAO.month8"  "NAO.month9"  "PDO.month1"  "PDO.month10" "PDO.month11"
+    ## [41] "PDO.month12" "PDO.month2"  "PDO.month3"  "PDO.month4"  "PDO.month5" 
+    ## [46] "PDO.month6"  "PDO.month7"  "PDO.month8"  "PDO.month9"
 
     # ah ha, seems that something like "NAO.mon" will do it for us but you don't need to worry about the case
     NAO.vars= find.vars.f("nao.mon")
@@ -953,7 +980,7 @@ and then with that information select the NAO monthly data.
 ![](README_files/figure-markdown_strict/plotting4-1.png)
 
 Discovering relationship between variables in the database
-==========================================================
+----------------------------------------------------------
 
 If you have a hunch that one variable may be driving another, you can do
 a fairly simple analysis to at least give you a first crack at testing
@@ -965,7 +992,9 @@ the EA.data table with the function <b>EA.cor.f</b>.
 So let’s assume for this example that you think that sea surface
 temperature in the central Gulf (EAR 3) is related to the North Atlantic
 Oscillation at some earlier time (<b>climatic</b> variables always have
-EAR=0) but you are not sure what time lag might be most appropriate
+EAR=-1) but you are not sure what time lag might be most appropriate.
+Here you are assuming NAO is the independent variable and, SST is the
+dependent variable
 
     EA.plot.f(variables=c("H.NAO","SST"), years=1900:2020, EARs=c(-1,3), smoothing=T,pch=20)
 
@@ -976,22 +1005,21 @@ time series are quite different. The cross correlation testing at
 various temporal lags will probably help you formulate your hypotheses
 better.
 
-    EA.cor.f(c("H.NAO","SST"), 1900:2020, c(-1,3))
+    EA.cor.f(x="H.NAO", y="SST", years=1900:2020, x.EAR=-1, y.EAR=3)
 
 ![](README_files/figure-markdown_strict/crosscor2-1.png)
 
 It is a bit of a downer because your best correlations is between NAO
 and SST in the same year (0 lag) and the relationship is not that strong
-(a bit stronger than -0.3). So let’s try an easy one by choosing two
-variable you know must be related: SST in EAR 3 (central Gulf) and SST
-in EAR 1 (NW Gulf).
+(about -0.3) and not significant. So let’s try an easy one by choosing
+two variable you know must be related: SST in EAR 3 (central Gulf) and
+SST in EAR 1 (NW Gulf).
 
-    EA.cor.f("SST", 1900:2020, c(1,3))
+    EA.cor.f(x="SST",y="SST", years=1900:2020, x.EAR=1, y.EAR=3)
 
 ![](README_files/figure-markdown_strict/crosscor3-1.png)
 
-Differencing before correlation
--------------------------------
+### Differencing before correlation
 
 You might also want to difference the variables before correlating. This
 is like asking the question if the magnitude of change in one variable
@@ -1001,7 +1029,7 @@ lagged too which brings forward the idea of causality in your
 hypothesis. Let’s try the NAO and SST again but this time on the
 differences
 
-    EA.cor.f(c("H.NAO","SST"), 1900:2020, c(-1,3), diff=T)
+    EA.cor.f(x="H.NAO", y="SST", years=1900:2020, x.EAR=-1, y.EAR=3, diff=T)
 
 ![](README_files/figure-markdown_strict/crosscor4-1.png)
 
@@ -1010,11 +1038,81 @@ different lags. You will note from the plot title that SST is the
 leading variable (i.e. it is the causal variable and the one that is
 lagged). This means that in order to be consistent with your causal
 hypothesis implicit in doing lagged correlation, you should be looking
-at negative lags. You will find a significant positive correlation at
-lag -3 and significant negative one at lag -4. This is like saying that
-positive changes in NAO lead to positive changes in SST three years
-later (correlation about 0.4) and that the magnitude of the changes are
-proportional.
+at negative lags. You will find the best lag is at -1. This is like
+saying that positive changes in NAO lead to positive changes in SST one
+year later (correlation of 0.43) and that the magnitude of the changes
+are proportional.
+
+Using down-scaled atmospheric climate projections to predict oceanographic variables
+------------------------------------------------------------------------------------
+
+The database contains atmospheric projections from 24 different global
+climate models that have been down-scaled to boxes roughly in the same
+area as the EARs. The ensemble medians and confidence intervals of
+selected variables are provided and for some variables the
+distributional characteristics over the ensemble are also provided.
+Ideally, we want and will include the direct oceanographic variable
+projections under different carbon emission scenarios but this is
+detailed work that is currently underway at IML. The atmospheric
+variables are provided here in the meantime (and they will remain)
+having been downloaded from www.climateatlas.ca (this is an excellent
+site, please check it out).
+
+So as an example of what could be done with this, the annual mean
+surface temperature for an EAR has been correlated against the deep
+water temperature. The linear model resulting from this is not too bad
+and could potential inform a semi-trustable projection (or at least
+better than guessing). Follow this code as an example of what could be
+done.
+
+      EA.cor.f("Ann.mean.T.med.RCP45","T.deep",1950:2020,1,1)
+
+![](README_files/figure-markdown_strict/climproject-1.png)
+
+    # lets look from 2009 when the deep water really started warming up, it is a pretty good predictor
+      EA.cor.f("Ann.mean.T.med.RCP45","T.deep",2009:2020,1,1)
+
+![](README_files/figure-markdown_strict/climproject-2.png)
+
+    # fit a linear model and project that model based on the ensemble median prediction until 2095
+      tmp= EA.query.f(c("Ann.mean.T.med.RCP45","T.deep"),1950:2100,1)
+      tmp2= dcast(tmp, year~variable)
+      plot(tmp2$Ann.mean.T.med.RCP45,tmp2$T.deep)
+      rug(tmp2$Ann.mean.T.med.RCP45)
+
+![](README_files/figure-markdown_strict/climproject-3.png)
+
+      pred.lm= lm(T.deep~Ann.mean.T.med.RCP45,data=tmp2)
+      summary(pred.lm)
+
+    ## 
+    ## Call:
+    ## lm(formula = T.deep ~ Ann.mean.T.med.RCP45, data = tmp2)
+    ## 
+    ## Residuals:
+    ##      Min       1Q   Median       3Q      Max 
+    ## -0.42450 -0.15178 -0.05905  0.08596  0.58004 
+    ## 
+    ## Coefficients:
+    ##                      Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)           3.66998    0.22421  16.368  < 2e-16 ***
+    ## Ann.mean.T.med.RCP45  0.55454    0.07796   7.113 5.43e-08 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 0.2393 on 31 degrees of freedom
+    ##   (113 observations deleted due to missingness)
+    ## Multiple R-squared:  0.6201, Adjusted R-squared:  0.6078 
+    ## F-statistic: 50.59 on 1 and 31 DF,  p-value: 5.427e-08
+
+      tmp2$T.deep.pred= predict(pred.lm,newdata=tmp2)
+      plot(tmp2$Ann.mean.T.med.RCP45,tmp2$T.deep.pred,type="l",col="blue",lwd=3,
+           xlab="Annual mean surface temperature down-scaled to EAR 1", ylab= "Bottom temperature of deep (>200 m) waters EAR 1")
+      points(tmp2$Ann.mean.T.med.RCP45,tmp2$T.deep,pch=20)
+      rug(tmp2$Ann.mean.T.med.RCP45)
+      title(main="RCP 4.5 climate projection until 2095, ensemble median")
+
+![](README_files/figure-markdown_strict/climproject-4.png)
 
 Source and references for data
 ==============================
@@ -1198,11 +1296,13 @@ to recompile the documentation using roxygen2.
 
 Clean and rebuild
 
-Project participants
-====================
+Project participants (past and present)
+=======================================
 
-Hugues Benoît, Marjolaine Blais, Daniel Duplisea, Peter Galbraith, David
-Merette, Stéphane Plourde, Marie-Julie Roux, Bernard Sainte-Marie
+Jérôme Beaulieu, Hugues Benoît, Marjolaine Blais, Hugo Bourdages, Daniel
+Duplisea, Peter Galbraith, Mike Hammill, Cédric Juillet, David Merette,
+Stéphane Plourde, Marie-Julie Roux, Bernard Sainte-Marie, Antoine
+Rivierre
 
 If you have issues
 ==================
