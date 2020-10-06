@@ -89,8 +89,8 @@ in the database yet) cover only the northern portion as the southern
 portion of the Gulf is surveyed by the Gulf Region in Moncton and with a
 different survey gear.
 
-There are also some broad climatirc, oceangraphic and atmospheric
-indices in the database (coded with EAR=-1) such as the North Atlantic
+There are also some broad climatic, oceangraphic and atmospheric indices
+in the database (coded with EAR=-1) such as the North Atlantic
 Osciallation. We have presently reserved EAR=0 for GSL scale indices
 even though there are none in the database yet.
 
@@ -184,8 +184,8 @@ metadata.f(verbosity)
 </ins>
 
 a description of the data available with three levels of
-<b>verbosity</b> (“low” “med”, “high”) or information on everyone’s
-favourite Dutch post-impressionist (lowercase no spaces).
+<b>verbosity</b> (“low” “med”, “high”) or EASTER EGG information on
+everyone’s favourite Dutch post-impressionist: metadata.f(“vangogh”).
 
 <ins>
 vars.f(variable.type)
@@ -1009,13 +1009,29 @@ better.
 
 It is a bit of a downer because your best correlations is between NAO
 and SST in the same year (0 lag) and the relationship is not that strong
-(about -0.3) and not significant. So let’s try an easy one by choosing
-two variable you know must be related: SST in EAR 3 (central Gulf) and
-SST in EAR 1 (NW Gulf).
+(about -0.3) and not significant.
+
+To imply the causality you are looking for in such an analysis (because
+you specified x as the independent variable and y as the dependent), you
+are looking for negative or 0 lags. Positive lags suggest that the y
+variable is leading the x. These are all just correlations, only your
+hypothesis implies causality.
+
+Let’s try an easy one by choosing two variable you know must be related:
+SST in EAR 3 (central Gulf) and SST in EAR 1 (NW Gulf).
 
     EA.cor.f(x="SST",y="SST", years=1900:2020, x.EAR=1, y.EAR=3)
 
 ![](README_files/figure-markdown_strict/crosscor3-1.png)
+
+Yes indeed, they are very tightly positively correlated.
+
+An important thing to note with cross correlation is that it will give
+the same result as “cor” only with lag 0. That is, if you try truncating
+series yourself and then run “cor” between the two series, you will not
+get the same result as ccf. This has to do with the normalisation of the
+data at the beginning before lagging in ccf. See the help for EA.cor.f
+for more details.
 
 Using down-scaled atmospheric climate projections to predict oceanographic variables
 ------------------------------------------------------------------------------------
@@ -1086,7 +1102,12 @@ done.
       rug(tmp2$Ann.mean.T.med.RCP45)
       title(main="RCP 4.5 climate projection until 2095, ensemble median")
 
-![](README_files/figure-markdown_strict/climproject-4.png)
+![](README_files/figure-markdown_strict/climproject-4.png) If one thinks
+it is valid to link the atmospheric variable so closely with deep water
+temperature at such scales 70+ years into the future then it can be a
+basis for extrapolation. As above, perhaps it is better than guessing
+but one needs to put a bit of water in their wine for the
+interpretation.
 
 Source and references for data
 ==============================

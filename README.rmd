@@ -1,7 +1,7 @@
 ---
 title: "Gulf of St. Lawrence Ecosystem Approach package (gslea)"
 output: 
-    html_document: 
+    md_document: 
       toc: true
 ---
 # What is it?
@@ -29,7 +29,7 @@ The package has been developed to allow for easy and consistent updating via aut
 # Data coverage
 Presently, this package consists of data for the Gulf of St Lawrence where collection and management of the data is done out of the Quebec Region. This means that physical, chemical and phenological data generally cover the entire Gulf of St Lawrence but fish survey data (not in the database yet) cover only the northern portion as the southern portion of the Gulf is surveyed by the Gulf Region in Moncton and with a different survey gear.
 
-There are also some broad climatirc, oceangraphic and atmospheric indices in the database (coded with EAR=-1) such as the North Atlantic Osciallation. We have presently reserved EAR=0 for GSL scale indices even though there are none in the database yet.
+There are also some broad climatic, oceangraphic and atmospheric indices in the database (coded with EAR=-1) such as the North Atlantic Osciallation. We have presently reserved EAR=0 for GSL scale indices even though there are none in the database yet.
 
 ![](README_files/figure-markdown_strict/gslmap.plain-1.png){width=100%}
 
@@ -54,7 +54,7 @@ Another data table describes the coordinates of the EAR boundaries in decimal de
 
 The package consists of limited number of functions:
 
-<ins>metadata.f(verbosity)</ins> a description of the data available with three levels of <b>verbosity</b> ("low" "med", "high") or information on everyone's favourite Dutch post-impressionist (lowercase no spaces).
+<ins>metadata.f(verbosity)</ins> a description of the data available with three levels of <b>verbosity</b> ("low" "med", "high") or EASTER EGG information on everyone's favourite Dutch post-impressionist: metadata.f("vangogh").
 
 <ins>vars.f(variable.type)</ins> shows the variables available in a particular <b>variable.type</b> ("physical", "chemical", "planktonic", "phenologic", "climatic"), gives a description of each and its units.
 
@@ -190,11 +190,20 @@ It is hard to say from just plotting the data because the length of the time ser
 EA.cor.f(x="H.NAO", y="SST", years=1900:2020, x.EAR=-1, y.EAR=3)
 ```
 
-It is a bit of a downer because your best correlations is between NAO and SST in the same year (0 lag) and the relationship is not that strong (about -0.3) and not significant. So let's try an easy one by choosing two variable you know must be related: SST in EAR 3 (central Gulf) and SST in EAR 1 (NW Gulf).
+It is a bit of a downer because your best correlations is between NAO and SST in the same year (0 lag) and the relationship is not that strong (about -0.3) and not significant. 
+
+To imply the causality you are looking for in such an analysis (because you specified x as the independent variable and y as the dependent), you are looking for negative or 0 lags. Positive lags suggest that the y variable is leading the x. These are all just correlations, only your hypothesis implies causality.
+
+Let's try an easy one by choosing two variable you know must be related: SST in EAR 3 (central Gulf) and SST in EAR 1 (NW Gulf).
 
 ```{r crosscor3, eval=TRUE}
 EA.cor.f(x="SST",y="SST", years=1900:2020, x.EAR=1, y.EAR=3)
 ```
+
+Yes indeed, they are very tightly positively correlated.
+
+An important thing to note with cross correlation is that it will give the same result as "cor" only with lag 0. That is, if you try truncating series yourself and then run "cor" between the two series, you will not get the same result as ccf. This has to do with the normalisation of the data at the beginning before lagging in ccf. See the help for EA.cor.f for more details.
+
 
 ## Using down-scaled atmospheric climate projections to predict oceanographic variables
 
@@ -222,7 +231,7 @@ So as an example of what could be done with this, the annual mean surface temper
   rug(tmp2$Ann.mean.T.med.RCP45)
   title(main="RCP 4.5 climate projection until 2095, ensemble median")
 ```
-
+If one thinks it is valid to link the atmospheric variable so closely with deep water temperature at such scales 70+ years into the future then it can be a basis for extrapolation. As above, perhaps it is better than guessing but one needs to put a bit of water in their wine for the interpretation.
 
 # Source and references for data
 It is important to acknowledge to the individuals and organisation who collected the data and or processed it to come up with the indices that are presented here. In some cases, this downstream acknowledgement may be the primary means of showing efficacy of their work so please be diligent about including citations and acknowledgements in your work.

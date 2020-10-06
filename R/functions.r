@@ -146,6 +146,12 @@ EA.plot.f= function(variables, years, EARs, smoothing=T, ...){
 #'    If you selected years where data are not available, they are pairwise deleted before correlation and because of the
 #'    hypothesis involved in lagged correlation analysis, only contiguous points (in time) are used. The largest of these
 #'    contiguous blocks is selected as the data input for the analysis.
+#'@details The ccf/acf function works differently than cor in a loop because it normalises the series only once at the beginning
+#'    while every call to "cor" will renormalise with the truncated (lagged series). They will be the same for lag=0 though. They
+#'    can, however, differ considerably especially for series with outliers at the ends and which is perhaps what we most often
+#'    see with environmental data series under climate change. Given the increased probability of having an outlier presently
+#'    under rapid climate change, it also means that causality inferred from a correlation analysis, especially a lagged one, is
+#'    more susceptible to being overturned with a data update.
 #' @author Daniel Duplisea
 #' @export
 #' @examples
