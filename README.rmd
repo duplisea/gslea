@@ -1,7 +1,7 @@
 ---
 title: "Gulf of St. Lawrence Ecosystem Approach package (gslea)"
 output: 
-    md_document: 
+    html_document: 
       toc: true
 ---
 # What is it?
@@ -195,15 +195,6 @@ It is a bit of a downer because your best correlations is between NAO and SST in
 ```{r crosscor3, eval=TRUE}
 EA.cor.f(x="SST",y="SST", years=1900:2020, x.EAR=1, y.EAR=3)
 ```
-
-### Differencing before correlation
-You might also want to difference the variables before correlating. This is like asking the question if the magnitude of change in one variable from one time period to the next is related to the manitude of change in another variables from one period to the next. This of course can be lagged too which brings forward the idea of causality in your hypothesis. Let's try the NAO and SST again but this time on the differences
-
-```{r crosscor4, eval=TRUE}
-EA.cor.f(x="H.NAO", y="SST", years=1900:2020, x.EAR=-1, y.EAR=3, diff=T)
-```
-
-You can see now that there are significant correlations at several different lags. You will note from the plot title that SST is the leading variable (i.e. it is the causal variable and the one that is lagged). This means that in order to be consistent with your causal hypothesis implicit in doing lagged correlation, you should be looking at negative lags. You will find the best lag is at -1. This is like saying that positive changes in NAO lead to positive changes in SST one year later (correlation of 0.43) and that the magnitude of the changes are proportional.
 
 ## Using down-scaled atmospheric climate projections to predict oceanographic variables
 

@@ -16,8 +16,6 @@
     -   [Finding variables and data](#finding-variables-and-data)
     -   [Discovering relationship between variables in the
         database](#discovering-relationship-between-variables-in-the-database)
-        -   [Differencing before
-            correlation](#differencing-before-correlation)
     -   [Using down-scaled atmospheric climate projections to predict
         oceanographic
         variables](#using-down-scaled-atmospheric-climate-projections-to-predict-oceanographic-variables)
@@ -1018,30 +1016,6 @@ SST in EAR 1 (NW Gulf).
     EA.cor.f(x="SST",y="SST", years=1900:2020, x.EAR=1, y.EAR=3)
 
 ![](README_files/figure-markdown_strict/crosscor3-1.png)
-
-### Differencing before correlation
-
-You might also want to difference the variables before correlating. This
-is like asking the question if the magnitude of change in one variable
-from one time period to the next is related to the manitude of change in
-another variables from one period to the next. This of course can be
-lagged too which brings forward the idea of causality in your
-hypothesis. Let’s try the NAO and SST again but this time on the
-differences
-
-    EA.cor.f(x="H.NAO", y="SST", years=1900:2020, x.EAR=-1, y.EAR=3, diff=T)
-
-![](README_files/figure-markdown_strict/crosscor4-1.png)
-
-You can see now that there are significant correlations at several
-different lags. You will note from the plot title that SST is the
-leading variable (i.e. it is the causal variable and the one that is
-lagged). This means that in order to be consistent with your causal
-hypothesis implicit in doing lagged correlation, you should be looking
-at negative lags. You will find the best lag is at -1. This is like
-saying that positive changes in NAO lead to positive changes in SST one
-year later (correlation of 0.43) and that the magnitude of the changes
-are proportional.
 
 Using down-scaled atmospheric climate projections to predict oceanographic variables
 ------------------------------------------------------------------------------------
