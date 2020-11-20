@@ -1,7 +1,7 @@
 ---
 title: "Gulf of St. Lawrence Ecosystem Approach package (gslea)"
 output: 
-    md_document: 
+    html_document: 
       toc: true
 ---
 # What is it?
@@ -16,7 +16,7 @@ Currently version 0.1 - beta. It will not be fixed until version 1 afterwhich up
 Open R and install the gslea package and try some commands outlined in ?gslea:
 
 ```{r quickstart, eval=FALSE}
-devtools::install_github("duplisea/gslea", build_vignettes = TRUE)
+devtools::install_github("duplisea/gslea")
 library(gslea)
 ?gslea
 ```
@@ -26,6 +26,8 @@ This describes the building of, the structure of and the use of an R package tha
 
 The package has been developed to allow for easy and consistent updating via automated scripts from tables provides by several individuals. This means that people should not have to keep pestering say Peter or Marjolaine to fullfill specific data requests for them. The package has a very simple data table structure with a minimal set of functions to understand the structure, query data and plot data roughly for initial data exploration. Data can then be brought into various analyses for the GSL that may fall under the banner of an ecosystem approach.
 
+The primary end-user for this work has been envisioned as DFO regional biologists who are involved in stock assessment and want to begin doing analyses that incorporate data outside measures of biology of their specific stock in an effort to expand their analysis to something that may be considered an ecosystem approach to fisheries. We also, however, anticipate that this matrix will have a much wider appeal for researchers in DFO and elsewhere and it should also serve data dissemination and open data initiatives in the Government of Canada.
+
 # Data coverage
 Presently, this package consists of data for the Gulf of St Lawrence where collection and management of the data is done out of the Quebec Region. This means that physical, chemical and phenological data generally cover the entire Gulf of St Lawrence but fish survey data (not in the database yet) cover only the northern portion as the southern portion of the Gulf is surveyed by the Gulf Region in Moncton and with a different survey gear.
 
@@ -33,8 +35,23 @@ There are also some broad climatic, oceangraphic and atmospheric indices in the 
 
 ![](README_files/figure-markdown_strict/gslmap.plain-1.png){width=100%}
 
-# Design
+# Design and development philosophy
 The package is GPL-3 licenced and thus is available globally without warranty. The package is designed to have as few data containers as possible and in a common and consistent format to allow generic extraction. The package has only one dependence which is the library data.table and data.table itself has no dependencies. The data.table library is used because of its efficient use of computing resources making it very fast for processing data (https://h2oai.github.io/db-benchmark/) which is important if in someone’s analysis they make repeated queries to the data in loops or in bootstrapping directly from the full database. The data are structured in what has become termed “tidy data” for people in the tidyverse as opposed to dirty data I suppose. You can use your own tidyverse code on it. The data class "data.table" inherit a secondary class of data.frame, therefore they are compatible with most of the base R data.frame operations. The package is designed such that it is consistent, should be scalable to when new data types become available and should not break existing analyses when updated (I hope).
+
+## List of development goals and guidelines
+* The package needs to be technically accessible to as wide a swath of the envisioned end user community as possible (see Purpose section for an explanation of who this is).
+* It must not require permissions to access and use the data and using it should be possible within minutes
+* It must be fast to access and have minimal dependencies
+* It must be operating system agnostic
+* It should easily integrate into people's work flow and analysis
+* Data updates or functionality updates should not break existing analyses
+* It should have only minimal data exploration functionality
+* It must conform to Transparent, Traceable and Transferable (TTT) ideas (Edwards et al. 2018)
+* It must create a clear flow from data supplier to user and make it easy to acknowledge and contact data suppliers
+* It must be relatively easily updatable, updated often and not go data-stale
+* It is a secondary data product and is not a primary relational database, i.e. it should not contain data that is not available or derivable from other existing databases. This also means that quality control in gslea is not on the data itself but only specific derived products.
+
+These guidelines should be followed closely to prevent "mission creep" which is likely to lead to failure of the usability of matrix at a later point.
 
 # Components of gslea
 
@@ -98,7 +115,7 @@ phys.var= vars.f(variable.type="physical")
 formattable::formattable(phys.var)
 ```
 
-You can also try to find a variable through partial matching of a term (case insensitive). So for example if you were interested in just temperature you might search "temp". Or anything that is from 300m deep then search "300". It will then give you a list of variable that have that term in their description.
+You can also try to find a variable through partial matching of a term (case insensitive). So for example if you were interested in just temperature you might search "temp". Or anything that is from 200m deep then search "200". It will then give you a list of variable that have that term in their description.
 
 ```{r vargrep, eval=TRUE}
 find.vars.f(search.term= "200")
@@ -249,6 +266,21 @@ You are not obliged to use this R-package if you want the data. The data table a
 
 Please do not forget to acknowledge the sources of the data and cite the appropriate references that are included in the excel file.
 
+# Development plan and data inclusion
+Presently, the development is occuring in Quebec Region but this will be expanded to include data that are stored and processed by researchers in the Gulf Region (Moncton) of DFO. Our goal is to get a good example from Quebec Region and then approach Gulf Region with specific examples that they could follow. A joint meeting in the Spring of 2020 was the first step in this cross region data sharing in the matrix.
+
+## Multispecies fish and invertebrate survey data
+We have added a preliminary extraction of Quebec Region multispecies fish and invertebrate biomass data but these will require more quality control and checking before we will consider them verified. We have applied species filtering criteria and identified 19 core species that are well represented by the survey and biomass by ecosystem approach region and year has been extracted for each of these. We have further identified 9 commercial species that are in a subset of the core species and we have further extracted their biomass in juvenile and adult categories. Finally, we have taken all species caught in the survey and lumped them into various functional guilds and extracted biomass by guild.
+
+## Fishing pressure indicators
+We have begun working on developing indicators of fishing pressure in each region which will have multiple measures such as biomass extracted by fishing as well as effort of various gear types in each of the regions for as many years as possible. There are many issues with some of these data such as improper location assignment. We are presently working on this to try to develop useful pressure indicators related to fishery removals and effort.
+
+## Down-scaled oceanographic projections
+Down-scaled oceanographic variable (physical, chemical, biological) projections under different ICCP RCP scenarios and ensembles means and variances will also be provided in the matrix eventually. We have been in discussion with our regional oceanographers and are developing a plan to include this information in a future update of the matrix.
+
+## Other data
+There have been considerations of including coastal data, stock assessment results, fine-scaled information. These may be possible to include in the current structure of gslea and we have also considered that this kind of information might be better suited to another similar kind of library but specifically aimed at this information. We need to keep a consistent approach to the development philoshophy and goals which can help us decide this.
+
 # Updating the package
 <mark>Unless you need to update this database, you do not need to read this</mark>
 
@@ -266,7 +298,7 @@ Once the data are processed and brought into the R package, then it should be us
 Raw data has been provided in various forms by individual data providers. Sometimes it is in tabular format while other times it is in a long format. We need to turn it all into long format and this also involves standardising variable names.
 
 ## Running the update script
-The update script is XXXX which is run from R. It makes system calls to the working directory you set. That working directory can be anywhere on your machine and you need to make sure there are sub-directories of that which are named by the data provider. So Peter Galbraith has supplied the physical oceanographic data and therefore the subdirectory is called galbraith. His raw .dat files are located there. These are text files of a sort that Peter extracts with commented (#) header lines describing the data and finishing with the data itself. Marjolaine Blais has supplied the chemical, planktonic and phenological variables is various forms. The subdirectory blais also has subdirectories for zooplankton, oxygen, pH etc.
+The update script is XXXX (I will make a vignette on this including the data but I have not done this yet) which is run from R. It makes system calls to the working directory you set. That working directory can be anywhere on your machine and you need to make sure there are sub-directories of that which are named by the data provider. So Peter Galbraith has supplied the physical oceanographic data and therefore the subdirectory is called galbraith. His raw .dat files are located there. These are text files of a sort that Peter extracts with commented (#) header lines describing the data and finishing with the data itself. Marjolaine Blais has supplied the chemical, planktonic and phenological variables is various forms. The subdirectory blais also has subdirectories for zooplankton, oxygen, pH etc.
 Aside from the data itself, the two other tables need to be imported into R. These sheets in an excel file describing the data. At first I was pulling this information from the headers but there were a lot of differences and this was creating very one-off fragile scripts that I knew would likely break on each update. Therefore, the excel sheets have been created to keep this information. You will need to edit them in excel. The good thing is that all you will have to alter for a simple update is the extraction date.  If you add new variables though, you will need to add a new line with all the information about that variable.
 
 If this is all in order on your machine, you just need to run the update script in the R command line. The script will manipulate the data and save each data.table as an .rda file in your data directory for the R package.
@@ -281,14 +313,20 @@ If you changed the documentation for the datasets or functions, you need to reco
 ### Making the R package
 Clean and rebuild
 
-
 # Project participants (past and present)
 
-Jérôme Beaulieu, Hugues Benoît, Marjolaine Blais, Hugo Bourdages, Daniel Duplisea, Peter Galbraith, Mike Hammill, Cédric Juillet, David Merette, Stéphane Plourde, Marie-Julie Roux, Bernard Sainte-Marie, Antoine Rivierre
+Jérôme Beaulieu, Hugues Benoît, Marjolaine Blais, Hugo Bourdages, Daniel Duplisea, Peter Galbraith, Mike Hammill, Cédric Juillet, David Merette, Stéphane Plourde, Marie-Julie Roux, Bernard Sainte-Marie, Antoine Rivierre, Virginie Roy
 
 # If you have issues
-For comments, questions, bugs etc, you can send this to the package maintainer, Daniel Duplisea, by email (daniel.duplisea@gmail.com) or file a bug report or issue on github.
+For comments, questions, bugs etc, you can send this to the package maintainer, Daniel Duplisea, by email (daniel.duplisea@gmail.com, daniel.duplisea@dfo-mpo.gc.ca) or file a bug report or issue on github. 
 
-# Citation
+Pull requests conforming to the development philosophy are welcome.
 
-Duplisea, DE. 2020. Gulf of St Lawrence ecosystem approach: gslea. R package version 0.1 https://github.com/duplisea/gslea.
+# Citation for this package
+
+Duplisea, DE. Merette, D., Roux, M-J., Benoît, H., Blais, M., Galbraith, P., Plourde, S. 2020. gslea: the Gulf of St Lawrence ecosystem approach data matrix R-package. R package version 0.1 https://github.com/duplisea/gslea.
+
+
+# References
+
+Edwards, A.M., Duplisea, D.E., Grinnell, M.H., Anderson, S.C., Grandin, C.J., Ricard, D., Keppel, E.A., Anderson, E.D., Baker, K.D., Benoît, H.P., Cleary, J.S., Connors, B.M., Desgagnés, M., English, P.A., Fishman, D.J., Freshwater, C., Hedges, K.J., Holt, C.A., Holt, K.R., Kronlund, A.R., Mariscak, A., Obradovich, S.G., Patten, B.A., Rogers, B., Rooper, C.N., Simpson, M.R., Surette, T.J., Tallman, R.F., Wheeland, L.J., Wor, C., and Zhu, X. 2018. Proceedings of the Technical Expertise in Stock Assessment (TESA) national workshop on ‘Tools for transparent, traceable, and transferable assessments,’ 27–30 November 2018 in Nanaimo, British Columbia. Can. Tech. Rep. Fish. Aquat. Sci. 3290: v + 10 p. https://waves-vagues.dfo-mpo.gc.ca/Library/40750152.pdf

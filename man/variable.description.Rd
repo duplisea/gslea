@@ -5,23 +5,20 @@
 \alias{variable.description}
 \title{Variable descriptions in EA.data}
 \format{
-data.table, data.frame
+\itemize{
+  \item variable The name of the variable in EA.data
+  \item description A description of the variable
+  \item units The units of measure for the value of the variable
+  \item contact The name of the contact person for each variable
+  \item type The broad category of the variabl, e.g. "physical", "chemical", "planktonic", "phenological", "climatic", "projection.atmospheric", "fish.survey.core.species", "fish.survey.commercial.species", "fish.survey.guild"
+  \item extraction.date The date which the data were extracted from the parent data base by the person named as the contact
+}
 }
 \usage{
 variable.description
 }
 \description{
 Descriptions of the variables in EA.data, the units of measure and other information
-}
-\details{
-\itemize{
-  \item variable The name of the variable in EA.data
-  \item description A description of the variable
-  \item units The units of measure for the value of the variable
-  \item contact The name of the contact person for each variable
-  \item type The broad category of the variabl, e.g. "physical", "chemical", "planktonic", "phenological", "climatic", "projection.atmospheric"
-  \item extraction.date The date which the data were extracted from the parent data base by the person named as the contact
-}
 }
 \seealso{
 field.description

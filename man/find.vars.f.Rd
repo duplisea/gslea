@@ -4,16 +4,18 @@
 \alias{find.vars.f}
 \title{Find variables with a keyword or phrase}
 \usage{
-find.vars.f(search.term)
+find.vars.f(search.term, description = FALSE)
 }
 \arguments{
 \item{search.term}{a term to search, e.g. "oxygen", "temperature", "temp", "saturat"}
+
+\item{description}{if T then the description of the variable is also provided (this can be long). Default FALSE.}
 }
 \description{
 Does a fuzzy search for the word in the variable description and returns the full variable names.
 }
 \examples{
-find.vars.f("temp")
+find.vars.f("temp", description=T)
        find.vars.f("satu")
 }
 \author{

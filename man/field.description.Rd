@@ -5,22 +5,6 @@
 \alias{field.description}
 \title{Field description}
 \format{
-data.table, data.frame
-
-data.table, data.frame
-}
-\usage{
-field.description
-
-field.description
-}
-\description{
-A description of the fields in the EA.data dataset. Elaboration of the meaning of some of the fields is provided
-and these can be joined to the output of a data query if desired.
-
-The various species codes and names used in the fish survey data
-}
-\details{
 \itemize{
   \item field the name of the field from the EA.data table
   \item description A description of the EA.data field
@@ -35,6 +19,17 @@ The various species codes and names used in the fish survey data
   \item latin The scientific latin name for the species
   \item aphiaid The aphiaid that is used in WoRMS and Fishbase
 }
+}
+\usage{
+field.description
+
+field.description
+}
+\description{
+A description of the fields in the EA.data dataset. Elaboration of the meaning of some of the fields is provided
+and these can be joined to the output of a data query if desired.
+
+The various species codes and names used in the fish survey data
 }
 \references{
 Vandepitte, L., Vanhoorne, B., Decock, W., Dekeyzer, S., Trias Verbeeck, A., Bovit, L., Hernandez, F. and Mees, J., 2015. How Aphia—The platform behind several online and taxonomically oriented databases—can serve both the taxonomic community and the field of biodiversity informatics. Journal of Marine Science and Engineering, 3(4), pp.1448-1473.

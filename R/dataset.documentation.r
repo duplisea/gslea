@@ -1,11 +1,32 @@
 #' Ecosystem Approach Data
 #'
-#' A data.table with all the ecosystem.approach data for the Gulf of St. Lawrence ecoregions. This includes data on
+#' @description
+#' A data.table with data useful in developing analysese that could be classified as an ecosystem approach data for the Gulf of St. Lawrence ecoregions.
+#'
+#' @details
+#' This includes data on
 #' physical oceanography (physical); chemical oceanographic (chemical); phyto and zooplankton abundance or biomass
 #' (planktonic); timing of phyto and zooplankton dynamics (phenological); large scale indices of oceanography, atmosphere
 #' at broad scales (climatic); atmospheric projections from the climateatlas.ca website that brings together predictions from
-#' 24 global climate models.
+#' 24 global climate models (projection.atmospheric); fish survey biomass estimates are divided into three groups: core species
+#' (fish.survey.core.species) are 19 species that are consistently captured by the survey, commercial species (fish.survey.commercial.species)
+#' includes 9 species which have been or are commercially exploited. The commercial species biomass is provided for juveniles and adults with the division between juvenile
+#' and adult being the regulations on the small fish protocol:
 #'
+#' Cod/ Morue – 43 cm
+#' American Plaice/Plie canadienne – 30 cm
+#' Witch Flounder/ Plie grise – 30 cm
+#' White hake / Merluche blanche – 45 cm
+#' Winter Flounder / Plie rouge – 25 cm
+#' Yellowtail Flounder/ Limande à queue jaune - 25 cm
+#' Atlantic Halibut/ Flétan de l’Atlantique – 85 cm
+#' Greenland Halibut/ Flétan du Groenland – 44 cm
+#' Redfish/ Sébaste – 22 cm.
+#'
+#' Finally fish biomass is also aggregated into functional guilds (fish.survey.guild) which is a hybrid guild concept based on
+#' both the main food source of species in that guild as well as their primary habitat.
+#'
+#' @format
 #' \itemize{
 #'   \item year The year of data collection
 #'   \item EAR The Ecosystem Approach Region
@@ -18,19 +39,20 @@
 #' @seealso field.description
 #' @name EA.data
 #' @usage EA.data
-#' @format data.table, data.frame
 NULL
 
 #' Variable descriptions in EA.data
 #'
+#' @description
 #' Descriptions of the variables in EA.data, the units of measure and other information
 #'
+#' @format
 #' \itemize{
 #'   \item variable The name of the variable in EA.data
 #'   \item description A description of the variable
 #'   \item units The units of measure for the value of the variable
 #'   \item contact The name of the contact person for each variable
-#'   \item type The broad category of the variabl, e.g. "physical", "chemical", "planktonic", "phenological", "climatic", "projection.atmospheric"
+#'   \item type The broad category of the variabl, e.g. "physical", "chemical", "planktonic", "phenological", "climatic", "projection.atmospheric", "fish.survey.core.species", "fish.survey.commercial.species", "fish.survey.guild"
 #'   \item extraction.date The date which the data were extracted from the parent data base by the person named as the contact
 #' }
 #'
@@ -39,17 +61,17 @@ NULL
 #' @seealso field.description
 #' @name variable.description
 #' @usage variable.description
-#' @format data.table, data.frame
 #' @author Daniel Duplisea
 NULL
 
 
 
 #' Field description
-#'
+#' @description
 #' A description of the fields in the EA.data dataset. Elaboration of the meaning of some of the fields is provided
 #' and these can be joined to the output of a data query if desired.
 #'
+#' @format
 #' \itemize{
 #'   \item field the name of the field from the EA.data table
 #'   \item description A description of the EA.data field
@@ -60,16 +82,16 @@ NULL
 #' @keywords datasets
 #' @name field.description
 #' @usage field.description
-#' @format data.table, data.frame
 #' @author Daniel Duplisea
 NULL
 
 
 
 #' Fish survey species
-#'
+#' @description
 #' The various species codes and names used in the fish survey data
 #'
+#' @format
 #' \itemize{
 #'   \item variable	The name of the variable in the EA.data table
 #'   \item species.code The species code from the Quebec region survey
@@ -85,7 +107,6 @@ NULL
 #'             Miller, R. et Chabot. D. 2014. Code list of marine plants, invertebrates and vertebrates used by the Quebec Region of DFO. Canadian Data Report of Fisheries and Aquatic Sciences 1254 : iv+ 115 p.
 #' @name field.description
 #' @usage field.description
-#' @format data.table, data.frame
 #' @author Daniel Duplisea
 NULL
 
