@@ -19,7 +19,8 @@ EA.plot.f(variables, years, EARs, smoothing = T, ...)
 }
 \description{
 Plots a matrix of variables with EAR as columns and variable as rows. If no data then a blank graph
-              is plotted.
+              is plotted. If there are more than 25 individual plots (5x5) then it will ask for an enter from the
+              keyboard before presenting a page of plots.
 }
 \examples{
 EA.plot.f(variables=c("T150", "ph_bot.fall", "T250"), years=1900:2030, EARs=1:4, type="b",pch=20)

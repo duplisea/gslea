@@ -60,6 +60,7 @@ vars.f= function(variable.type="all"){
 #' Find variables with a keyword or phrase
 #' @param search.term a term to search, e.g. "oxygen", "temperature", "temp", "saturat"
 #' @param description if T then the description of the variable is also provided (this can be long). Default FALSE.
+#' @param units if T then the units of measure of the variable is also provided. Default FALSE.
 #' @description  Does a fuzzy search for the word in the variable description and returns the full variable names.
 #' @author Daniel Duplisea
 #' @export
@@ -72,7 +73,7 @@ find.vars.f= function(search.term, description=FALSE){
   vars4= variable.description[grep(search.term, variable.description$reference, ignore.case=T),]$variable
   vars5= variable.description[grep(search.term, variable.description$type, ignore.case=T),]$variable
   vars= unique(c(vars1,vars2,vars3,vars4,vars5))
-  if (description) vars= as.data.frame(variable.description[match(vars, variable.description$variable),1:2])
+  if (description) vars= as.data.frame(variable.description[match(vars, variable.description$variable),c(1:2,4)])
   vars
 }
 
@@ -98,7 +99,6 @@ EA.query.f= function(variables, years, EARs, crosstab=F){
 }
 
 
-
 #' Plot data time series
 #'
 #' @param variables variable vector
@@ -107,7 +107,8 @@ EA.query.f= function(variables, years, EARs, crosstab=F){
 #' @param smoothing if TRUE and n>5, then a smooth.spline is drawn through the data with df=n/3
 #' @param ... arguments to par for plotting
 #' @description  Plots a matrix of variables with EAR as columns and variable as rows. If no data then a blank graph
-#'               is plotted.
+#'               is plotted. If there are more than 25 individual plots (5x5) then it will ask for an enter from the
+#'               keyboard before presenting a page of plots.
 #' @author Daniel Duplisea
 #' @export
 #' @examples
@@ -116,7 +117,7 @@ EA.plot.f= function(variables, years, EARs, smoothing=T, ...){
   dat= EA.query.f(variables=variables, years=years, EARs=EARs)
   actual.EARs= sort(as.numeric(dat[,unique(EAR)]))
   no.plots= length(variables)*length(actual.EARs)
-  if(no.plots>25) {par(mfcol=c(5, 5),mar=c(1.3,2,3.2,1),omi=c(.1,.1,.1,.1))}
+  if(no.plots>25) {par(mfcol=c(5, 5),mar=c(1.3,2,3.2,1),omi=c(.1,.1,.1,.1), ask=T)}
   if(no.plots<=25){ par(mfcol=c(length(variables), length(actual.EARs)),mar=c(1.3,2,3.2,1),omi=c(.1,.1,.1,.1))}
   counter=1
 
@@ -131,7 +132,7 @@ EA.plot.f= function(variables, years, EARs, smoothing=T, ...){
     }
     counter= counter+1
   }
-  par(mfcol=c(1,1),omi=c(0,0,0,0),mar= c(5.1, 4.1, 4.1, 2.1))
+  par(mfcol=c(1,1),omi=c(0,0,0,0),mar= c(5.1, 4.1, 4.1, 2.1), ask=F)
 }
 
 #' Compute and plot the cross correlation with lags between two E variables

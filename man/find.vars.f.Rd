@@ -10,6 +10,8 @@ find.vars.f(search.term, description = FALSE)
 \item{search.term}{a term to search, e.g. "oxygen", "temperature", "temp", "saturat"}
 
 \item{description}{if T then the description of the variable is also provided (this can be long). Default FALSE.}
+
+\item{units}{if T then the units of measure of the variable is also provided. Default FALSE.}
 }
 \description{
 Does a fuzzy search for the word in the variable description and returns the full variable names.

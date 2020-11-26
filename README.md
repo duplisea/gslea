@@ -1153,11 +1153,12 @@ done.
       rug(tmp2$Ann.mean.T.med.RCP45)
       title(main="RCP 4.5 climate projection until 2095, ensemble median")
 
-![](README_files/figure-markdown_strict/climproject-4.png) If one thinks
-it is valid to link the atmospheric variable so closely with deep water
-temperature at such scales 70+ years into the future then it can be a
-basis for extrapolation. As above, perhaps it is better than guessing
-but one needs to put a bit of water in their wine for the
+![](README_files/figure-markdown_strict/climproject-4.png)
+
+If one thinks it is valid to link the atmospheric variable so closely
+with deep water temperature at such scales 70+ years into the future
+then it can be a basis for extrapolation. As above, perhaps it is better
+than guessing but one needs to put a bit of water in their wine for the
 interpretation.
 
 Source and references for data
