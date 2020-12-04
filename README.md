@@ -70,6 +70,12 @@ Open R and install the gslea package and try some commands outlined in
     library(gslea)
     ?gslea
 
+On Windows, you might need to install a new version of Rtools:
+
+<a href="https://cran.r-project.org/bin/windows/Rtools/" class="uri">https://cran.r-project.org/bin/windows/Rtools/</a>
+
+for devtools to work.
+
 Purpose
 =======
 
