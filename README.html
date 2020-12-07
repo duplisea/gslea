@@ -432,15 +432,22 @@ summary {
 <div id="quick-start" class="section level1">
 <h1>Quick start</h1>
 <p>Open R and install the gslea package and try some commands outlined in ?gslea:</p>
-<pre class="r"><code>devtools::install_github(&quot;duplisea/gslea&quot;)
+<pre class="r"><code>install.packages(&quot;devtools&quot;)
+devtools::install_github(&quot;duplisea/gslea&quot;)
 library(gslea)
 ?gslea</code></pre>
 <div id="installation-troubleshooting" class="section level2">
 <h2>Installation troubleshooting</h2>
-<p>On Windows, you might need to install a new version of Rtools for devtools to work:</p>
-<p><a href="https://cran.r-project.org/bin/windows/Rtools/" class="uri">https://cran.r-project.org/bin/windows/Rtools/</a></p>
-<p>You will need administrator privileges to do this. The version of Rtools on the DFO software repository is likely to be out of date.</p>
-<p>You may also need to update your R version, however, I have compiled the package using the R version available on the DFO software repository which is usually behind the latest version. If you have admininstrator priviledges on your windows machine, you can get the latest update from cran choosing your preferred mirror.</p>
+<p>IF you are having trouble installing gslea, firstly, you should try to update R and Rtools to the latest version. Unfortunately on DFO windows computers, the R version and the Rtools version are likely to be outdated and if you do not have administrator privileges, you are stuck with that.</p>
+<p>Rtools (you do not need Rtools for Linux or Mac): <a href="https://cran.r-project.org/bin/windows/Rtools/" class="uri">https://cran.r-project.org/bin/windows/Rtools/</a></p>
+<p>So if you do not have administrator privileges the error I suspect you will get is:</p>
+<p>“Error: (converted from warning) package ‘data.table’ was built under R version 4.0.3”</p>
+<p>The solution to this is to make sure you have devtools installed (above) and then turnoff the convert warnings to error problem and then try to reinstall.</p>
+<pre class="r"><code>library(devtools)
+Sys.setenv(&quot;R_REMOTES_NO_ERRORS_FROM_WARNINGS&quot;=TRUE)
+devtools::install_github(&quot;duplisea/gslea&quot;)
+library(gslea)</code></pre>
+<p>Hopefully, this will allow you to install gslea even though the default windows binary for data.table was built under a newer version of R than available on the DFO software repository.</p>
 </div>
 </div>
 <div id="purpose" class="section level1">

@@ -67,6 +67,7 @@ Quick start
 Open R and install the gslea package and try some commands outlined in
 ?gslea:
 
+    install.packages("devtools")
     devtools::install_github("duplisea/gslea")
     library(gslea)
     ?gslea
@@ -74,19 +75,33 @@ Open R and install the gslea package and try some commands outlined in
 Installation troubleshooting
 ----------------------------
 
-On Windows, you might need to install a new version of Rtools for
-devtools to work:
+IF you are having trouble installing gslea, firstly, you should try to
+update R and Rtools to the latest version. Unfortunately on DFO windows
+computers, the R version and the Rtools version are likely to be
+outdated and if you do not have administrator privileges, you are stuck
+with that.
 
+Rtools (you do not need Rtools for Linux or Mac):
 <a href="https://cran.r-project.org/bin/windows/Rtools/" class="uri">https://cran.r-project.org/bin/windows/Rtools/</a>
 
-You will need administrator privileges to do this. The version of Rtools
-on the DFO software repository is likely to be out of date.
+So if you do not have administrator privileges the error I suspect you
+will get is:
 
-You may also need to update your R version, however, I have compiled the
-package using the R version available on the DFO software repository
-which is usually behind the latest version. If you have admininstrator
-priviledges on your windows machine, you can get the latest update from
-cran choosing your preferred mirror.
+“Error: (converted from warning) package ‘data.table’ was built under R
+version 4.0.3”
+
+The solution to this is to make sure you have devtools installed (above)
+and then turnoff the convert warnings to error problem and then try to
+reinstall.
+
+    library(devtools)
+    Sys.setenv("R_REMOTES_NO_ERRORS_FROM_WARNINGS"=TRUE)
+    devtools::install_github("duplisea/gslea")
+    library(gslea)
+
+Hopefully, this will allow you to install gslea even though the default
+windows binary for data.table was built under a newer version of R than
+available on the DFO software repository.
 
 Purpose
 =======
