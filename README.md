@@ -1,5 +1,6 @@
 -   [What is it?](#what-is-it)
 -   [Quick start](#quick-start)
+    -   [Installation troubleshooting](#installation-troubleshooting)
 -   [Purpose](#purpose)
 -   [Data coverage](#data-coverage)
 -   [Design and development
@@ -70,11 +71,22 @@ Open R and install the gslea package and try some commands outlined in
     library(gslea)
     ?gslea
 
-On Windows, you might need to install a new version of Rtools:
+Installation troubleshooting
+----------------------------
+
+On Windows, you might need to install a new version of Rtools for
+devtools to work:
 
 <a href="https://cran.r-project.org/bin/windows/Rtools/" class="uri">https://cran.r-project.org/bin/windows/Rtools/</a>
 
-for devtools to work.
+You will need administrator privileges to do this. The version of Rtools
+on the DFO software repository is likely to be out of date.
+
+You may also need to update your R version, however, I have compiled the
+package using the R version available on the DFO software repository
+which is usually behind the latest version. If you have admininstrator
+priviledges on your windows machine, you can get the latest update from
+cran choosing your preferred mirror.
 
 Purpose
 =======

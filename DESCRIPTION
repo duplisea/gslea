@@ -15,3 +15,5 @@ Depends:
         data.table
 LazyData: true
 RoxygenNote: 7.1.1
+Suggests: 
+    testthat
