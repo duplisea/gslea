@@ -291,6 +291,18 @@ You are not obliged to use this R-package if you want the data. The data table a
 
 Please do not forget to acknowledge the sources of the data and cite the appropriate references that are included in the excel file.
 
+# Work using gslea and links to associated code
+
+## Where gslea has been used in research and advice
+* Conditioning advice for Gulf of St. Lawrence shrimp based on an assessment of environment and palusible future climate scenarios. January 2020.
+* Risk of climate change impacts on the Gulf of St. Lawrence turbot fishery. February 2020.
+* 4R herring assessment. November 2020
+
+## Code and packages that have drawn up gslea
+* [Andrew Smith](https://github.com/adsmithca) created a script as a [github gist](https://gist.github.com/adsmithca/8c00a360292e127cfaef4564df0a7b1d) that makes some beautiful maps drawing on the data in the package using several of the tidyverse libraries
+
+
+
 # Development plan and data inclusion
 Presently, the development is occuring in Quebec Region but this will be expanded to include data that are stored and processed by researchers in the Gulf Region (Moncton) of DFO. Our goal is to get a good example from Quebec Region and then approach Gulf Region with specific examples that they could follow. A joint meeting in the Spring of 2020 was the first step in this cross region data sharing in the matrix.
 
