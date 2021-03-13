@@ -6,7 +6,7 @@
 #' @details
 #' This includes data on
 #' physical oceanography (physical); chemical oceanographic (chemical); phyto and zooplankton abundance or biomass
-#' (planktonic); timing of phyto and zooplankton dynamics (phenological); large scale indices of oceanography, atmosphere
+#' (planktonic); large scale indices of oceanography, atmosphere
 #' at broad scales (climatic); atmospheric projections from the climateatlas.ca website that brings together predictions from
 #' 24 global climate models (projection.atmospheric); fish survey biomass estimates are divided into three groups: core species
 #' (fish.survey.core.species) are 19 species that are consistently captured by the survey, commercial species (fish.survey.commercial.species)

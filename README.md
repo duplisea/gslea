@@ -26,6 +26,12 @@
 -   [Source and references for data](#source-and-references-for-data)
 -   [Forget the R-package, I just want the
     data](#forget-the-r-package-i-just-want-the-data)
+-   [Work using gslea and links to associated
+    code](#work-using-gslea-and-links-to-associated-code)
+    -   [Where gslea has been used in research and
+        advice](#where-gslea-has-been-used-in-research-and-advice)
+    -   [Code and packages that have drawn up
+        gslea](#code-and-packages-that-have-drawn-up-gslea)
 -   [Development plan and data
     inclusion](#development-plan-and-data-inclusion)
     -   [Multispecies fish and invertebrate survey
@@ -48,8 +54,7 @@
 -   [Citation for this package](#citation-for-this-package)
 -   [References](#references)
 
-What is it?
-===========
+# What is it?
 
 An R package to house Gulf of St Lawrence environment and ecosystem data
 to promote ecosystem research and analysis in the Gulf of St Lawrence
@@ -61,8 +66,7 @@ Currently version 0.1 - beta. It will not be fixed until version 1
 afterwhich updates should not break existing analyses. That could still
 happen now with updates.
 
-Quick start
-===========
+# Quick start
 
 Open R and install the gslea package and try some commands outlined in
 ?gslea:
@@ -72,8 +76,7 @@ Open R and install the gslea package and try some commands outlined in
     library(gslea)
     ?gslea
 
-Installation troubleshooting
-----------------------------
+## Installation troubleshooting
 
 IF you are having trouble installing gslea, firstly, you should try to
 update R and Rtools to the latest version. Unfortunately on DFO windows
@@ -82,7 +85,7 @@ outdated and if you do not have administrator privileges, you are stuck
 with that.
 
 Rtools (you do not need Rtools for Linux or Mac):
-<a href="https://cran.r-project.org/bin/windows/Rtools/" class="uri">https://cran.r-project.org/bin/windows/Rtools/</a>
+<https://cran.r-project.org/bin/windows/Rtools/>
 
 So if you do not have administrator privileges the error I suspect you
 will get is:
@@ -103,8 +106,7 @@ Hopefully, this will allow you to install gslea even though the default
 windows binary for data.table was built under a newer version of R than
 available on the DFO software repository.
 
-Purpose
-=======
+# Purpose
 
 This describes the building of, the structure of and the use of an R
 package that gathers up physical, chemical, planktonic, plankton
@@ -132,8 +134,7 @@ anticipate that this matrix will have a much wider appeal for
 researchers in DFO and elsewhere and it should also serve data
 dissemination and open data initiatives in the Government of Canada.
 
-Data coverage
-=============
+# Data coverage
 
 Presently, this package consists of data for the Gulf of St Lawrence
 where collection and management of the data is done out of the Quebec
@@ -150,8 +151,7 @@ even though there are none in the database yet.
 
 <img src="README_files/figure-markdown_strict/gslmap.plain-1.png" style="width:100.0%" />
 
-Design and development philosophy
-=================================
+# Design and development philosophy
 
 The package is GPL-3 licenced and thus is available globally without
 warranty. The package is designed to have as few data containers as
@@ -160,19 +160,18 @@ extraction. The package has only one dependence which is the library
 data.table and data.table itself has no dependencies. The data.table
 library is used because of its efficient use of computing resources
 making it very fast for processing data
-(<a href="https://h2oai.github.io/db-benchmark/" class="uri">https://h2oai.github.io/db-benchmark/</a>)
-which is important if in someone’s analysis they make repeated queries
-to the data in loops or in bootstrapping directly from the full
-database. The data are structured in what has become termed “tidy data”
-for people in the tidyverse as opposed to dirty data I suppose. You can
-use your own tidyverse code on it. The data class “data.table” inherit a
-secondary class of data.frame, therefore they are compatible with most
-of the base R data.frame operations. The package is designed such that
-it is consistent, should be scalable to when new data types become
-available and should not break existing analyses when updated (I hope).
+(<https://h2oai.github.io/db-benchmark/>) which is important if in
+someone’s analysis they make repeated queries to the data in loops or in
+bootstrapping directly from the full database. The data are structured
+in what has become termed “tidy data” for people in the tidyverse as
+opposed to messy data I suppose. You can use your own tidyverse code on
+it. The data class “data.table” inherits a secondary class of
+data.frame, therefore they are compatible with most of the base R
+data.frame operations. The package is designed such that it is
+consistent, should be scalable to when new data types become available
+and should not break existing analyses when updated (I hope).
 
-List of development goals and guidelines
-----------------------------------------
+## List of development goals and guidelines
 
 -   The package needs to be technically accessible to as wide a swath of
     the envisioned end user community as possible (see Purpose section
@@ -201,11 +200,9 @@ These guidelines should be followed closely to prevent “mission creep”
 which is likely to lead to failure of the usability of matrix at a later
 point.
 
-Components of gslea
-===================
+# Components of gslea
 
-Data objects
-------------
+## Data objects
 
 The package consists of three main tables presently:
 
@@ -258,8 +255,7 @@ include “early summer”. <b>field</b> is the key variable.
 Another data table describes the coordinates of the EAR boundaries in
 decimal degrees but you never see that here.
 
-Functions
----------
+## Functions
 
 The package consists of limited number of functions:
 
@@ -276,8 +272,7 @@ vars.f(variable.type)
 </ins>
 
 shows the variables available in a particular <b>variable.type</b>
-(“physical”, “chemical”, “planktonic”, “phenologic”, “climatic”), gives
-a description of each and its units.
+e.g. “physical”, “chemical” gives a description of each and its units.
 
 <ins>
 find.vars.f(search.term)
@@ -291,7 +286,7 @@ EA.query.f(variables, years, EARs)
 </ins>
 
 the function you use to query the data and the output is in long data
-format. <b>variables</b> (e.g. “T150”,“SST”) is a character vector,
+format. <b>variables</b> (e.g. “t150”,“sst”) is a character vector,
 <b>years</b> is a numeric vector (e.g. 2002:2012), <b>EARs</b> is the
 ecoregion and is a numeric vector (e.g. 1:3).
 
@@ -301,7 +296,7 @@ EA.plot.f(variables, years, EARs, …)
 
 this will plot the variables over time. It will make a matrix of
 variable x EAR with up to 25 plots per page (i.e. 25 variable\*EAR
-combinations). <b>variables</b> (e.g. “T150”) is a character vector,
+combinations). <b>variables</b> (e.g. “t150”) is a character vector,
 <b>years</b> is a numeric vector (e.g. 2002:2012), <b>EARs</b> is the
 ecoregion and is a numeric vector (e.g. 1:3), <b>smoothing</b> is a
 logical on whether the smooth.spline should be run through the data
@@ -328,17 +323,14 @@ gives a source and reference for any variable in the database. If NULL
 then it returns the full list of sources and references. Please cite
 these references if using the data.
 
-Installing gslea
-================
+# Installing gslea
 
     devtools::install_github("duplisea/gslea", build_vignettes = TRUE)
     library(gslea)
 
-Accessing the data
-==================
+# Accessing the data
 
-Data content overviews
-----------------------
+## Data content overviews
 
 A few minimal extraction functions are provided that should be fast and
 relatively generic. A function called <b>metadata.f</b> is provided with
@@ -351,10 +343,10 @@ entire content of the variable.description table.
     metadata.f(verbosity="low")
 
     ## $Number.of.variables
-    ## [1] 394
+    ## [1] 426
     ## 
     ## $Number.of.EARS
-    ## [1] 11
+    ## [1] 14
     ## 
     ## $Number.of.years
     ## [1] 243
@@ -363,19 +355,18 @@ entire content of the variable.description table.
     ## [1] 1854 2096
     ## 
     ## $Number.of.observations
-    ## [1] 139835
+    ## [1] 145752
 
 Another perhaps more useful way to know what the database contains is
 with the function <b>var.f</b>. <b>var.f</b> accepts as an argument one
 of the data types with the default being “all”. The options are the
-adjectives for a data type: “physical”, “chemical”, “planktonic”,
-“phenological” which for some data types seems awkward but it is
-consistent. It will give you the exact name of the variable, its
-description and units. The output can be long and the descriptions are
-sometimes quite wordy so it is difficult to read. I suggest you save the
-result of a large query to var.f as an object and then use the library
-formattable to make it into a more readable table. So for example
-formattable, e.g.:
+adjectives for a data type, e.g. “physical”, “chemical”, “planktonic”
+which for some data types seems awkward but it is consistent. It will
+give you the exact name of the variable, its description and units. The
+output can be long and the descriptions are sometimes quite wordy so it
+is difficult to read. I suggest you save the result of a large query to
+var.f as an object and then use the library formattable to make it into
+a more readable table. So for example formattable, e.g.:
 
     phys.var= vars.f(variable.type="physical")
     formattable::formattable(phys.var)
@@ -400,7 +391,7 @@ units
 <tbody>
 <tr>
 <td style="text-align:right;">
-CIL.vol.LT.1
+cil.vol.lt.1
 </td>
 <td style="text-align:right;">
 physical
@@ -410,230 +401,6 @@ Volume of water in CIL defined by the &lt;1 C boundary
 </td>
 <td style="text-align:right;">
 km cubed
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-SST
-</td>
-<td style="text-align:right;">
-physical
-</td>
-<td style="text-align:right;">
-sea surface temperature annual
-</td>
-<td style="text-align:right;">
-degrees celsius
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-SST.anomaly
-</td>
-<td style="text-align:right;">
-physical
-</td>
-<td style="text-align:right;">
-anomaly in sea surface temperature annual
-</td>
-<td style="text-align:right;">
-degrees celsius
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-SST.month10
-</td>
-<td style="text-align:right;">
-physical
-</td>
-<td style="text-align:right;">
-sea surface temperature in October
-</td>
-<td style="text-align:right;">
-degrees celsius
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-SST.month11
-</td>
-<td style="text-align:right;">
-physical
-</td>
-<td style="text-align:right;">
-sea surface temperature in November
-</td>
-<td style="text-align:right;">
-degrees celsius
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-SST.month5
-</td>
-<td style="text-align:right;">
-physical
-</td>
-<td style="text-align:right;">
-sea surface temperature in May
-</td>
-<td style="text-align:right;">
-degrees celsius
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-SST.month6
-</td>
-<td style="text-align:right;">
-physical
-</td>
-<td style="text-align:right;">
-sea surface temperature in June
-</td>
-<td style="text-align:right;">
-degrees celsius
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-SST.month7
-</td>
-<td style="text-align:right;">
-physical
-</td>
-<td style="text-align:right;">
-sea surface temperature in July
-</td>
-<td style="text-align:right;">
-degrees celsius
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-SST.month8
-</td>
-<td style="text-align:right;">
-physical
-</td>
-<td style="text-align:right;">
-sea surface temperature in August
-</td>
-<td style="text-align:right;">
-degrees celsius
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-SST.month9
-</td>
-<td style="text-align:right;">
-physical
-</td>
-<td style="text-align:right;">
-sea surface temperature in September
-</td>
-<td style="text-align:right;">
-degrees celsius
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-T.deep
-</td>
-<td style="text-align:right;">
-physical
-</td>
-<td style="text-align:right;">
-Bottom temperature in waters &gt; 200m deep
-</td>
-<td style="text-align:right;">
-degrees celsius
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-T.shallow
-</td>
-<td style="text-align:right;">
-physical
-</td>
-<td style="text-align:right;">
-Bottom temperature in waters &lt; 200m deep
-</td>
-<td style="text-align:right;">
-degrees celsius
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-T150
-</td>
-<td style="text-align:right;">
-physical
-</td>
-<td style="text-align:right;">
-Temperature at 150m
-</td>
-<td style="text-align:right;">
-degrees celsius
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-T200
-</td>
-<td style="text-align:right;">
-physical
-</td>
-<td style="text-align:right;">
-Temperature at 200m
-</td>
-<td style="text-align:right;">
-degrees celsius
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-T250
-</td>
-<td style="text-align:right;">
-physical
-</td>
-<td style="text-align:right;">
-Temperature at 250m
-</td>
-<td style="text-align:right;">
-degrees celsius
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-T300
-</td>
-<td style="text-align:right;">
-physical
-</td>
-<td style="text-align:right;">
-Temperature at 300m
-</td>
-<td style="text-align:right;">
-degrees celsius
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-Tmax200.400
-</td>
-<td style="text-align:right;">
-physical
-</td>
-<td style="text-align:right;">
-Maximum temperature between 200 and 400m
-</td>
-<td style="text-align:right;">
-degrees celsius
 </td>
 </tr>
 <tr>
@@ -722,6 +489,132 @@ day of the year
 </tr>
 <tr>
 <td style="text-align:right;">
+sst
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+sea surface temperature annual
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+sst.anomaly
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+anomaly in sea surface temperature annual
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+sst.month10
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+sea surface temperature in October
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+sst.month11
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+sea surface temperature in November
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+sst.month5
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+sea surface temperature in May
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+sst.month6
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+sea surface temperature in June
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+sst.month7
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+sea surface temperature in July
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+sst.month8
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+sea surface temperature in August
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+sst.month9
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+sea surface temperature in September
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
 start.10
 </td>
 <td style="text-align:right;">
@@ -748,6 +641,104 @@ Timing of when water first warms to 12 C
 week of the year
 </td>
 </tr>
+<tr>
+<td style="text-align:right;">
+t.deep
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Bottom temperature in waters &gt; 200m deep
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+t.shallow
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Bottom temperature in waters &lt; 200m deep
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+t150
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Temperature at 150m
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+t200
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Temperature at 200m
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+t250
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Temperature at 250m
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+t300
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Temperature at 300m
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+tmax200.400
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+Maximum temperature between 200 and 400m
+</td>
+<td style="text-align:right;">
+degrees celsius
+</td>
+</tr>
 </tbody>
 </table>
 
@@ -759,15 +750,15 @@ that term in their description.
 
     find.vars.f(search.term= "200")
 
-    ##  [1] "J.GSNW.Q1"   "J.GSNW.Q2"   "J.GSNW.Q3"   "J.GSNW.Q4"   "T.deep"     
-    ##  [6] "T.shallow"   "T200"        "Tmax200.400" "AMO.month1"  "AMO.month10"
-    ## [11] "AMO.month11" "AMO.month12" "AMO.month2"  "AMO.month3"  "AMO.month4" 
-    ## [16] "AMO.month5"  "AMO.month6"  "AMO.month7"  "AMO.month8"  "AMO.month9" 
-    ## [21] "PDO.month1"  "PDO.month10" "PDO.month11" "PDO.month12" "PDO.month2" 
-    ## [26] "PDO.month3"  "PDO.month4"  "PDO.month5"  "PDO.month6"  "PDO.month7" 
-    ## [31] "PDO.month8"  "PDO.month9"
+    ##  [1] "j.gsnw.q1"   "j.gsnw.q2"   "j.gsnw.q3"   "j.gsnw.q4"   "t.deep"     
+    ##  [6] "t.shallow"   "t200"        "tmax200.400" "amo.month1"  "amo.month10"
+    ## [11] "amo.month11" "amo.month12" "amo.month2"  "amo.month3"  "amo.month4" 
+    ## [16] "amo.month5"  "amo.month6"  "amo.month7"  "amo.month8"  "amo.month9" 
+    ## [21] "pdo.month1"  "pdo.month10" "pdo.month11" "pdo.month12" "pdo.month2" 
+    ## [26] "pdo.month3"  "pdo.month4"  "pdo.month5"  "pdo.month6"  "pdo.month7" 
+    ## [31] "pdo.month8"  "pdo.month9"
 
-You will see that T.deep and T.shallow come up in this because in their
+You will see that t.deep and t.shallow come up in this because in their
 descriptions, the distinction between shallow and deep waters is 200m.
 You will also see AMO variable coming up and this is because the
 reference for the AMO was published in 2001 and 200 is a substring of
@@ -776,98 +767,97 @@ that. So you can see it will find things fairly broadly
 This search function will search most of the main fields of the
 variable.description table. So for example you may be interested in
 products which Peter Galbraith was involved with so you could try
-find.vars.f(search.term= “galbra”) or say something to do with plankon
+find.vars.f(search.term= “galbra”) or say something to do with plankton
 blooms find.vars.f(“bloom”).
 
-Data extraction
----------------
+## Data extraction
 
 Extracting the data is done with a single function called
 <b>EA.query.f</b>. This query wants a character vector or scalar for
 variable, an integer vector or scalar for year and an integer vector or
 scalar for EAR:
 
-    EA.query.f(years=1999:2012, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:2)
+    EA.query.f(years=1999:2012, variables=c("t150", "ph_bot.fall", "t250"), EARs=1:2)
 
     ##     year EAR    variable    value
-    ##  1: 1999   1        T150 3.170000
-    ##  2: 2000   1        T150 3.100000
-    ##  3: 2001   1        T150 3.290000
-    ##  4: 2002   1        T150 3.320000
-    ##  5: 2003   1        T150 2.880000
-    ##  6: 2004   1        T150 3.030000
-    ##  7: 2005   1        T150 3.030000
-    ##  8: 2006   1        T150 3.580000
-    ##  9: 2007   1        T150 2.970000
-    ## 10: 2008   1        T150 2.920000
-    ## 11: 2009   1        T150 2.920000
-    ## 12: 2010   1        T150 2.710000
-    ## 13: 2011   1        T150 3.140000
-    ## 14: 2012   1        T150 3.380000
-    ## 15: 1999   2        T150 3.100000
-    ## 16: 2000   2        T150 2.880000
-    ## 17: 2001   2        T150 2.480000
-    ## 18: 2002   2        T150 2.780000
-    ## 19: 2003   2        T150 2.060000
-    ## 20: 2004   2        T150 2.100000
-    ## 21: 2005   2        T150 2.450000
-    ## 22: 2006   2        T150 3.110000
-    ## 23: 2007   2        T150 2.320000
-    ## 24: 2008   2        T150 1.930000
-    ## 25: 2009   2        T150 2.140000
-    ## 26: 2010   2        T150 2.650000
-    ## 27: 2011   2        T150 2.690000
-    ## 28: 2012   2        T150 3.150000
-    ## 29: 1999   1        T250 5.060000
-    ## 30: 2000   1        T250 4.960000
-    ## 31: 2001   1        T250 5.050000
-    ## 32: 2002   1        T250 5.130000
-    ## 33: 2003   1        T250 5.170000
-    ## 34: 2004   1        T250 5.220000
-    ## 35: 2005   1        T250 5.220000
-    ## 36: 2006   1        T250 5.260000
-    ## 37: 2007   1        T250 5.200000
-    ## 38: 2008   1        T250 5.050000
-    ## 39: 2009   1        T250 5.000000
-    ## 40: 2010   1        T250 4.870000
-    ## 41: 2011   1        T250 4.980000
-    ## 42: 2012   1        T250 5.090000
-    ## 43: 1999   2        T250 5.390000
-    ## 44: 2000   2        T250 5.580000
-    ## 45: 2001   2        T250 5.590000
-    ## 46: 2002   2        T250 5.750000
-    ## 47: 2003   2        T250 5.750000
-    ## 48: 2004   2        T250 5.700000
-    ## 49: 2005   2        T250 5.510000
-    ## 50: 2006   2        T250 5.640000
-    ## 51: 2007   2        T250 5.730000
-    ## 52: 2008   2        T250 5.340000
-    ## 53: 2009   2        T250 5.060000
-    ## 54: 2010   2        T250 5.140000
-    ## 55: 2011   2        T250 5.520000
-    ## 56: 2012   2        T250 5.890000
-    ## 57: 2009   1 ph_bot.fall 7.670815
-    ## 58: 2011   1 ph_bot.fall 7.652947
-    ## 59: 2011   2 ph_bot.fall 7.700699
+    ##  1: 2009   1 ph_bot.fall 7.665480
+    ##  2: 2011   1 ph_bot.fall 7.650002
+    ##  3: 2011   2 ph_bot.fall 7.699617
+    ##  4: 1999   1        t150 3.170000
+    ##  5: 2000   1        t150 3.100000
+    ##  6: 2001   1        t150 3.290000
+    ##  7: 2002   1        t150 3.320000
+    ##  8: 2003   1        t150 2.880000
+    ##  9: 2004   1        t150 3.030000
+    ## 10: 2005   1        t150 3.030000
+    ## 11: 2006   1        t150 3.580000
+    ## 12: 2007   1        t150 2.970000
+    ## 13: 2008   1        t150 2.920000
+    ## 14: 2009   1        t150 2.920000
+    ## 15: 2010   1        t150 2.710000
+    ## 16: 2011   1        t150 3.140000
+    ## 17: 2012   1        t150 3.380000
+    ## 18: 1999   2        t150 3.100000
+    ## 19: 2000   2        t150 2.880000
+    ## 20: 2001   2        t150 2.480000
+    ## 21: 2002   2        t150 2.780000
+    ## 22: 2003   2        t150 2.060000
+    ## 23: 2004   2        t150 2.100000
+    ## 24: 2005   2        t150 2.450000
+    ## 25: 2006   2        t150 3.110000
+    ## 26: 2007   2        t150 2.320000
+    ## 27: 2008   2        t150 1.930000
+    ## 28: 2009   2        t150 2.140000
+    ## 29: 2010   2        t150 2.650000
+    ## 30: 2011   2        t150 2.690000
+    ## 31: 2012   2        t150 3.150000
+    ## 32: 1999   1        t250 5.060000
+    ## 33: 2000   1        t250 4.960000
+    ## 34: 2001   1        t250 5.050000
+    ## 35: 2002   1        t250 5.130000
+    ## 36: 2003   1        t250 5.170000
+    ## 37: 2004   1        t250 5.220000
+    ## 38: 2005   1        t250 5.220000
+    ## 39: 2006   1        t250 5.260000
+    ## 40: 2007   1        t250 5.200000
+    ## 41: 2008   1        t250 5.050000
+    ## 42: 2009   1        t250 5.000000
+    ## 43: 2010   1        t250 4.870000
+    ## 44: 2011   1        t250 4.980000
+    ## 45: 2012   1        t250 5.090000
+    ## 46: 1999   2        t250 5.390000
+    ## 47: 2000   2        t250 5.580000
+    ## 48: 2001   2        t250 5.590000
+    ## 49: 2002   2        t250 5.750000
+    ## 50: 2003   2        t250 5.750000
+    ## 51: 2004   2        t250 5.700000
+    ## 52: 2005   2        t250 5.510000
+    ## 53: 2006   2        t250 5.640000
+    ## 54: 2007   2        t250 5.730000
+    ## 55: 2008   2        t250 5.340000
+    ## 56: 2009   2        t250 5.060000
+    ## 57: 2010   2        t250 5.140000
+    ## 58: 2011   2        t250 5.520000
+    ## 59: 2012   2        t250 5.890000
     ##     year EAR    variable    value
 
 You need to name all the variables you want to extract but you can
 access all the years or all the EARs by putting a wide range on them
 
-    EA.query.f(years=1900:2020, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:99)
+    EA.query.f(years=1900:2020, variables=c("t150", "ph_bot.fall", "t250"), EARs=1:99)
 
     ##      year EAR    variable    value
-    ##   1: 1969   1        T150 2.640000
-    ##   2: 1970   1        T150 2.950000
-    ##   3: 1971   1        T150 3.350000
-    ##   4: 1974   1        T150 2.970000
-    ##   5: 1979   1        T150 4.330000
+    ##   1: 2009  10 ph_bot.fall 7.612320
+    ##   2: 2011  10 ph_bot.fall 7.595473
+    ##   3: 2014  10 ph_bot.fall 7.597316
+    ##   4: 2015  10 ph_bot.fall 7.583178
+    ##   5: 2016  10 ph_bot.fall 7.567549
     ##  ---                              
-    ## 298: 2014   5 ph_bot.fall 7.779244
-    ## 299: 2015   5 ph_bot.fall 7.744043
-    ## 300: 2016   5 ph_bot.fall 7.797067
-    ## 301: 2017   5 ph_bot.fall 7.788932
-    ## 302: 2018   5 ph_bot.fall 7.845360
+    ## 396: 2016   3        t250 6.510000
+    ## 397: 2017   3        t250 6.530000
+    ## 398: 2018   3        t250 6.510000
+    ## 399: 2019   3        t250 6.730000
+    ## 400: 2020   3        t250 6.970000
 
 You may want to save the results of a query to an object and then export
 it to csv (<b>fwrite</b>) or some other format.
@@ -881,62 +871,63 @@ in the database either. If you want tabular data (wide) to show when say
 and observation was not made for a particular year and variable and EAR,
 then you can widen the data using the “dcast” function from data.table
 
-    dat= EA.query.f(years=1900:2020, variables=c("T150","ph_bot.fall","ice.max","O2.Late_summer.sat.mean50_100"), EARs=1)
+    dat= EA.query.f(years=1900:2020, variables=c("t150","ph_bot.fall","ice.max","o2.late_summer.sat.mean50_100"), EARs=1)
     dcast(dat, year~ variable)
 
-    ##     year T150 ice.max O2.Late_summer.sat.mean50_100 ph_bot.fall
-    ##  1: 1969 2.64    4.03                            NA          NA
-    ##  2: 1970 2.95    6.27                            NA          NA
-    ##  3: 1971 3.35   12.18                            NA          NA
-    ##  4: 1972   NA   10.13                            NA          NA
-    ##  5: 1973   NA    8.74                            NA          NA
-    ##  6: 1974 2.97    8.47                            NA          NA
-    ##  7: 1975   NA    7.24                            NA          NA
-    ##  8: 1976   NA    7.21                            NA          NA
-    ##  9: 1977   NA    8.86                            NA          NA
-    ## 10: 1978   NA   10.05                            NA          NA
-    ## 11: 1979 4.33   15.36                            NA          NA
-    ## 12: 1980   NA    4.38                            NA          NA
-    ## 13: 1981   NA    8.63                            NA          NA
-    ## 14: 1982   NA    5.46                            NA          NA
-    ## 15: 1983   NA    7.84                            NA          NA
-    ## 16: 1984   NA    8.44                            NA          NA
-    ## 17: 1985   NA    6.17                            NA          NA
-    ## 18: 1986   NA    5.97                            NA          NA
-    ## 19: 1987 3.12    7.95                            NA          NA
-    ## 20: 1988 3.36   10.11                            NA          NA
-    ## 21: 1989   NA    5.77                            NA          NA
-    ## 22: 1990 2.76    6.85                            NA          NA
-    ## 23: 1991 1.71    5.74                            NA          NA
-    ## 24: 1992 2.11   10.52                            NA          NA
-    ## 25: 1993 2.21   11.74                            NA          NA
-    ## 26: 1994 2.86    7.60                            NA          NA
-    ## 27: 1995 2.23   11.42                            NA          NA
-    ## 28: 1996 2.21    8.84                            NA          NA
-    ## 29: 1997 2.62    7.34                            NA          NA
-    ## 30: 1998 2.98    5.13                            NA          NA
-    ## 31: 1999 3.17    5.27                            NA          NA
-    ## 32: 2000 3.10    4.64                            NA          NA
-    ## 33: 2001 3.29    4.66                            NA          NA
-    ## 34: 2002 3.32    7.43                      74.62483          NA
-    ## 35: 2003 2.88    4.53                      77.94894          NA
-    ## 36: 2004 3.03    4.91                      79.23847          NA
-    ## 37: 2005 3.03    7.67                      75.06227          NA
-    ## 38: 2006 3.58    3.22                      69.31014          NA
-    ## 39: 2007 2.97    2.31                      78.79188          NA
-    ## 40: 2008 2.92    9.61                      79.47174          NA
-    ## 41: 2009 2.92    5.48                      77.52256    7.670815
-    ## 42: 2010 2.71    1.85                      79.09986          NA
-    ## 43: 2011 3.14    1.99                      78.65502    7.652947
-    ## 44: 2012 3.38    3.94                      76.33686          NA
-    ## 45: 2013 3.26    2.44                      80.67675          NA
-    ## 46: 2014 3.34    7.47                      83.08551    7.646517
-    ## 47: 2015 4.19    9.12                      77.00939    7.666830
-    ## 48: 2016 4.26    3.06                      73.53504    7.633863
-    ## 49: 2017 3.81    3.81                      76.16029    7.612828
-    ## 50: 2018 3.24    6.08                      82.21718    7.640820
-    ## 51: 2019 3.64    4.76                            NA          NA
-    ##     year T150 ice.max O2.Late_summer.sat.mean50_100 ph_bot.fall
+    ##     year ice.max o2.late_summer.sat.mean50_100 ph_bot.fall t150
+    ##  1: 1969    4.25                            NA          NA 2.64
+    ##  2: 1970    6.61                            NA          NA 2.95
+    ##  3: 1971   13.20                            NA          NA 3.35
+    ##  4: 1972   10.96                            NA          NA   NA
+    ##  5: 1973    9.37                            NA          NA   NA
+    ##  6: 1974    8.82                            NA          NA 2.97
+    ##  7: 1975    7.60                            NA          NA   NA
+    ##  8: 1976    7.54                            NA          NA   NA
+    ##  9: 1977    9.61                            NA          NA   NA
+    ## 10: 1978   10.87                            NA          NA   NA
+    ## 11: 1979   16.86                            NA          NA 4.33
+    ## 12: 1980    4.43                            NA          NA   NA
+    ## 13: 1981    9.05                            NA          NA   NA
+    ## 14: 1982    5.60                            NA          NA   NA
+    ## 15: 1983    7.84                            NA          NA   NA
+    ## 16: 1984    8.44                            NA          NA   NA
+    ## 17: 1985    6.17                            NA          NA   NA
+    ## 18: 1986    5.97                            NA          NA   NA
+    ## 19: 1987    7.95                            NA          NA 3.12
+    ## 20: 1988   10.11                            NA          NA 3.36
+    ## 21: 1989    5.77                            NA          NA   NA
+    ## 22: 1990    6.85                            NA          NA 2.76
+    ## 23: 1991    5.73                            NA          NA 1.71
+    ## 24: 1992   10.52                            NA          NA 2.11
+    ## 25: 1993   11.73                            NA          NA 2.21
+    ## 26: 1994    7.60                            NA          NA 2.86
+    ## 27: 1995   11.42                            NA          NA 2.23
+    ## 28: 1996    8.84                            NA          NA 2.21
+    ## 29: 1997    7.34                            NA          NA 2.62
+    ## 30: 1998    5.13                            NA          NA 2.98
+    ## 31: 1999    5.27                            NA          NA 3.17
+    ## 32: 2000    4.64                            NA          NA 3.10
+    ## 33: 2001    4.66                            NA          NA 3.29
+    ## 34: 2002    7.43                      74.85196          NA 3.32
+    ## 35: 2003    4.53                      77.94120          NA 2.88
+    ## 36: 2004    4.91                      79.46163          NA 3.03
+    ## 37: 2005    7.67                      75.37610          NA 3.03
+    ## 38: 2006    3.22                      69.55593          NA 3.58
+    ## 39: 2007    2.31                      79.41540          NA 2.97
+    ## 40: 2008    9.61                      80.21454          NA 2.92
+    ## 41: 2009    5.48                      77.44965    7.665480 2.92
+    ## 42: 2010    1.85                      79.23001          NA 2.71
+    ## 43: 2011    1.99                      78.86014    7.650002 3.14
+    ## 44: 2012    3.94                      76.54409          NA 3.38
+    ## 45: 2013    2.44                      80.88125          NA 3.26
+    ## 46: 2014    7.47                      83.09693    7.647305 3.34
+    ## 47: 2015    9.12                      76.90995    7.664455 4.19
+    ## 48: 2016    3.06                      73.39238    7.629347 4.26
+    ## 49: 2017    3.81                      75.99841    7.611966 3.81
+    ## 50: 2018    6.08                      82.23750    7.638834 3.24
+    ## 51: 2019    5.06                      80.52226    7.638646 3.43
+    ## 52: 2020    4.36                            NA          NA 3.56
+    ##     year ice.max o2.late_summer.sat.mean50_100 ph_bot.fall t150
 
 This puts each variable as a separate column, it preserves all the years
 where at least one of the variables had an observation and it puts NA
@@ -953,59 +944,71 @@ however, cast multidimension data into a table but it will repeat the
 columns for each EAR (note that “EAR” is now in the right hand side of
 the formula)
 
-    dat= EA.query.f(years=2015:2020, variables=c("T150","ph_bot.fall","ice.max","O2.Late_summer.sat.mean50_100"), EARs=1:100)
+    dat= EA.query.f(years=2015:2020, variables=c("t150","ph_bot.fall","ice.max","o2.late_summer.sat.mean50_100"), EARs=1:100)
     dcast(dat, year~ variable+EAR)
 
-    ##    year T150_1 T150_2 T150_3 T150_4 ice.max_1 ice.max_2 ice.max_3 ice.max_4
-    ## 1: 2015   4.19   3.69   4.01   0.33      9.12     15.42     12.98      7.39
-    ## 2: 2016   4.26   3.60   4.03  -0.21      3.06      2.22      1.21      1.90
-    ## 3: 2017   3.81   2.16   3.35  -0.92      3.81      5.98      1.41     12.17
-    ## 4: 2018   3.24   2.32   2.72  -0.19      6.08      4.62      5.67      5.04
-    ## 5: 2019   3.64   3.14   3.66  -0.32      4.76     18.94     13.83      4.93
-    ##    ice.max_5 ice.max_6 ice.max_7 ice.max_10 ice.max_50
-    ## 1:     29.53      4.76     11.41       1.85       1.32
-    ## 2:      8.27      1.26      0.03       0.74       0.54
-    ## 3:      9.28      2.73      0.99       0.94       0.79
-    ## 4:     16.18      2.76      1.29       1.25       1.07
-    ## 5:     27.17      3.63      4.14       1.15       1.14
-    ##    O2.Late_summer.sat.mean50_100_1 O2.Late_summer.sat.mean50_100_2
-    ## 1:                        77.00939                        88.50907
-    ## 2:                        73.53504                        89.20817
-    ## 3:                        76.16029                        88.95445
-    ## 4:                        82.21718                        91.13842
-    ## 5:                              NA                              NA
-    ##    O2.Late_summer.sat.mean50_100_3 O2.Late_summer.sat.mean50_100_4
-    ## 1:                        85.78378                        90.53384
-    ## 2:                        86.30571                        91.21765
-    ## 3:                        86.48652                        90.02184
-    ## 4:                        88.21394                        93.54802
-    ## 5:                              NA                              NA
-    ##    O2.Late_summer.sat.mean50_100_10 ph_bot.fall_1 ph_bot.fall_2 ph_bot.fall_3
-    ## 1:                         78.11792      7.666830      7.816374      7.763617
-    ## 2:                         70.87260      7.633863      7.761814      7.744903
-    ## 3:                         77.69411      7.612828      7.733547      7.753033
-    ## 4:                         83.13097      7.640820      7.734545      7.766139
-    ## 5:                               NA            NA            NA            NA
-    ##    ph_bot.fall_5 ph_bot.fall_10
-    ## 1:      7.744043       7.584211
-    ## 2:      7.797067       7.572334
-    ## 3:      7.788932       7.561805
-    ## 4:      7.845360       7.592093
-    ## 5:            NA             NA
+    ##    year ice.max_1 ice.max_2 ice.max_3 ice.max_4 ice.max_5 ice.max_6 ice.max_7
+    ## 1: 2015      9.12     15.42     12.98      7.39     29.53      4.76     11.42
+    ## 2: 2016      3.06      2.21      1.21      1.90      8.27      1.26      0.03
+    ## 3: 2017      3.81      5.98      1.41     12.17      9.91      2.73      0.99
+    ## 4: 2018      6.08      4.62      5.67      5.04     16.18      2.76      1.29
+    ## 5: 2019      5.06     18.94     13.83      4.93     27.17      3.63      4.14
+    ## 6: 2020      4.36      9.86      5.57      7.81     17.06      2.75      1.71
+    ##    ice.max_10 ice.max_11 ice.max_30 ice.max_31 ice.max_50
+    ## 1:       1.85       7.28       9.99       4.71       1.32
+    ## 2:       0.74       2.32       1.20       0.02       0.54
+    ## 3:       0.94       2.88       1.20       0.21       0.79
+    ## 4:       1.25       4.83       4.83       0.84       1.10
+    ## 5:       1.15       4.02       9.28       6.20       1.14
+    ## 6:       1.19       3.47       4.15       1.42       1.35
+    ##    o2.late_summer.sat.mean50_100_1 o2.late_summer.sat.mean50_100_2
+    ## 1:                        76.90995                        88.23709
+    ## 2:                        73.39238                        89.03141
+    ## 3:                        75.99841                        88.90779
+    ## 4:                        82.23750                        91.21643
+    ## 5:                        80.52226                        90.17201
+    ## 6:                              NA                              NA
+    ##    o2.late_summer.sat.mean50_100_3 o2.late_summer.sat.mean50_100_4
+    ## 1:                        86.03116                        90.18816
+    ## 2:                        86.97931                        90.85565
+    ## 3:                        87.49978                        89.81340
+    ## 4:                        89.17018                        93.43198
+    ## 5:                        88.93582                        90.39068
+    ## 6:                              NA                              NA
+    ##    o2.late_summer.sat.mean50_100_10 o2.late_summer.sat.mean50_100_11
+    ## 1:                         78.15062                         76.62354
+    ## 2:                         71.00473                         73.94409
+    ## 3:                         77.45907                         75.66042
+    ## 4:                         82.16858                         82.25341
+    ## 5:                         78.43210                         81.00553
+    ## 6:                               NA                               NA
+    ##    ph_bot.fall_1 ph_bot.fall_2 ph_bot.fall_3 ph_bot.fall_5 ph_bot.fall_10
+    ## 1:      7.664455      7.800129      7.764251      7.744036       7.583178
+    ## 2:      7.629347      7.752494      7.744871      7.805870       7.567549
+    ## 3:      7.611966      7.725187      7.753973      7.797726       7.558538
+    ## 4:      7.638834      7.719959      7.765986      7.840955       7.588689
+    ## 5:      7.638646      7.718430      7.747536      7.760601       7.590770
+    ## 6:            NA            NA            NA            NA             NA
+    ##    ph_bot.fall_11 t150_1 t150_2 t150_3 t150_4 t150_10
+    ## 1:       7.728533   4.19   3.69   4.01   0.33    4.06
+    ## 2:       7.668149   4.26   3.60   4.03  -0.21    4.11
+    ## 3:       7.646781   3.81   2.16   3.35  -0.92    3.46
+    ## 4:       7.668735   3.24   2.32   2.72  -0.19    3.10
+    ## 5:       7.666020   3.43   2.84   3.26  -0.32    3.50
+    ## 6:             NA   3.56   3.59   4.05   1.17    3.49
 
 This wide data now has as many rows as years and as many columns as
 variable x EAR. The columns are named with the variable followed by
 "\_EAR" to identify the EAR it represents.
 
-Data plotting
--------------
+## Data plotting
 
 The data plotting function <b>EA.plot.f</b> just queries the EA.data
 with <b>EA.query.f</b> and then plots them. It puts all the plots on one
 page as a matrix of plots with each row being a variable and each column
 being an EAR:
 
-    EA.plot.f(years=1900:2020, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:4, smoothing=T)
+    EA.plot.f(years=1900:2020, variables=c("t150", "ph_bot.fall", "t250"), EARs=1:4, smoothing=T)
 
 ![](README_files/figure-markdown_strict/plotting1-1.png)
 
@@ -1016,7 +1019,7 @@ put them all in one pdf in your working directory.
 Another example of the plot without smoothing and different graphical
 parameters:
 
-    EA.plot.f(years=1900:2020, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:4, smoothing=F, pch=20, lwd=2, col="blue", type="b")
+    EA.plot.f(years=1900:2020, variables=c("t150", "ph_bot.fall", "t250"), EARs=1:4, smoothing=F, pch=20, lwd=2, col="blue", type="b")
 
 ![](README_files/figure-markdown_strict/plotting2-1.png)
 
@@ -1027,12 +1030,11 @@ You may want to plot all variables of a particular type. You can do this
 by selecting the variables with the vars.f function and selecting just
 the <b>variable</b> column from its output using “$”
 
-    EA.plot.f(years=1900:2020, variables=vars.f(variable.type="phenological")$variable, EARs=1:2, smoothing=T)
+    EA.plot.f(years=1900:2020, variables=vars.f(variable.type="chemical")$variable, EARs=1:2, smoothing=T)
 
-![](README_files/figure-markdown_strict/plotting3-1.png)
+![](README_files/figure-markdown_strict/plotting3-1.png)![](README_files/figure-markdown_strict/plotting3-2.png)![](README_files/figure-markdown_strict/plotting3-3.png)![](README_files/figure-markdown_strict/plotting3-4.png)![](README_files/figure-markdown_strict/plotting3-5.png)![](README_files/figure-markdown_strict/plotting3-6.png)![](README_files/figure-markdown_strict/plotting3-7.png)
 
-Finding variables and data
---------------------------
+## Finding variables and data
 
 You might be interested in anything to do with large scale oscillation
 indices, e.g. North Atlantic Oscillation. These all have an EAR=-1
@@ -1042,16 +1044,16 @@ and then with that information select the NAO monthly data.
 
     find.vars.f("oscilla")
 
-    ##  [1] "AMO.month1"  "AMO.month10" "AMO.month11" "AMO.month12" "AMO.month2" 
-    ##  [6] "AMO.month3"  "AMO.month4"  "AMO.month5"  "AMO.month6"  "AMO.month7" 
-    ## [11] "AMO.month8"  "AMO.month9"  "AO.month1"   "AO.month10"  "AO.month11" 
-    ## [16] "AO.month12"  "AO.month2"   "AO.month3"   "AO.month4"   "AO.month5"  
-    ## [21] "AO.month6"   "AO.month7"   "AO.month8"   "AO.month9"   "H.NAO"      
-    ## [26] "NAO.month1"  "NAO.month10" "NAO.month11" "NAO.month12" "NAO.month2" 
-    ## [31] "NAO.month3"  "NAO.month4"  "NAO.month5"  "NAO.month6"  "NAO.month7" 
-    ## [36] "NAO.month8"  "NAO.month9"  "PDO.month1"  "PDO.month10" "PDO.month11"
-    ## [41] "PDO.month12" "PDO.month2"  "PDO.month3"  "PDO.month4"  "PDO.month5" 
-    ## [46] "PDO.month6"  "PDO.month7"  "PDO.month8"  "PDO.month9"
+    ##  [1] "amo.month1"  "amo.month10" "amo.month11" "amo.month12" "amo.month2" 
+    ##  [6] "amo.month3"  "amo.month4"  "amo.month5"  "amo.month6"  "amo.month7" 
+    ## [11] "amo.month8"  "amo.month9"  "ao.month1"   "ao.month10"  "ao.month11" 
+    ## [16] "ao.month12"  "ao.month2"   "ao.month3"   "ao.month4"   "ao.month5"  
+    ## [21] "ao.month6"   "ao.month7"   "ao.month8"   "ao.month9"   "h.nao"      
+    ## [26] "nao.month1"  "nao.month10" "nao.month11" "nao.month12" "nao.month2" 
+    ## [31] "nao.month3"  "nao.month4"  "nao.month5"  "nao.month6"  "nao.month7" 
+    ## [36] "nao.month8"  "nao.month9"  "pdo.month1"  "pdo.month10" "pdo.month11"
+    ## [41] "pdo.month12" "pdo.month2"  "pdo.month3"  "pdo.month4"  "pdo.month5" 
+    ## [46] "pdo.month6"  "pdo.month7"  "pdo.month8"  "pdo.month9"
 
     # ah ha, seems that something like "NAO.mon" will do it for us but you don't need to worry about the case
     NAO.vars= find.vars.f("nao.mon")
@@ -1061,8 +1063,7 @@ and then with that information select the NAO monthly data.
 
 ![](README_files/figure-markdown_strict/plotting4-1.png)
 
-Discovering relationship between variables in the database
-----------------------------------------------------------
+## Discovering relationship between variables in the database
 
 If you have a hunch that one variable may be driving another, you can do
 a fairly simple analysis to at least give you a first crack at testing
@@ -1078,16 +1079,16 @@ EAR=-1) but you are not sure what time lag might be most appropriate.
 Here you are assuming NAO is the independent variable and, SST is the
 dependent variable
 
-    EA.plot.f(variables=c("H.NAO","SST"), years=1900:2020, EARs=c(-1,3), smoothing=T,pch=20)
+    EA.plot.f(variables=c("h.nao","sst"), years=1900:2020, EARs=c(-1,3), smoothing=T,pch=20)
 
 ![](README_files/figure-markdown_strict/crosscor1-1.png)
 
-It is hard to say from just plotting the data because the length of the
+It is hard to say from just pltotting the data because the length of the
 time series are quite different. The cross correlation testing at
 various temporal lags will probably help you formulate your hypotheses
 better.
 
-    EA.cor.f(x="H.NAO", y="SST", years=1900:2020, x.EAR=-1, y.EAR=3)
+    EA.cor.f(x="h.nao", y="sst", years=1900:2020, x.EAR=-1, y.EAR=3)
 
 ![](README_files/figure-markdown_strict/crosscor2-1.png)
 
@@ -1104,7 +1105,7 @@ hypothesis implies causality.
 Let’s try an easy one by choosing two variable you know must be related:
 SST in EAR 3 (central Gulf) and SST in EAR 1 (NW Gulf).
 
-    EA.cor.f(x="SST",y="SST", years=1900:2020, x.EAR=1, y.EAR=3)
+    EA.cor.f(x="sst",y="sst", years=1900:2020, x.EAR=1, y.EAR=3)
 
 ![](README_files/figure-markdown_strict/crosscor3-1.png)
 
@@ -1117,8 +1118,7 @@ get the same result as ccf. This has to do with the normalisation of the
 data at the beginning before lagging in ccf. See the help for EA.cor.f
 for more details.
 
-Using down-scaled atmospheric climate projections to predict oceanographic variables
-------------------------------------------------------------------------------------
+## Using down-scaled atmospheric climate projections to predict oceanographic variables
 
 The database contains atmospheric projections from 24 different global
 climate models that have been down-scaled to boxes roughly in the same
@@ -1139,51 +1139,51 @@ and could potential inform a semi-trustable projection (or at least
 better than guessing). Follow this code as an example of what could be
 done.
 
-      EA.cor.f("Ann.mean.T.med.RCP45","T.deep",1950:2020,1,1)
+      EA.cor.f("ann.mean.t.med.rcp45","t.deep",1950:2020,1,1)
 
 ![](README_files/figure-markdown_strict/climproject-1.png)
 
     # lets look from 2009 when the deep water really started warming up, it is a pretty good predictor
-      EA.cor.f("Ann.mean.T.med.RCP45","T.deep",2009:2020,1,1)
+      EA.cor.f("ann.mean.t.med.rcp45","t.deep",2009:2020,1,1)
 
 ![](README_files/figure-markdown_strict/climproject-2.png)
 
     # fit a linear model and project that model based on the ensemble median prediction until 2095
-      tmp= EA.query.f(c("Ann.mean.T.med.RCP45","T.deep"),1950:2100,1)
+      tmp= EA.query.f(c("ann.mean.t.med.rcp45","t.deep"),1950:2100,1)
       tmp2= dcast(tmp, year~variable)
-      plot(tmp2$Ann.mean.T.med.RCP45,tmp2$T.deep)
-      rug(tmp2$Ann.mean.T.med.RCP45)
+      plot(tmp2$ann.mean.t.med.rcp45,tmp2$t.deep)
+      rug(tmp2$ann.mean.t.med.rcp45)
 
 ![](README_files/figure-markdown_strict/climproject-3.png)
 
-      pred.lm= lm(T.deep~Ann.mean.T.med.RCP45,data=tmp2)
+      pred.lm= lm(t.deep~ann.mean.t.med.rcp45,data=tmp2)
       summary(pred.lm)
 
     ## 
     ## Call:
-    ## lm(formula = T.deep ~ Ann.mean.T.med.RCP45, data = tmp2)
+    ## lm(formula = t.deep ~ ann.mean.t.med.rcp45, data = tmp2)
     ## 
     ## Residuals:
     ##      Min       1Q   Median       3Q      Max 
-    ## -0.42450 -0.15178 -0.05905  0.08596  0.58004 
+    ## -0.44891 -0.16203 -0.05265  0.12173  0.58400 
     ## 
     ## Coefficients:
     ##                      Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept)           3.66998    0.22421  16.368  < 2e-16 ***
-    ## Ann.mean.T.med.RCP45  0.55454    0.07796   7.113 5.43e-08 ***
+    ## (Intercept)           3.61109    0.23661  15.262 3.05e-16 ***
+    ## ann.mean.t.med.rcp45  0.58057    0.08185   7.093 4.78e-08 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
-    ## Residual standard error: 0.2393 on 31 degrees of freedom
-    ##   (113 observations deleted due to missingness)
-    ## Multiple R-squared:  0.6201, Adjusted R-squared:  0.6078 
-    ## F-statistic: 50.59 on 1 and 31 DF,  p-value: 5.427e-08
+    ## Residual standard error: 0.2547 on 32 degrees of freedom
+    ##   (112 observations deleted due to missingness)
+    ## Multiple R-squared:  0.6113, Adjusted R-squared:  0.5991 
+    ## F-statistic: 50.32 on 1 and 32 DF,  p-value: 4.782e-08
 
-      tmp2$T.deep.pred= predict(pred.lm,newdata=tmp2)
-      plot(tmp2$Ann.mean.T.med.RCP45,tmp2$T.deep.pred,type="l",col="blue",lwd=3,
+      tmp2$t.deep.pred= predict(pred.lm,newdata=tmp2)
+      plot(tmp2$ann.mean.t.med.rcp45,tmp2$t.deep.pred,type="l",col="blue",lwd=3,
            xlab="Annual mean surface temperature down-scaled to EAR 1", ylab= "Bottom temperature of deep (>200 m) waters EAR 1")
-      points(tmp2$Ann.mean.T.med.RCP45,tmp2$T.deep,pch=20)
-      rug(tmp2$Ann.mean.T.med.RCP45)
+      points(tmp2$ann.mean.t.med.rcp45,tmp2$t.deep,pch=20)
+      rug(tmp2$ann.mean.t.med.rcp45)
       title(main="RCP 4.5 climate projection until 2095, ensemble median")
 
 ![](README_files/figure-markdown_strict/climproject-4.png)
@@ -1194,8 +1194,7 @@ then it can be a basis for extrapolation. As above, perhaps it is better
 than guessing but one needs to put a bit of water in their wine for the
 interpretation.
 
-Source and references for data
-==============================
+# Source and references for data
 
 It is important to acknowledge to the individuals and organisation who
 collected the data and or processed it to come up with the indices that
@@ -1208,7 +1207,7 @@ give you the name and or link to the person or organisation responsible
 for the data represented by that variable. It will also provide the main
 citation for that variable.
 
-    formattable::formattable(sources.f(c("T200","H.NAO","O2.Fall.DOXY2.bottom")))
+    formattable::formattable(sources.f(c("t.200","h.nao","o2.fall.doxy2.bottom")))
 
 <table class="table table-condensed">
 <thead>
@@ -1227,10 +1226,10 @@ reference
 <tbody>
 <tr>
 <td style="text-align:right;">
-H.NAO
+h.nao
 </td>
 <td style="text-align:right;">
-<a href="https://climatedataguide.ucar.edu/sites/default/files/nao_station_annual.txt" class="uri">https://climatedataguide.ucar.edu/sites/default/files/nao_station_annual.txt</a>
+<https://climatedataguide.ucar.edu/sites/default/files/nao_station_annual.txt>
 </td>
 <td style="text-align:right;">
 Hurrell, J.W., 1995: Decadal trends in the North Atlantic Oscillation
@@ -1240,32 +1239,16 @@ and relationships to regional temperature and precipitation. Science
 </tr>
 <tr>
 <td style="text-align:right;">
-O2.Fall.DOXY2.bottom
+o2.fall.doxy2.bottom
 </td>
 <td style="text-align:right;">
-Marjolaine Blais
-(<a href="mailto:marjolaine.blais@dfo-mpo.gc.ca" class="email">marjolaine.blais@dfo-mpo.gc.ca</a>)
+Marjolaine Blais (<marjolaine.blais@dfo-mpo.gc.ca>)
 </td>
 <td style="text-align:right;">
-Blais, M., Galbraith, P.S., Plourde, S., Scarratt, M., Devine, L. and
-Lehoux, C. 2019. Chemical and Biological Oceanographic Conditions in the
-Estuary and Gulf of St. Lawrence during 2017. DFO Can. Sci. Advis. Sec.
-Res. Doc. 2019/009. iv + 56 pp. 
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-T200
-</td>
-<td style="text-align:right;">
-Peter Galbraith
-(<a href="mailto:peter.galbraith@dfo-mpo.gc.ca" class="email">peter.galbraith@dfo-mpo.gc.ca</a>)
-</td>
-<td style="text-align:right;">
-Galbraith, P.S., Chassé, J., Caverhill, C., Nicot, P., Gilbert, D.,
-Lefaivre, D. and Lafleur, C. 2018. Physical Oceanographic Conditions in
-the Gulf of St. Lawrence during 2017. DFO Can. Sci. Advis. Sec. Res.
-Doc. 2018/050. v + 79 p. 
+Blais, M., Galbraith, P.S., Plourde, S., Devine, L. and Lehoux, C. 2021.
+Chemical and Biological Oceanographic Conditions in the Estuary and Gulf
+of St. Lawrence during 2019. DFO Can. Sci. Advis. Sec. Res. Doc.
+2021/002. iv + 66 p. 
 </td>
 </tr>
 </tbody>
@@ -1274,8 +1257,7 @@ Doc. 2018/050. v + 79 p. 
 If you just type source.f() you will get the person/organisation
 responsible and main reference for all variables in the database.
 
-Forget the R-package, I just want the data
-==========================================
+# Forget the R-package, I just want the data
 
 You are not obliged to use this R-package if you want the data. The data
 table and variable description table have been merged and written to an
@@ -1292,8 +1274,26 @@ from the two places.
 Please do not forget to acknowledge the sources of the data and cite the
 appropriate references that are included in the excel file.
 
-Development plan and data inclusion
-===================================
+# Work using gslea and links to associated code
+
+## Where gslea has been used in research and advice
+
+-   Conditioning advice for Gulf of St. Lawrence shrimp based on an
+    assessment of environment and palusible future climate scenarios.
+    January 2020.
+-   Risk of climate change impacts on the Gulf of St. Lawrence turbot
+    fishery. February 2020.
+-   4R herring assessment. November 2020
+
+## Code and packages that have drawn up gslea
+
+-   [Andrew Smith](https://github.com/adsmithca) created a script as a
+    [github
+    gist](https://gist.github.com/adsmithca/8c00a360292e127cfaef4564df0a7b1d)
+    that makes some nice maps drawing on the data in the package using
+    several of the tidyverse libraries.
+
+# Development plan and data inclusion
 
 Presently, the development is occuring in Quebec Region but this will be
 expanded to include data that are stored and processed by researchers in
@@ -1302,8 +1302,7 @@ Quebec Region and then approach Gulf Region with specific examples that
 they could follow. A joint meeting in the Spring of 2020 was the first
 step in this cross region data sharing in the matrix.
 
-Multispecies fish and invertebrate survey data
-----------------------------------------------
+## Multispecies fish and invertebrate survey data
 
 We have added a preliminary extraction of Quebec Region multispecies
 fish and invertebrate biomass data but these will require more quality
@@ -1317,8 +1316,7 @@ categories. Finally, we have taken all species caught in the survey and
 lumped them into various functional guilds and extracted biomass by
 guild.
 
-Fishing pressure indicators
----------------------------
+## Fishing pressure indicators
 
 We have begun working on developing indicators of fishing pressure in
 each region which will have multiple measures such as biomass extracted
@@ -1328,8 +1326,7 @@ of these data such as improper location assignment. We are presently
 working on this to try to develop useful pressure indicators related to
 fishery removals and effort.
 
-Down-scaled oceanographic projections
--------------------------------------
+## Down-scaled oceanographic projections
 
 Down-scaled oceanographic variable (physical, chemical, biological)
 projections under different ICCP RCP scenarios and ensembles means and
@@ -1337,8 +1334,7 @@ variances will also be provided in the matrix eventually. We have been
 in discussion with our regional oceanographers and are developing a plan
 to include this information in a future update of the matrix.
 
-Other data
-----------
+## Other data
 
 There have been considerations of including coastal data, stock
 assessment results, fine-scaled information. These may be possible to
@@ -1348,8 +1344,7 @@ kind of library but specifically aimed at this information. We need to
 keep a consistent approach to the development philoshophy and goals
 which can help us decide this.
 
-Updating the package
-====================
+# Updating the package
 
 <mark>Unless you need to update this database, you do not need to read
 this</mark>
@@ -1362,8 +1357,7 @@ then manipulation in R.
 To update the package you will need the standard packages for doing it
 like roxygen and devtools.
 
-Computing requirements for updating
------------------------------------
+## Computing requirements for updating
 
 This package requires linux to update. The reason linux is needed is
 because it uses BASH system calls and programs like awk and sed to
@@ -1381,16 +1375,14 @@ and you cannot run R from powershell so I am not sure you could send R
 systemcalls to the powershell and if you can the script will fail
 without “sed”.
 
-Raw data
---------
+## Raw data
 
 Raw data has been provided in various forms by individual data
 providers. Sometimes it is in tabular format while other times it is in
 a long format. We need to turn it all into long format and this also
 involves standardising variable names.
 
-Running the update script
--------------------------
+## Running the update script
 
 The update script is XXXX (I will make a vignette on this including the
 data but I have not done this yet) which is run from R. It makes system
@@ -1421,8 +1413,7 @@ package.
 
 I doubt it will go this smoothly but I hope so.
 
-Updating the R package
-----------------------
+## Updating the R package
 
 ### Compiling documentation
 
@@ -1433,35 +1424,30 @@ to recompile the documentation using roxygen2.
 
 Clean and rebuild
 
-Project participants (past and present)
-=======================================
+# Project participants (past and present)
 
 Jérôme Beaulieu, Hugues Benoît, Marjolaine Blais, Hugo Bourdages, Daniel
 Duplisea, Peter Galbraith, Mike Hammill, Cédric Juillet, David Merette,
 Stéphane Plourde, Marie-Julie Roux, Bernard Sainte-Marie, Antoine
 Rivierre, Virginie Roy
 
-If you have issues
-==================
+# If you have issues
 
 For comments, questions, bugs etc, you can send this to the package
-maintainer, Daniel Duplisea, by email
-(<a href="mailto:daniel.duplisea@gmail.com" class="email">daniel.duplisea@gmail.com</a>,
-<a href="mailto:daniel.duplisea@dfo-mpo.gc.ca" class="email">daniel.duplisea@dfo-mpo.gc.ca</a>)
-or file a bug report or issue on github.
+maintainer, Daniel Duplisea, by email (<daniel.duplisea@gmail.com>,
+<daniel.duplisea@dfo-mpo.gc.ca>) or file a bug report or issue on
+github.
 
 Pull requests conforming to the development philosophy are welcome.
 
-Citation for this package
-=========================
+# Citation for this package
 
 Duplisea, DE. Merette, D., Roux, M-J., Benoît, H., Blais, M., Galbraith,
 P., Plourde, S. 2020. gslea: the Gulf of St Lawrence ecosystem approach
 data matrix R-package. R package version 0.1
-<a href="https://github.com/duplisea/gslea" class="uri">https://github.com/duplisea/gslea</a>.
+<https://github.com/duplisea/gslea>.
 
-References
-==========
+# References
 
 Edwards, A.M., Duplisea, D.E., Grinnell, M.H., Anderson, S.C., Grandin,
 C.J., Ricard, D., Keppel, E.A., Anderson, E.D., Baker, K.D., Benoît,
@@ -1473,5 +1459,4 @@ L.J., Wor, C., and Zhu, X. 2018. Proceedings of the Technical Expertise
 in Stock Assessment (TESA) national workshop on ‘Tools for transparent,
 traceable, and transferable assessments,’ 27–30 November 2018 in
 Nanaimo, British Columbia. Can. Tech. Rep. Fish. Aquat. Sci. 3290: v +
-10
-p. <a href="https://waves-vagues.dfo-mpo.gc.ca/Library/40750152.pdf" class="uri">https://waves-vagues.dfo-mpo.gc.ca/Library/40750152.pdf</a>
+10 p. <https://waves-vagues.dfo-mpo.gc.ca/Library/40750152.pdf>

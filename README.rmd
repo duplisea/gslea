@@ -1,7 +1,8 @@
 ---
 title: "Gulf of St. Lawrence Ecosystem Approach package (gslea)"
+date: 12 March 2021
 output: 
-    md_document: 
+    html_document: 
       toc: true
 ---
 # What is it?
@@ -60,7 +61,7 @@ There are also some broad climatic, oceangraphic and atmospheric indices in the 
 ![](README_files/figure-markdown_strict/gslmap.plain-1.png){width=100%}
 
 # Design and development philosophy
-The package is GPL-3 licenced and thus is available globally without warranty. The package is designed to have as few data containers as possible and in a common and consistent format to allow generic extraction. The package has only one dependence which is the library data.table and data.table itself has no dependencies. The data.table library is used because of its efficient use of computing resources making it very fast for processing data (https://h2oai.github.io/db-benchmark/) which is important if in someone’s analysis they make repeated queries to the data in loops or in bootstrapping directly from the full database. The data are structured in what has become termed “tidy data” for people in the tidyverse as opposed to dirty data I suppose. You can use your own tidyverse code on it. The data class "data.table" inherit a secondary class of data.frame, therefore they are compatible with most of the base R data.frame operations. The package is designed such that it is consistent, should be scalable to when new data types become available and should not break existing analyses when updated (I hope).
+The package is GPL-3 licenced and thus is available globally without warranty. The package is designed to have as few data containers as possible and in a common and consistent format to allow generic extraction. The package has only one dependence which is the library data.table and data.table itself has no dependencies. The data.table library is used because of its efficient use of computing resources making it very fast for processing data (https://h2oai.github.io/db-benchmark/) which is important if in someone’s analysis they make repeated queries to the data in loops or in bootstrapping directly from the full database. The data are structured in what has become termed “tidy data” for people in the tidyverse as opposed to messy data I suppose. You can use your own tidyverse code on it. The data class "data.table" inherits a secondary class of data.frame, therefore they are compatible with most of the base R data.frame operations. The package is designed such that it is consistent, should be scalable to when new data types become available and should not break existing analyses when updated (I hope).
 
 ## List of development goals and guidelines
 * The package needs to be technically accessible to as wide a swath of the envisioned end user community as possible (see Purpose section for an explanation of who this is).
@@ -97,13 +98,13 @@ The package consists of limited number of functions:
 
 <ins>metadata.f(verbosity)</ins> a description of the data available with three levels of <b>verbosity</b> ("low" "med", "high") or EASTER EGG information on everyone's favourite Dutch post-impressionist: metadata.f("vangogh").
 
-<ins>vars.f(variable.type)</ins> shows the variables available in a particular <b>variable.type</b> ("physical", "chemical", "planktonic", "phenologic", "climatic"), gives a description of each and its units.
+<ins>vars.f(variable.type)</ins> shows the variables available in a particular <b>variable.type</b> e.g. "physical", "chemical" gives a description of each and its units.
 
 <ins>find.vars.f(search.term)</ins> finds variable names based on partial matches. It search not just the variable names but also their descriptions, sources and references.
 
-<ins>EA.query.f(variables, years, EARs) </ins> the function you use to query the data and the output is in long data format. <b>variables</b> (e.g. "T150","SST") is a character vector, <b>years</b> is a numeric vector (e.g. 2002:2012), <b>EARs</b> is the ecoregion and is a numeric vector (e.g. 1:3).
+<ins>EA.query.f(variables, years, EARs) </ins> the function you use to query the data and the output is in long data format. <b>variables</b> (e.g. "t150","sst") is a character vector, <b>years</b> is a numeric vector (e.g. 2002:2012), <b>EARs</b> is the ecoregion and is a numeric vector (e.g. 1:3).
 
-<ins>EA.plot.f(variables, years, EARs, ...)</ins> this will plot the variables over time. It will make a matrix of variable x EAR with up to 25 plots per page (i.e. 25 variable*EAR combinations). <b>variables</b> (e.g. "T150") is a character vector, <b>years</b> is a numeric vector (e.g. 2002:2012), <b>EARs</b> is the ecoregion and is a numeric vector (e.g. 1:3), <b>smoothing</b> is a logical on whether the smooth.spline should be run through the data series to help give a general idea of the tendencies in time. It will only try to smooth if the data has more than 5 observations. <b>....</b> will accept parameters to par for plotting. This is mostly for quick exploration of the data rather than for making good quality graphics.
+<ins>EA.plot.f(variables, years, EARs, ...)</ins> this will plot the variables over time. It will make a matrix of variable x EAR with up to 25 plots per page (i.e. 25 variable*EAR combinations). <b>variables</b> (e.g. "t150") is a character vector, <b>years</b> is a numeric vector (e.g. 2002:2012), <b>EARs</b> is the ecoregion and is a numeric vector (e.g. 1:3), <b>smoothing</b> is a logical on whether the smooth.spline should be run through the data series to help give a general idea of the tendencies in time. It will only try to smooth if the data has more than 5 observations. <b>....</b> will accept parameters to par for plotting. This is mostly for quick exploration of the data rather than for making good quality graphics.
 
 <ins>EA.cor.f(variables, years, EARs, ...)</ins> commputes the cross corelation between two variables with lags. It has the option of differencing the variables to make them stationary and therefore correlate on the how the values of each of the variables changes from year to year as opposed to their absolute values. ... gives arguments to the <b>ccf</b> function.
 
@@ -132,7 +133,7 @@ A few minimal extraction functions are provided that should be fast and relative
 metadata.f(verbosity="low")
 ```
 
-Another perhaps more useful way to know what the database contains is with the function <b>var.f</b>. <b>var.f</b> accepts as an argument one of the data types with the default being “all”. The options are the adjectives for a data type: "physical", "chemical", "planktonic", "phenological" which for some data types seems awkward but it is consistent. It will give you the exact name of the variable, its description and units. The output can be long and the descriptions are sometimes quite wordy so it is difficult to read. I suggest you save the result of a large query to var.f as an object and then use the library formattable to make it into a more readable table. So for example formattable, e.g.:
+Another perhaps more useful way to know what the database contains is with the function <b>var.f</b>. <b>var.f</b> accepts as an argument one of the data types with the default being “all”. The options are the adjectives for a data type, e.g. "physical", "chemical", "planktonic" which for some data types seems awkward but it is consistent. It will give you the exact name of the variable, its description and units. The output can be long and the descriptions are sometimes quite wordy so it is difficult to read. I suggest you save the result of a large query to var.f as an object and then use the library formattable to make it into a more readable table. So for example formattable, e.g.:
 
 ```{r variables, eval=TRUE}
 phys.var= vars.f(variable.type="physical")
@@ -145,21 +146,21 @@ You can also try to find a variable through partial matching of a term (case ins
 find.vars.f(search.term= "200")
 ```
 
-You will see that T.deep and T.shallow come up in this because in their descriptions, the distinction between shallow and deep waters is 200m. You will also see AMO variable coming up and this is because the reference for the AMO was published in 2001 and 200 is a substring of that. So you can see it will find things fairly broadly
+You will see that t.deep and t.shallow come up in this because in their descriptions, the distinction between shallow and deep waters is 200m. You will also see AMO variable coming up and this is because the reference for the AMO was published in 2001 and 200 is a substring of that. So you can see it will find things fairly broadly
 
-This search function will search most of the main fields of the variable.description table. So for example you may be interested in products which Peter Galbraith was involved with so you could try find.vars.f(search.term= "galbra") or say something to do with plankon blooms find.vars.f("bloom").
+This search function will search most of the main fields of the variable.description table. So for example you may be interested in products which Peter Galbraith was involved with so you could try find.vars.f(search.term= "galbra") or say something to do with plankton blooms find.vars.f("bloom").
 
 ## Data extraction
 Extracting the data is done with a single function called <b>EA.query.f</b>. This query wants a character vector or scalar for variable, an integer vector or scalar for year and an integer vector or scalar for EAR:
 
 ```{r extraction1, eval=TRUE}
-EA.query.f(years=1999:2012, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:2)
+EA.query.f(years=1999:2012, variables=c("t150", "ph_bot.fall", "t250"), EARs=1:2)
 ```
 
 You need to name all the variables you want to extract but you can access all the years or all the EARs by putting a wide range on them
 
 ```{r extraction2, eval=TRUE}
-EA.query.f(years=1900:2020, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:99)
+EA.query.f(years=1900:2020, variables=c("t150", "ph_bot.fall", "t250"), EARs=1:99)
 ```
 
 You may want to save the results of a query to an object and then export it to csv (<b>fwrite</b>) or some other format.
@@ -168,7 +169,7 @@ You may want to save the results of a query to an object and then export it to c
 The data are in long format (tidyverse speak = "tidy data") which is the common way to store data in databases. It means that for a variable x year x EAR comination where there is no observation, there is not a row in the database either. If you want tabular data (wide) to show when say and observation was not made for a particular year and variable and EAR, then you can widen the data using the "dcast" function from data.table
 
 ```{r recasting, eval=TRUE}
-dat= EA.query.f(years=1900:2020, variables=c("T150","ph_bot.fall","ice.max","O2.Late_summer.sat.mean50_100"), EARs=1)
+dat= EA.query.f(years=1900:2020, variables=c("t150","ph_bot.fall","ice.max","o2.late_summer.sat.mean50_100"), EARs=1)
 dcast(dat, year~ variable)
 ```
 
@@ -177,7 +178,7 @@ This puts each variable as a separate column, it preserves all the years where a
 It is important to know that when you do this as above, you are making 2-dimensional table data which is fine if your data are two dimensional. If you have more than one EAR, then your initial data are 3-dimensional and when you cast the data to 2-dimensions, a decision needs to made on how to reduce it to 2-dimensions. This is done with a "group by" function. By default, dcast will do a group-by as count but you can also specify other groub-by functions such as sum or mean. You can also, however, cast multidimension data into a table but it will repeat the columns for each EAR (note that "EAR" is now in the right hand side of the formula)
 
 ```{r recasting2, eval=TRUE}
-dat= EA.query.f(years=2015:2020, variables=c("T150","ph_bot.fall","ice.max","O2.Late_summer.sat.mean50_100"), EARs=1:100)
+dat= EA.query.f(years=2015:2020, variables=c("t150","ph_bot.fall","ice.max","o2.late_summer.sat.mean50_100"), EARs=1:100)
 dcast(dat, year~ variable+EAR)
 ```
 This wide data now has as many rows as years and as many columns as variable x EAR. The columns are named with the variable followed by "_EAR" to identify the EAR it represents.
@@ -186,7 +187,7 @@ This wide data now has as many rows as years and as many columns as variable x E
 The data plotting function <b>EA.plot.f</b> just queries the EA.data with <b>EA.query.f</b> and then plots them. It puts all the plots on one page as a matrix of plots with each row being a variable and each column being an EAR:
 
 ```{r plotting1, eval=TRUE}
-EA.plot.f(years=1900:2020, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:4, smoothing=T)
+EA.plot.f(years=1900:2020, variables=c("t150", "ph_bot.fall", "t250"), EARs=1:4, smoothing=T)
 ```
 
 It will plot a maximum of 25 plots per page. What you might want to do is call pdf("EA.plots.pdf") xxx dev.off() when doing this and it will put them all in one pdf in your working directory.
@@ -194,14 +195,14 @@ It will plot a maximum of 25 plots per page. What you might want to do is call p
 Another example of the plot without smoothing and different graphical parameters:
 
 ```{r plotting2, eval=TRUE}
-EA.plot.f(years=1900:2020, variables=c("T150", "ph_bot.fall", "T250"), EARs=1:4, smoothing=F, pch=20, lwd=2, col="blue", type="b")
+EA.plot.f(years=1900:2020, variables=c("t150", "ph_bot.fall", "t250"), EARs=1:4, smoothing=F, pch=20, lwd=2, col="blue", type="b")
 ```
 
 You can see that if there are no data for the variable by EAR combination, a blank plot is produced in the plot matrix.
 
 You may want to plot all variables of a particular type. You can do this by selecting the variables with the vars.f function and selecting just the <b>variable</b> column from its output using "$"
 ```{r plotting3, eval=TRUE}
-EA.plot.f(years=1900:2020, variables=vars.f(variable.type="phenological")$variable, EARs=1:2, smoothing=T)
+EA.plot.f(years=1900:2020, variables=vars.f(variable.type="chemical")$variable, EARs=1:2, smoothing=T)
 ```
 
 ## Finding variables and data
@@ -222,13 +223,13 @@ If you have a hunch that one variable may be driving another, you can do a fairl
 So let's assume for this example that you think that sea surface temperature in the central Gulf (EAR 3) is related to the North Atlantic Oscillation at some earlier time (<b>climatic</b> variables always have EAR=-1) but you are not sure what time lag might be most appropriate. Here you are assuming NAO is the independent variable and, SST is the dependent variable
 
 ```{r crosscor1, eval=TRUE}
-EA.plot.f(variables=c("H.NAO","SST"), years=1900:2020, EARs=c(-1,3), smoothing=T,pch=20)
+EA.plot.f(variables=c("h.nao","sst"), years=1900:2020, EARs=c(-1,3), smoothing=T,pch=20)
 ```
 
-It is hard to say from just plotting the data because the length of the time series are quite different. The cross correlation testing at various temporal lags will probably help you formulate your hypotheses better.
+It is hard to say from just pltotting the data because the length of the time series are quite different. The cross correlation testing at various temporal lags will probably help you formulate your hypotheses better.
 
 ```{r crosscor2, eval=TRUE}
-EA.cor.f(x="H.NAO", y="SST", years=1900:2020, x.EAR=-1, y.EAR=3)
+EA.cor.f(x="h.nao", y="sst", years=1900:2020, x.EAR=-1, y.EAR=3)
 ```
 
 It is a bit of a downer because your best correlations is between NAO and SST in the same year (0 lag) and the relationship is not that strong (about -0.3) and not significant. 
@@ -238,7 +239,7 @@ To imply the causality you are looking for in such an analysis (because you spec
 Let's try an easy one by choosing two variable you know must be related: SST in EAR 3 (central Gulf) and SST in EAR 1 (NW Gulf).
 
 ```{r crosscor3, eval=TRUE}
-EA.cor.f(x="SST",y="SST", years=1900:2020, x.EAR=1, y.EAR=3)
+EA.cor.f(x="sst",y="sst", years=1900:2020, x.EAR=1, y.EAR=3)
 ```
 
 Yes indeed, they are very tightly positively correlated.
@@ -253,23 +254,23 @@ The database contains atmospheric projections from 24 different global climate m
 So as an example of what could be done with this, the annual mean surface temperature for an EAR has been correlated against the deep water temperature. The linear model resulting from this is not too bad and could potential inform a semi-trustable projection (or at least better than guessing). Follow this code as an example of what could be done.
 
 ```{r climproject, eval=TRUE}
-  EA.cor.f("Ann.mean.T.med.RCP45","T.deep",1950:2020,1,1)
+  EA.cor.f("ann.mean.t.med.rcp45","t.deep",1950:2020,1,1)
 
 # lets look from 2009 when the deep water really started warming up, it is a pretty good predictor
-  EA.cor.f("Ann.mean.T.med.RCP45","T.deep",2009:2020,1,1)
+  EA.cor.f("ann.mean.t.med.rcp45","t.deep",2009:2020,1,1)
 
 # fit a linear model and project that model based on the ensemble median prediction until 2095
-  tmp= EA.query.f(c("Ann.mean.T.med.RCP45","T.deep"),1950:2100,1)
+  tmp= EA.query.f(c("ann.mean.t.med.rcp45","t.deep"),1950:2100,1)
   tmp2= dcast(tmp, year~variable)
-  plot(tmp2$Ann.mean.T.med.RCP45,tmp2$T.deep)
-  rug(tmp2$Ann.mean.T.med.RCP45)
-  pred.lm= lm(T.deep~Ann.mean.T.med.RCP45,data=tmp2)
+  plot(tmp2$ann.mean.t.med.rcp45,tmp2$t.deep)
+  rug(tmp2$ann.mean.t.med.rcp45)
+  pred.lm= lm(t.deep~ann.mean.t.med.rcp45,data=tmp2)
   summary(pred.lm)
-  tmp2$T.deep.pred= predict(pred.lm,newdata=tmp2)
-  plot(tmp2$Ann.mean.T.med.RCP45,tmp2$T.deep.pred,type="l",col="blue",lwd=3,
+  tmp2$t.deep.pred= predict(pred.lm,newdata=tmp2)
+  plot(tmp2$ann.mean.t.med.rcp45,tmp2$t.deep.pred,type="l",col="blue",lwd=3,
        xlab="Annual mean surface temperature down-scaled to EAR 1", ylab= "Bottom temperature of deep (>200 m) waters EAR 1")
-  points(tmp2$Ann.mean.T.med.RCP45,tmp2$T.deep,pch=20)
-  rug(tmp2$Ann.mean.T.med.RCP45)
+  points(tmp2$ann.mean.t.med.rcp45,tmp2$t.deep,pch=20)
+  rug(tmp2$ann.mean.t.med.rcp45)
   title(main="RCP 4.5 climate projection until 2095, ensemble median")
 ```
 
@@ -281,7 +282,7 @@ It is important to acknowledge to the individuals and organisation who collected
 The function sources.f accept a variable name as an argument. It will give you the name and or link to the person or organisation responsible for the data represented by that variable. It will also provide the main citation for that variable.
 
 ```{r sources, eval=TRUE}
-formattable::formattable(sources.f(c("T200","H.NAO","O2.Fall.DOXY2.bottom")))
+formattable::formattable(sources.f(c("t.200","h.nao","o2.fall.doxy2.bottom")))
 ```
 
 If you just type source.f() you will get the person/organisation responsible and main reference for all variables in the database.
@@ -299,8 +300,7 @@ Please do not forget to acknowledge the sources of the data and cite the appropr
 * 4R herring assessment. November 2020
 
 ## Code and packages that have drawn up gslea
-* [Andrew Smith](https://github.com/adsmithca) created a script as a [github gist](https://gist.github.com/adsmithca/8c00a360292e127cfaef4564df0a7b1d) that makes some beautiful maps drawing on the data in the package using several of the tidyverse libraries
-
+* [Andrew Smith](https://github.com/adsmithca) created a script as a [github gist](https://gist.github.com/adsmithca/8c00a360292e127cfaef4564df0a7b1d) that makes some nice maps drawing on the data in the package using several of the tidyverse libraries.
 
 
 # Development plan and data inclusion
