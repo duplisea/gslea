@@ -1,8 +1,8 @@
 ---
 title: "Gulf of St. Lawrence Ecosystem Approach package (gslea)"
-date: 12 March 2021
+date: 13 April 2021
 output: 
-    html_document: 
+    md_document: 
       toc: true
 ---
 # What is it?
@@ -300,8 +300,28 @@ Please do not forget to acknowledge the sources of the data and cite the appropr
 * 4R herring assessment. November 2020
 
 ## Code and packages that have drawn up gslea
-* [Andrew Smith](https://github.com/adsmithca) created a script as a [github gist](https://gist.github.com/adsmithca/8c00a360292e127cfaef4564df0a7b1d) that makes some nice maps drawing on the data in the package using several of the tidyverse libraries.
+### [Andrew Smith](https://github.com/adsmithca) created a script as a [github gist](https://gist.github.com/adsmithca/8c00a360292e127cfaef4564df0a7b1d) that makes some nice maps drawing on the data in the package using several of the tidyverse libraries.
 
+### Climate stripes
+You can use a package by the same author to make climate stripes plots from data in this package. They have intentionally been kept separate in order to keep gslea as minimal and streamlined as possible. Here we use SST from the central GSL, and then a longer series using the down-scaled atmospheric climate projections for RCP 8.5 surface temperature
+
+```{r climatestripes, eval=TRUE}
+# to install the climate stripes package
+# devtools::install_github("duplisea/climatestripes")
+library(climatestripes)
+tempdata= EA.query.f(var="ann.mean.t.med.rcp85", EAR=3, years=1900:2100)
+title.name= "RCP 8.5 surface temperature Magdalen Islands"
+climate.col.stripes.f(time.vector=tempdata$year,temperature.vector=tempdata$value, colour.vec=c("navyblue","lightblue","white","red","darkred"),title=title.name,legend=T)
+superimpose.data.f(time.vector=tempdata$year,temperature.vector=tempdata$value, data.colour="yellow", spline=T, spline.colour="white",lwd=4)
+```
+
+# A shiny implementation
+
+You can run this as a shiny application on your webbrowser. You will need to install the package shiny from CRAN and then use the command
+
+```{r shinyapp, eval=FALSE}
+runGitHub(repo="gslea", username="duplisea", subdir="shiny")
+```
 
 # Development plan and data inclusion
 Presently, the development is occuring in Quebec Region but this will be expanded to include data that are stored and processed by researchers in the Gulf Region (Moncton) of DFO. Our goal is to get a good example from Quebec Region and then approach Gulf Region with specific examples that they could follow. A joint meeting in the Spring of 2020 was the first step in this cross region data sharing in the matrix.

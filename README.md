@@ -32,6 +32,12 @@
         advice](#where-gslea-has-been-used-in-research-and-advice)
     -   [Code and packages that have drawn up
         gslea](#code-and-packages-that-have-drawn-up-gslea)
+        -   [Andrew Smith created a script as a github gist that makes
+            some nice maps drawing on the data in the package using
+            several of the tidyverse
+            libraries.](#andrew-smith-created-a-script-as-a-github-gist-that-makes-some-nice-maps-drawing-on-the-data-in-the-package-using-several-of-the-tidyverse-libraries.)
+        -   [Climate stripes](#climate-stripes)
+-   [A shiny implementation](#a-shiny-implementation)
 -   [Development plan and data
     inclusion](#development-plan-and-data-inclusion)
     -   [Multispecies fish and invertebrate survey
@@ -1287,11 +1293,48 @@ appropriate references that are included in the excel file.
 
 ## Code and packages that have drawn up gslea
 
--   [Andrew Smith](https://github.com/adsmithca) created a script as a
-    [github
-    gist](https://gist.github.com/adsmithca/8c00a360292e127cfaef4564df0a7b1d)
-    that makes some nice maps drawing on the data in the package using
-    several of the tidyverse libraries.
+### [Andrew Smith](https://github.com/adsmithca) created a script as a [github gist](https://gist.github.com/adsmithca/8c00a360292e127cfaef4564df0a7b1d) that makes some nice maps drawing on the data in the package using several of the tidyverse libraries.
+
+### Climate stripes
+
+You can use a package by the same author to make climate stripes plots
+from data in this package. They have intentionally been kept separate in
+order to keep gslea as minimal and streamlined as possible. Here we use
+SST from the central GSL, and then a longer series using the down-scaled
+atmospheric climate projections for RCP 8.5 surface temperature
+
+    # to install the climate stripes package
+    # devtools::install_github("duplisea/climatestripes")
+    library(climatestripes)
+
+    ## Loading required package: mgcv
+
+    ## Loading required package: nlme
+
+    ## This is mgcv 1.8-34. For overview type 'help("mgcv-package")'.
+
+    ## Loading required package: scales
+
+    ## 
+    ## Attaching package: 'climatestripes'
+
+    ## The following object is masked from 'package:datasets':
+    ## 
+    ##     sunspots
+
+    tempdata= EA.query.f(var="ann.mean.t.med.rcp85", EAR=3, years=1900:2100)
+    title.name= "RCP 8.5 surface temperature Magdalen Islands"
+    climate.col.stripes.f(time.vector=tempdata$year,temperature.vector=tempdata$value, colour.vec=c("navyblue","lightblue","white","red","darkred"),title=title.name,legend=T)
+    superimpose.data.f(time.vector=tempdata$year,temperature.vector=tempdata$value, data.colour="yellow", spline=T, spline.colour="white",lwd=4)
+
+![](README_files/figure-markdown_strict/climatestripes-1.png)
+
+# A shiny implementation
+
+You can run this as a shiny application on your webbrowser. You will
+need to install the package shiny from CRAN and then use the command
+
+    runGitHub(repo="gslea", username="duplisea", subdir="shiny")
 
 # Development plan and data inclusion
 

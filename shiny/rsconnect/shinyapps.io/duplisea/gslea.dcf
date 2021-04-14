@@ -1,0 +1,12 @@
+name: gslea
+title: gslea
+username:
+account: duplisea
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3952864
+bundleId: 4463650
+url: https://duplisea.shinyapps.io/gslea/
+when: 1618280690.13786
+asMultiple: FALSE
+asStatic: FALSE
