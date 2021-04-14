@@ -1334,6 +1334,10 @@ atmospheric climate projections for RCP 8.5 surface temperature
 You can run this as a shiny application on your webbrowser. You will
 need to install the package shiny from CRAN and then use the command
 
+    if (!require('shiny')) install.packages('shiny'); library('shiny')
+    if (!require('shinybusy')) install.packages('shinybusy')
+    if (!require('devtools')) install.packages('devtools')
+    if (!require('gslea')) devtools::install_github('duplisea/gslea')
     runGitHub(repo="gslea", username="duplisea", subdir="shiny")
 
 # Development plan and data inclusion

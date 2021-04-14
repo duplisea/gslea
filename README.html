@@ -1143,7 +1143,11 @@ superimpose.data.f(time.vector=tempdata$year,temperature.vector=tempdata$value, 
 <div id="a-shiny-implementation" class="section level1">
 <h1>A shiny implementation</h1>
 <p>You can run this as a shiny application on your webbrowser. You will need to install the package shiny from CRAN and then use the command</p>
-<pre class="r"><code>runGitHub(repo=&quot;gslea&quot;, username=&quot;duplisea&quot;, subdir=&quot;shiny&quot;)</code></pre>
+<pre class="r"><code>if (!require(&#39;shiny&#39;)) install.packages(&#39;shiny&#39;); library(&#39;shiny&#39;)
+if (!require(&#39;shinybusy&#39;)) install.packages(&#39;shinybusy&#39;)
+if (!require(&#39;devtools&#39;)) install.packages(&#39;devtools&#39;)
+if (!require(&#39;gslea&#39;)) devtools::install_github(&#39;duplisea/gslea&#39;)
+runGitHub(repo=&quot;gslea&quot;, username=&quot;duplisea&quot;, subdir=&quot;shiny&quot;)</code></pre>
 </div>
 <div id="development-plan-and-data-inclusion" class="section level1">
 <h1>Development plan and data inclusion</h1>
