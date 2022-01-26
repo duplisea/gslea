@@ -1,65 +1,3 @@
--   [What is it?](#what-is-it)
--   [Quick start](#quick-start)
-    -   [Installation troubleshooting](#installation-troubleshooting)
--   [Purpose](#purpose)
--   [Data coverage](#data-coverage)
--   [Design and development
-    philosophy](#design-and-development-philosophy)
-    -   [List of development goals and
-        guidelines](#list-of-development-goals-and-guidelines)
--   [Components of gslea](#components-of-gslea)
-    -   [Data objects](#data-objects)
-    -   [Functions](#functions)
--   [Installing gslea](#installing-gslea)
--   [Accessing the data](#accessing-the-data)
-    -   [Data content overviews](#data-content-overviews)
-    -   [Data extraction](#data-extraction)
-        -   [Recasting data and showing when there were no
-            observations](#recasting-data-and-showing-when-there-were-no-observations)
-    -   [Data plotting](#data-plotting)
-    -   [Finding variables and data](#finding-variables-and-data)
-    -   [Discovering relationship between variables in the
-        database](#discovering-relationship-between-variables-in-the-database)
-    -   [Using down-scaled atmospheric climate projections to predict
-        oceanographic
-        variables](#using-down-scaled-atmospheric-climate-projections-to-predict-oceanographic-variables)
--   [Source and references for data](#source-and-references-for-data)
--   [Forget the R-package, I just want the
-    data](#forget-the-r-package-i-just-want-the-data)
--   [Work using gslea and links to associated
-    code](#work-using-gslea-and-links-to-associated-code)
-    -   [Where gslea has been used in research and
-        advice](#where-gslea-has-been-used-in-research-and-advice)
-    -   [Code and packages that have drawn up
-        gslea](#code-and-packages-that-have-drawn-up-gslea)
-        -   [Andrew Smith created a script as a github gist that makes
-            some nice maps drawing on the data in the package using
-            several of the tidyverse
-            libraries.](#andrew-smith-created-a-script-as-a-github-gist-that-makes-some-nice-maps-drawing-on-the-data-in-the-package-using-several-of-the-tidyverse-libraries.)
-        -   [Climate stripes](#climate-stripes)
--   [A shiny implementation](#a-shiny-implementation)
--   [Development plan and data
-    inclusion](#development-plan-and-data-inclusion)
-    -   [Multispecies fish and invertebrate survey
-        data](#multispecies-fish-and-invertebrate-survey-data)
-    -   [Fishing pressure indicators](#fishing-pressure-indicators)
-    -   [Down-scaled oceanographic
-        projections](#down-scaled-oceanographic-projections)
-    -   [Other data](#other-data)
--   [Updating the package](#updating-the-package)
-    -   [Computing requirements for
-        updating](#computing-requirements-for-updating)
-    -   [Raw data](#raw-data)
-    -   [Running the update script](#running-the-update-script)
-    -   [Updating the R package](#updating-the-r-package)
-        -   [Compiling documentation](#compiling-documentation)
-        -   [Making the R package](#making-the-r-package)
--   [Project participants (past and
-    present)](#project-participants-past-and-present)
--   [If you have issues](#if-you-have-issues)
--   [Citation for this package](#citation-for-this-package)
--   [References](#references)
-
 # What is it?
 
 An R package to house Gulf of St Lawrence environment and ecosystem data
@@ -81,6 +19,12 @@ Open R and install the gslea package and try some commands outlined in
     devtools::install_github("duplisea/gslea")
     library(gslea)
     ?gslea
+
+If it installed, it is recommended that you print out, or have handy on
+your computer, gslea.cheat.sheet.pdf. This one-pager provides examples
+of all the basic commands that you can modify for your needs. The
+greatest asset of this is to have the Gulf of St. Lawrence map available
+so you can quickly see the numbers for each ecosystem approach region.
 
 ## Installation troubleshooting
 
@@ -361,7 +305,7 @@ entire content of the variable.description table.
     ## [1] 1854 2096
     ## 
     ## $Number.of.observations
-    ## [1] 145752
+    ## [1] 146031
 
 Another perhaps more useful way to know what the database contains is
 with the function <b>var.f</b>. <b>var.f</b> accepts as an argument one
@@ -850,7 +794,7 @@ scalar for EAR:
 You need to name all the variables you want to extract but you can
 access all the years or all the EARs by putting a wide range on them
 
-    EA.query.f(years=1900:2020, variables=c("t150", "ph_bot.fall", "t250"), EARs=1:99)
+    EA.query.f(years=1900:2021, variables=c("t150", "ph_bot.fall", "t250"), EARs=1:99)
 
     ##      year EAR    variable    value
     ##   1: 2009  10 ph_bot.fall 7.612320
@@ -859,11 +803,11 @@ access all the years or all the EARs by putting a wide range on them
     ##   4: 2015  10 ph_bot.fall 7.583178
     ##   5: 2016  10 ph_bot.fall 7.567549
     ##  ---                              
-    ## 396: 2016   3        t250 6.510000
-    ## 397: 2017   3        t250 6.530000
-    ## 398: 2018   3        t250 6.510000
-    ## 399: 2019   3        t250 6.730000
-    ## 400: 2020   3        t250 6.970000
+    ## 405: 2017   3        t250 6.530000
+    ## 406: 2018   3        t250 6.510000
+    ## 407: 2019   3        t250 6.730000
+    ## 408: 2020   3        t250 6.970000
+    ## 409: 2021   3        t250 7.030000
 
 You may want to save the results of a query to an object and then export
 it to csv (<b>fwrite</b>) or some other format.
@@ -877,7 +821,7 @@ in the database either. If you want tabular data (wide) to show when say
 and observation was not made for a particular year and variable and EAR,
 then you can widen the data using the “dcast” function from data.table
 
-    dat= EA.query.f(years=1900:2020, variables=c("t150","ph_bot.fall","ice.max","o2.late_summer.sat.mean50_100"), EARs=1)
+    dat= EA.query.f(years=1900:2021, variables=c("t150","ph_bot.fall","ice.max","o2.late_summer.sat.mean50_100"), EARs=1)
     dcast(dat, year~ variable)
 
     ##     year ice.max o2.late_summer.sat.mean50_100 ph_bot.fall t150
@@ -933,6 +877,7 @@ then you can widen the data using the “dcast” function from data.table
     ## 50: 2018    6.08                      82.23750    7.638834 3.24
     ## 51: 2019    5.06                      80.52226    7.638646 3.43
     ## 52: 2020    4.36                            NA          NA 3.56
+    ## 53: 2021    1.35                            NA          NA 4.24
     ##     year ice.max o2.late_summer.sat.mean50_100 ph_bot.fall t150
 
 This puts each variable as a separate column, it preserves all the years
@@ -950,7 +895,7 @@ however, cast multidimension data into a table but it will repeat the
 columns for each EAR (note that “EAR” is now in the right hand side of
 the formula)
 
-    dat= EA.query.f(years=2015:2020, variables=c("t150","ph_bot.fall","ice.max","o2.late_summer.sat.mean50_100"), EARs=1:100)
+    dat= EA.query.f(years=2015:2021, variables=c("t150","ph_bot.fall","ice.max","o2.late_summer.sat.mean50_100"), EARs=1:100)
     dcast(dat, year~ variable+EAR)
 
     ##    year ice.max_1 ice.max_2 ice.max_3 ice.max_4 ice.max_5 ice.max_6 ice.max_7
@@ -960,6 +905,7 @@ the formula)
     ## 4: 2018      6.08      4.62      5.67      5.04     16.18      2.76      1.29
     ## 5: 2019      5.06     18.94     13.83      4.93     27.17      3.63      4.14
     ## 6: 2020      4.36      9.86      5.57      7.81     17.06      2.75      1.71
+    ## 7: 2021      1.35      0.41      0.12      1.80      6.80      1.41      0.31
     ##    ice.max_10 ice.max_11 ice.max_30 ice.max_31 ice.max_50
     ## 1:       1.85       7.28       9.99       4.71       1.32
     ## 2:       0.74       2.32       1.20       0.02       0.54
@@ -967,6 +913,7 @@ the formula)
     ## 4:       1.25       4.83       4.83       0.84       1.10
     ## 5:       1.15       4.02       9.28       6.20       1.14
     ## 6:       1.19       3.47       4.15       1.42       1.35
+    ## 7:       0.88       0.52       0.05       0.07       0.65
     ##    o2.late_summer.sat.mean50_100_1 o2.late_summer.sat.mean50_100_2
     ## 1:                        76.90995                        88.23709
     ## 2:                        73.39238                        89.03141
@@ -974,6 +921,7 @@ the formula)
     ## 4:                        82.23750                        91.21643
     ## 5:                        80.52226                        90.17201
     ## 6:                              NA                              NA
+    ## 7:                              NA                              NA
     ##    o2.late_summer.sat.mean50_100_3 o2.late_summer.sat.mean50_100_4
     ## 1:                        86.03116                        90.18816
     ## 2:                        86.97931                        90.85565
@@ -981,6 +929,7 @@ the formula)
     ## 4:                        89.17018                        93.43198
     ## 5:                        88.93582                        90.39068
     ## 6:                              NA                              NA
+    ## 7:                              NA                              NA
     ##    o2.late_summer.sat.mean50_100_10 o2.late_summer.sat.mean50_100_11
     ## 1:                         78.15062                         76.62354
     ## 2:                         71.00473                         73.94409
@@ -988,6 +937,7 @@ the formula)
     ## 4:                         82.16858                         82.25341
     ## 5:                         78.43210                         81.00553
     ## 6:                               NA                               NA
+    ## 7:                               NA                               NA
     ##    ph_bot.fall_1 ph_bot.fall_2 ph_bot.fall_3 ph_bot.fall_5 ph_bot.fall_10
     ## 1:      7.664455      7.800129      7.764251      7.744036       7.583178
     ## 2:      7.629347      7.752494      7.744871      7.805870       7.567549
@@ -995,6 +945,7 @@ the formula)
     ## 4:      7.638834      7.719959      7.765986      7.840955       7.588689
     ## 5:      7.638646      7.718430      7.747536      7.760601       7.590770
     ## 6:            NA            NA            NA            NA             NA
+    ## 7:            NA            NA            NA            NA             NA
     ##    ph_bot.fall_11 t150_1 t150_2 t150_3 t150_4 t150_10
     ## 1:       7.728533   4.19   3.69   4.01   0.33    4.06
     ## 2:       7.668149   4.26   3.60   4.03  -0.21    4.11
@@ -1002,10 +953,11 @@ the formula)
     ## 4:       7.668735   3.24   2.32   2.72  -0.19    3.10
     ## 5:       7.666020   3.43   2.84   3.26  -0.32    3.50
     ## 6:             NA   3.56   3.59   4.05   1.17    3.49
+    ## 7:             NA   4.24   4.24   3.98   1.82    4.22
 
 This wide data now has as many rows as years and as many columns as
 variable x EAR. The columns are named with the variable followed by
-"\_EAR" to identify the EAR it represents.
+“\_EAR” to identify the EAR it represents.
 
 ## Data plotting
 
@@ -1014,7 +966,7 @@ with <b>EA.query.f</b> and then plots them. It puts all the plots on one
 page as a matrix of plots with each row being a variable and each column
 being an EAR:
 
-    EA.plot.f(years=1900:2020, variables=c("t150", "ph_bot.fall", "t250"), EARs=1:4, smoothing=T)
+    EA.plot.f(years=1900:2021, variables=c("t150", "ph_bot.fall", "t250"), EARs=1:4, smoothing=T)
 
 ![](README_files/figure-markdown_strict/plotting1-1.png)
 
@@ -1025,7 +977,7 @@ put them all in one pdf in your working directory.
 Another example of the plot without smoothing and different graphical
 parameters:
 
-    EA.plot.f(years=1900:2020, variables=c("t150", "ph_bot.fall", "t250"), EARs=1:4, smoothing=F, pch=20, lwd=2, col="blue", type="b")
+    EA.plot.f(years=1900:2021, variables=c("t150", "ph_bot.fall", "t250"), EARs=1:4, smoothing=F, pch=20, lwd=2, col="blue", type="b")
 
 ![](README_files/figure-markdown_strict/plotting2-1.png)
 
@@ -1036,7 +988,7 @@ You may want to plot all variables of a particular type. You can do this
 by selecting the variables with the vars.f function and selecting just
 the <b>variable</b> column from its output using “$”
 
-    EA.plot.f(years=1900:2020, variables=vars.f(variable.type="chemical")$variable, EARs=1:2, smoothing=T)
+    EA.plot.f(years=1900:2021, variables=vars.f(variable.type="chemical")$variable, EARs=1:2, smoothing=T)
 
 ![](README_files/figure-markdown_strict/plotting3-1.png)![](README_files/figure-markdown_strict/plotting3-2.png)![](README_files/figure-markdown_strict/plotting3-3.png)![](README_files/figure-markdown_strict/plotting3-4.png)![](README_files/figure-markdown_strict/plotting3-5.png)![](README_files/figure-markdown_strict/plotting3-6.png)![](README_files/figure-markdown_strict/plotting3-7.png)
 
@@ -1065,7 +1017,7 @@ and then with that information select the NAO monthly data.
     NAO.vars= find.vars.f("nao.mon")
     #but because variable names are character and you may want them ordered by month you need to sort the names vector
     NAO.vars= NAO.vars[order(nchar(NAO.vars), NAO.vars)]
-    EA.plot.f(years=1800:2020, variables=NAO.vars[1:5], EARs=-1, smoothing=T,pch=20)
+    EA.plot.f(years=1800:2021, variables=NAO.vars[1:5], EARs=-1, smoothing=T,pch=20)
 
 ![](README_files/figure-markdown_strict/plotting4-1.png)
 
@@ -1085,7 +1037,7 @@ EAR=-1) but you are not sure what time lag might be most appropriate.
 Here you are assuming NAO is the independent variable and, SST is the
 dependent variable
 
-    EA.plot.f(variables=c("h.nao","sst"), years=1900:2020, EARs=c(-1,3), smoothing=T,pch=20)
+    EA.plot.f(variables=c("h.nao","sst"), years=1900:2021, EARs=c(-1,3), smoothing=T,pch=20)
 
 ![](README_files/figure-markdown_strict/crosscor1-1.png)
 
@@ -1094,7 +1046,7 @@ time series are quite different. The cross correlation testing at
 various temporal lags will probably help you formulate your hypotheses
 better.
 
-    EA.cor.f(x="h.nao", y="sst", years=1900:2020, x.EAR=-1, y.EAR=3)
+    EA.cor.f(x="h.nao", y="sst", years=1900:2021, x.EAR=-1, y.EAR=3)
 
 ![](README_files/figure-markdown_strict/crosscor2-1.png)
 
@@ -1111,7 +1063,7 @@ hypothesis implies causality.
 Let’s try an easy one by choosing two variable you know must be related:
 SST in EAR 3 (central Gulf) and SST in EAR 1 (NW Gulf).
 
-    EA.cor.f(x="sst",y="sst", years=1900:2020, x.EAR=1, y.EAR=3)
+    EA.cor.f(x="sst",y="sst", years=1900:2021, x.EAR=1, y.EAR=3)
 
 ![](README_files/figure-markdown_strict/crosscor3-1.png)
 
@@ -1145,12 +1097,12 @@ and could potential inform a semi-trustable projection (or at least
 better than guessing). Follow this code as an example of what could be
 done.
 
-      EA.cor.f("ann.mean.t.med.rcp45","t.deep",1950:2020,1,1)
+      EA.cor.f("ann.mean.t.med.rcp45","t.deep",1950:2021,1,1)
 
 ![](README_files/figure-markdown_strict/climproject-1.png)
 
     # lets look from 2009 when the deep water really started warming up, it is a pretty good predictor
-      EA.cor.f("ann.mean.t.med.rcp45","t.deep",2009:2020,1,1)
+      EA.cor.f("ann.mean.t.med.rcp45","t.deep",2009:2021,1,1)
 
 ![](README_files/figure-markdown_strict/climproject-2.png)
 
@@ -1171,19 +1123,19 @@ done.
     ## 
     ## Residuals:
     ##      Min       1Q   Median       3Q      Max 
-    ## -0.44891 -0.16203 -0.05265  0.12173  0.58400 
+    ## -0.48193 -0.18107 -0.05456  0.16981  0.60764 
     ## 
     ## Coefficients:
     ##                      Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept)           3.61109    0.23661  15.262 3.05e-16 ***
-    ## ann.mean.t.med.rcp45  0.58057    0.08185   7.093 4.78e-08 ***
+    ## (Intercept)           3.49852    0.24716   14.15 1.42e-15 ***
+    ## ann.mean.t.med.rcp45  0.62607    0.08483    7.38 1.78e-08 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
-    ## Residual standard error: 0.2547 on 32 degrees of freedom
-    ##   (112 observations deleted due to missingness)
-    ## Multiple R-squared:  0.6113, Adjusted R-squared:  0.5991 
-    ## F-statistic: 50.32 on 1 and 32 DF,  p-value: 4.782e-08
+    ## Residual standard error: 0.2715 on 33 degrees of freedom
+    ##   (111 observations deleted due to missingness)
+    ## Multiple R-squared:  0.6227, Adjusted R-squared:  0.6113 
+    ## F-statistic: 54.47 on 1 and 33 DF,  p-value: 1.779e-08
 
       tmp2$t.deep.pred= predict(pred.lm,newdata=tmp2)
       plot(tmp2$ann.mean.t.med.rcp45,tmp2$t.deep.pred,type="l",col="blue",lwd=3,
@@ -1311,7 +1263,7 @@ atmospheric climate projections for RCP 8.5 surface temperature
 
     ## Loading required package: nlme
 
-    ## This is mgcv 1.8-34. For overview type 'help("mgcv-package")'.
+    ## This is mgcv 1.8-38. For overview type 'help("mgcv-package")'.
 
     ## Loading required package: scales
 
@@ -1438,7 +1390,7 @@ anywhere on your machine and you need to make sure there are
 sub-directories of that which are named by the data provider. So Peter
 Galbraith has supplied the physical oceanographic data and therefore the
 subdirectory is called galbraith. His raw .dat files are located there.
-These are text files of a sort that Peter extracts with commented (\#)
+These are text files of a sort that Peter extracts with commented (#)
 header lines describing the data and finishing with the data itself.
 Marjolaine Blais has supplied the chemical, planktonic and phenological
 variables is various forms. The subdirectory blais also has
