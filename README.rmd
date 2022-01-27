@@ -2,7 +2,7 @@
 title: "Gulf of St. Lawrence Ecosystem Approach package (gslea)"
 date: 25 January 2022
 output: 
-    md_document: 
+    html_document: 
       toc: true
 ---
 # What is it?
@@ -24,6 +24,8 @@ library(gslea)
 ```
 
 If it installed, it is recommended that you print out, or have handy on your computer, gslea.cheat.sheet.pdf. This one-pager provides examples of all the basic commands that you can modify for your needs. The greatest asset of this is to have the Gulf of St. Lawrence map available so you can quickly see the numbers for each ecosystem approach region.
+
+The cheat sheet is available on the github repository and it is on your computer hard disc if you installed the package from github.
 
 ## Installation troubleshooting
 

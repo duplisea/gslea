@@ -26,6 +26,9 @@ of all the basic commands that you can modify for your needs. The
 greatest asset of this is to have the Gulf of St. Lawrence map available
 so you can quickly see the numbers for each ecosystem approach region.
 
+The cheat sheet is available on the github repository and it is on your
+computer hard disc if you installed the package from github.
+
 ## Installation troubleshooting
 
 IF you are having trouble installing gslea, firstly, you should try to
