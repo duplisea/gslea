@@ -170,7 +170,7 @@ EA.query.f(years=1900:2021, variables=c("t150", "ph_bot.fall", "t250"), EARs=1:9
 You may want to save the results of a query to an object and then export it to csv (<b>fwrite</b>) or some other format.
 
 ### Recasting data and showing when there were no observations
-The data are in long format (tidyverse speak = "tidy data") which is the common way to store data in databases. It means that for a variable x year x EAR comination where there is no observation, there is not a row in the database either. If you want tabular data (wide) to show when say and observation was not made for a particular year and variable and EAR, then you can widen the data using the "dcast" function from data.table
+The data are in long format (tidyverse speak = "tidy data") which is the common way to store data in databases. It means that for a variable x year x EAR combination where there is no observation, there is not a row in the database either. If you want tabular data (wide) to show when say and observation was not made for a particular year and variable and EAR, then you can widen the data using the "dcast" function from data.table
 
 ```{r recasting, eval=TRUE}
 dat= EA.query.f(years=1900:2021, variables=c("t150","ph_bot.fall","ice.max","o2.late_summer.sat.mean50_100"), EARs=1)
@@ -291,8 +291,20 @@ formattable::formattable(sources.f(c("t.200","h.nao","o2.fall.doxy2.bottom")))
 
 If you just type source.f() you will get the person/organisation responsible and main reference for all variables in the database.
 
+## Major data contributors
+The major contributors to data in this package are:
+
+
+Marjolaine Blais - plankton & nutrients (marjolaine.blais@dfo-mpo.gc.ca
+Peter Galbraith - physical oceanography (peter.galbraith@dfo-mpo.gc.ca)
+Diane Lavoie - oceanographic climate projections (diane.lavoie@dfo-mpo.gc.ca)
+DFO multispecies surveys - fish stock abundance indices (denis.gilbert@dfo-mpo.gc.ca)
+Prairie Climate Centre - atmospheric climate projects (www.climateatlas.ca)
+NOAA - large scale climate indices
+Natural Resouces Canada - solar flux (spaceweather.ca)
+
 # Forget the R-package, I just want the data
-You are not obliged to use this R-package if you want the data. The data table and variable description table have been merged and written to an excel file sheet. The field descriptions have been written to another sheet in the same excel file. This will be downloaded as part of the R package from github but you can access just that file directly from the gslea github root directory if you do not want to download the R package. It is call "<b>EAdata.dump.xlsx</b>". You might just download it and filter the variable column or other columns to choose the data you want from excel. This file is automatically updated everytime the gslea library is updated so there should be no discrepency in the data from the two places.
+You are not obliged to use this R-package if you just want the data. The data table and variable description table have been merged and written to an excel file sheet. The field descriptions have been written to another sheet in the same excel file. This will be downloaded as part of the R package from github but you can access just that file directly from the gslea github root directory if you do not want to download the R package. It is call "<b>EAdata.dump.xlsx</b>". You might just download it and filter the variable column or other columns to choose the data you want from excel. This file is automatically updated everytime the gslea library is updated so there should be no discrepency in the data from the two places.
 
 Please do not forget to acknowledge the sources of the data and cite the appropriate references that are included in the excel file.
 
@@ -344,7 +356,7 @@ We have begun working on developing indicators of fishing pressure in each regio
 Down-scaled oceanographic variable (physical, chemical, biological) projections under different ICCP RCP scenarios and ensembles means and variances will also be provided in the matrix eventually. We have been in discussion with our regional oceanographers and are developing a plan to include this information in a future update of the matrix.
 
 ## Other data
-There have been considerations of including coastal data, stock assessment results, fine-scaled information. These may be possible to include in the current structure of gslea and we have also considered that this kind of information might be better suited to another similar kind of library but specifically aimed at this information. We need to keep a consistent approach to the development philoshophy and goals which can help us decide this.
+There have been considerations of including coastal data, stock assessment results, fine-scaled information. These may be possible to include in the current structure of gslea and we have also considered that this kind of information might be better suited to another similar kind of library but specifically aimed at this information. We need to keep a consistent approach to the development philoshophy and goals which may preclude the inclusion of some data.
 
 # Updating the package
 <mark>Unless you need to update this database, you do not need to read this</mark>
@@ -355,20 +367,21 @@ To update the package you will need the standard packages for doing it like roxy
 
 ## Computing requirements for updating
 
-This package requires linux to update. The reason linux is needed is because it uses BASH system calls and programs like awk and sed to pre-process data to make names consisitent, e.g. “Year” to “year” or other inconsistencies between how raw data is provided by different people. If data gets provided by people differently between updates then this will require updating of these scripts.
+This package requires linux to update. The reason linux is needed is because it uses BASH system calls and programs like awk and sed to pre-process some data.
 
-Once the data are processed and brought into the R package, then it should be useable by any platform that runs R but I would not know how to process the raw data in windows. You may be able to do this in windows10 powershell but I have never tried it so I cannot say it will work. I do note that powershell does not have "sed" installed by default and you cannot run R from powershell so I am not sure you could send R systemcalls to the powershell and if you can the script will fail without "sed".
+Once the data are processed and brought into the R-package, then it should be useable by any platform that runs R but I would not know how to process the raw data in windows. You may be able to do this in windows powershell but I have never tried it so I cannot say it will work. I do note that powershell does not have "sed" installed by default and you cannot run R from powershell so I am not sure you could send R systemcalls to the powershell.
 
 ## Raw data
-Raw data has been provided in various forms by individual data providers. Sometimes it is in tabular format while other times it is in a long format. We need to turn it all into long format and this also involves standardising variable names.
+Raw data has been provided in various forms by individual data providers. Sometimes it is in tabular format while other times it is in long format. We need to turn it all into long format and this also involves standardising variable names.
 
 ## Running the update script
 The update script is XXXX (I will make a vignette on this including the data but I have not done this yet) which is run from R. It makes system calls to the working directory you set. That working directory can be anywhere on your machine and you need to make sure there are sub-directories of that which are named by the data provider. So Peter Galbraith has supplied the physical oceanographic data and therefore the subdirectory is called galbraith. His raw .dat files are located there. These are text files of a sort that Peter extracts with commented (#) header lines describing the data and finishing with the data itself. Marjolaine Blais has supplied the chemical, planktonic and phenological variables is various forms. The subdirectory blais also has subdirectories for zooplankton, oxygen, pH etc.
+
 Aside from the data itself, the two other tables need to be imported into R. These sheets in an excel file describing the data. At first I was pulling this information from the headers but there were a lot of differences and this was creating very one-off fragile scripts that I knew would likely break on each update. Therefore, the excel sheets have been created to keep this information. You will need to edit them in excel. The good thing is that all you will have to alter for a simple update is the extraction date.  If you add new variables though, you will need to add a new line with all the information about that variable.
 
 If this is all in order on your machine, you just need to run the update script in the R command line. The script will manipulate the data and save each data.table as an .rda file in your data directory for the R package.
 
-I doubt it will go this smoothly but I hope so.
+I can provide the R update script if you wish. I doubt it will go this smoothly but I hope so.
 
 ## Updating the R package
 
@@ -383,9 +396,7 @@ Clean and rebuild
 Jérôme Beaulieu, Hugues Benoît, Marjolaine Blais, Hugo Bourdages, Daniel Duplisea, Peter Galbraith, Mike Hammill, Cédric Juillet, David Merette, Stéphane Plourde, Marie-Julie Roux, Bernard Sainte-Marie, Antoine Rivierre, Virginie Roy
 
 # If you have issues
-For comments, questions, bugs etc, you can send this to the package maintainer, Daniel Duplisea, by email (daniel.duplisea@gmail.com, daniel.duplisea@dfo-mpo.gc.ca) or file a bug report or issue on github. 
-
-Pull requests conforming to the development philosophy are welcome.
+For comments, questions, bugs etc, you can send this to the package maintainer, Daniel Duplisea, by email (daniel.duplisea@gmail.com, daniel.duplisea@dfo-mpo.gc.ca).
 
 # Citation for this package
 

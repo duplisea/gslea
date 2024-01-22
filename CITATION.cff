@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "Software citation below"
+authors:
+- family-names: "Duplisea"
+  given-names: "Daniel E."
+  orcid: "https://orcid.org/0000-0002-0844-359X"
+- family-names: "Roux"
+  given-names: "Marie-Julie"
+- family-names: "Benoît"
+  given-names: "Hugues P."
+- family-names: "Blais"
+  given-names: "Marjolaine"
+- family-names: "Galbraith"
+  given-names: "Peter"
+- family-names: "Plourde"
+  given-names: "Stéphane"
+title: "gslea: the Gulf of St Lawrence ecosystem approach data matrix R-package"
+version: 0.1
+doi: 10.5281/zenodo.1234
+date-released: 2021-12-18
+url: "https://github.com/duplisea/gslea"

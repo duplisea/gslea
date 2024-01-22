@@ -58,20 +58,22 @@ vars.f= function(variable.type="all"){
 
 
 #' Find variables with a keyword or phrase
-#' @param search.term a term to search, e.g. "oxygen", "temperature", "temp", "saturat"
+#' @param search.term a term to search, e.g. "oxygen", "temperature", "temp", "saturat". can have multiple terms, e.g. c("coD","250","MaRjO")
 #' @param description if T then the description of the variable is also provided (this can be long). Default FALSE.
 #' @param units if T then the units of measure of the variable is also provided. Default FALSE.
-#' @description  Does a fuzzy search for the word in the variable description and returns the full variable names.
+#' @description  Does a search for the string(s) in the variable description and returns the full variable names.
 #' @author Daniel Duplisea
+#' @seealso like, %like%, grepl, variable.description
 #' @export
 #' @examples find.vars.f("temp", description=T)
 #'        find.vars.f("satu")
 find.vars.f= function(search.term, description=FALSE){
-  vars1= variable.description[grep(search.term, variable.description$description, ignore.case=T),]$variable
-  vars2= variable.description[grep(search.term, variable.description$variable, ignore.case=T),]$variable
-  vars3= variable.description[grep(search.term, variable.description$source, ignore.case=T),]$variable
-  vars4= variable.description[grep(search.term, variable.description$reference, ignore.case=T),]$variable
-  vars5= variable.description[grep(search.term, variable.description$type, ignore.case=T),]$variable
+  search.term= paste(search.term, collapse="|") #or between search terms
+  vars1= variable.description[like(variable.description$description, search.term, ignore.case=T),]$variable
+  vars2= variable.description[like(variable.description$variable, search.term, ignore.case=T),]$variable
+  vars3= variable.description[like(variable.description$source, search.term, ignore.case=T),]$variable
+  vars4= variable.description[like(variable.description$reference, search.term, ignore.case=T),]$variable
+  vars5= variable.description[like(variable.description$type, search.term, ignore.case=T),]$variable
   vars= unique(c(vars1,vars2,vars3,vars4,vars5))
   if (description) vars= as.data.frame(variable.description[match(vars, variable.description$variable),c(1:2,4)])
   vars
