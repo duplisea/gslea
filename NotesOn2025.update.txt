@@ -1,0 +1,85 @@
+Notes on physical oceanography 2024 data
+
+Bottom temperature
+    the central zone with cabot strait was removed (EAR 3) and the centre only zone (EAR 30) renamed EAR 3
+    Cabot strait (EAR 31) renamed EAR 7 (Laurentian Hermitage)
+
+	# AE Region 10 (Estuary)
+	# AE Region 11 (NW GSL)
+	# AE Region 1  (Estuary & NW GSL)
+	# AE Region 2  (NE GSL)
+	# AE Region 3  (Centre & Cabot Strait)
+	# AE Region 30 (Centre)
+	# AE Region 31 (Cabot Strait)
+	# AE Region 4  (Mecatina)
+	# AE Region 5  (Magdalen Shallows)
+	# AE Region 50 (Baie des Chaleurs)
+	# AE Region 6  (Northumberland)
+
+
+S_DeepLayersInterpol_Regions
+    The raw data says they are temperatures but they are all around 33 and it suggests it is salinity in ppt
+
+
+
+Notes biological oceanography 2024 data
+
+Zooplankton
+    EAR 10 is the estuary and NE Gulf together
+
+Oxygen measurements (not projections)
+    Region 3 removed from the data and Region 30 considered region 3
+    Riki station and Shediac station dropped from the data
+    Region 31 considerd region 7 (Laurentian Hermitage)
+
+    Key provided from source
+    Region1 : Estuary and NW GSL
+    Region10 : Estuary
+    Region11 : NW GSL
+    Region2 : NE GSL
+    Region3 : Central GSL and Cabot Strait
+    Region30 : Central GSL
+    Region31 : Cabot Strait
+    Region4 : Mecatina
+    Region5 : Magdalen Shallows (includes Region50)
+    Region50 : Chaleurs Bay
+    Region6 : Northumberland
+
+Springbloom
+    Spring timing : Day of the year of the peak value = start
+    Spring average : mg chl m-3 (mean concentration over spring season) = magnitude
+    Cabot Strait consider region 7 (Laurentian Hermitage)
+    EAR 1 is estuary and NW Gulf together
+
+Chlorophyll A
+    VALUES ARE LOG-10 TRANSFORMED
+    Region 3 removed from the data and Region 30 considered region 3
+    Region 31 considerd region 7 (Laurentian Hermitage)
+
+    Key provided from source
+    Region1 : Estuary and NW GSL
+    Region10 : Estuary
+    Region11 : NW GSL
+    Region2 : NE GSL
+    Region3 : Central GSL and Cabot Strait
+    Region30 : Central GSL
+    Region31 : Cabot Strait
+    Region4 : Mecatina
+    Region5 : Magdalen Shallows
+
+Nutrients
+    VALUES ARE LOG-10 TRANSFORMED
+    Region 3 removed from the data and Region 30 considered region 3
+    Region 31 considerd region 7 (Laurentian Hermitage)
+
+    Key provided from source
+    Region1 : Estuary and NW GSL
+    Region10 : Estuary
+    Region11 : NW GSL
+    Region2 : NE GSL
+    Region3 : Central GSL and Cabot Strait
+    Region30 : Central GSL
+    Region31 : Cabot Strait
+    Region4 : Mecatina
+    Region5 : Magdalen Shallows
+    Region 50 : Chaleurs Bay

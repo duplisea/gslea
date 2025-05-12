@@ -1,0 +1,49 @@
+---
+syntax: R
+tags: [ statistics, development, messyverse, data, lawrence, oceanographic, R ]
+---
+# Install the package
+	devtools::install_github("duplisea/gslea")
+
+# Get the excel data dump file
+	https://github.com/duplisea/gslea/raw/master/EAdata.dump.xlsx
+
+# How much data is available
+	metadata.f()
+
+# Find variables
+	find.vars.f("sst") # sea surface temperature
+	find.vars.f("sst", description=T) # sea surface temperature with description
+	find.vars.f("bottom") # anything to do with the bottom (e.g. temperature)
+	find.vars.f("gulf stream") # Gulf stream indices
+	find.vars.f("oxygen") # oxygen measures
+	find.vars.f("plankton") # plankton
+	find.vars.f("galbrai") # data or studies associated with Peter Galbraith
+	find.vars.f("cod") # anything to do with cod
+
+# Plot time series
+	EA.plot.f("sst",2000:2020,2) # sea surface temperature, EAR 2, years from 2000 till 2020
+	EA.plot.f("sst",1:3000,2:3) # sea surface temperature, EAR 2 and 3, all conceivable years
+	EA.plot.f("sst",1:3000,-10:100) # sea surface temperature, EAR 2 and 3, all conceivable years
+	EA.plot.f("h.nao",1:3000,-10:100) # Hurrels NAO for all conceivable years
+	EA.plot.f("wcrb.total",1:3000,-10:100) # Warm core ring births off the Gulf Stream
+
+# Find a variable and plot it, refining the terms as you go
+	EA.plot.f(find.vars.f("herring"),1970:2021,1) # anything to do with herring from 1970 till 2021 in EAR 1
+	find.vars.f("herring",description=T) # what are those herring variables?
+	EA.plot.f("150.all.mn.nt.qc",1970:2021,1) # ok, lets just plot the herring mean biomass from the survey
+	EA.plot.f("150.all.mn.nt.qc",1970:2021,1, smooth=F) # remove the smoother because it does not make a lot of sense
+
+# Query data
+	EA.query.f(find.vars.f("herring"),1970:2021,-100:100) # anything to do with herring from 1970 till 2021 in all EARs
+	EA.query.f("sst",1:3000,-100:100) # sea surface temperature, in all conceivable years and EARs
+	EA.query.f("sst",1:3000,-100:100,crosstab=T) # sea surface temperature, in all conceivable years and EARs and crosstabulate
+
+# Relationship between variables
+	EA.cor.f(x="h.nao", y="sst", years=1900:2020, x.EAR=-1, y.EAR=3) # cross-correlation between the NAO and sea surface temperature in EAR 3)
+	EA.cor.f(x="sst",y="sst", years=1900:2020, x.EAR=1, y.EAR=3) # cross-correlation between the sea surface temperature in EAR 1 and EAR 3
+	EA.cor.f(x="150.all.mn.nt.qc",y="sst", years=1900:2020, x.EAR=2, y.EAR=2) #  between the sea surface temperature in EAR 2 and herring biomass in EAR 2
+
+# Data sources and resource people
+	sources.f(c("t.200","h.nao","o2.fall.doxy2.bottom")) # data sources for these variables
+	formattable::formattable(sources.f(c("t.200","h.nao","o2.fall.doxy2.bottom"))) # data sources for these variables and make it look pretty with formattable

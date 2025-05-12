@@ -37,7 +37,5 @@ Vandepitte, L., Vanhoorne, B., Decock, W., Dekeyzer, S., Trias Verbeeck, A., Bov
 }
 \author{
 Daniel Duplisea
-
-Daniel Duplisea
 }
 \keyword{datasets}
