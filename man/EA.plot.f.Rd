@@ -2,28 +2,43 @@
 % Please edit documentation in R/functions.r
 \name{EA.plot.f}
 \alias{EA.plot.f}
-\title{Plot data time series}
+\title{Plot ecosystem approach data time series}
 \usage{
-EA.plot.f(variables, years, EARs, smoothing = T, ...)
+EA.plot.f(variables, years, EARs, smoothing = TRUE, ...)
 }
 \arguments{
-\item{variables}{variable vector}
+\item{variables}{character vector of variable names to plot.}
 
-\item{years}{year vector}
+\item{years}{numeric vector of years to include, e.g. \code{1900:2030}.}
 
-\item{EARs}{EAR vector}
+\item{EARs}{numeric vector of Ecosystem Approach Regions (EARs) to plot.}
 
-\item{smoothing}{if TRUE and n>5, then a smooth.spline is drawn through the data with df=n/3}
+\item{smoothing}{logical. If \code{TRUE} (default) and a series has more than 5
+observations, a smoothing spline (df = n/3) is overlaid on the plot.}
 
-\item{...}{arguments to par for plotting}
+\item{...}{additional arguments passed to \code{\link[graphics]{plot}} for
+controlling point appearance (e.g. \code{type}, \code{pch}, \code{col},
+\code{cex}). Arguments that are not valid for \code{\link[graphics]{lines}}
+(e.g. \code{type}, \code{log}, \code{axes}) are automatically stripped before
+the smoothing spline is drawn.}
 }
 \description{
-Plots a matrix of variables with EAR as columns and variable as rows. If no data then a blank graph
-              is plotted. If there are more than 25 individual plots (5x5) then it will ask for an enter from the
-              keyboard before presenting a page of plots.
+Plots a matrix of time series with EARs as columns and variables
+  as rows. If no data exist for a given variable/EAR combination a blank panel
+  is drawn with a "No Data" label. If the total number of panels exceeds 25
+  (5x5), plots are displayed page by page and the user is prompted before each
+  new page.
 }
 \examples{
-EA.plot.f(variables=c("T150", "ph_bot.fall", "T250"), years=1900:2030, EARs=1:4, type="b",pch=20)
+EA.plot.f(variables = c("T150", "ph_bot.fall", "T250"),
+          years = 1900:2030, EARs = 1:4, type = "b", pch = 20)
+
+EA.plot.f(variables = c("T150", "ph_bot.fall", "T250", "ice.max",
+                        "chl0_100.annual", "chl0_100.early_summer"),
+          years = 1900:2030, EARs = 1:50, type = "b", pch = 20, cex.main = 0.8)
+}
+\seealso{
+\code{\link{EA.query.f}}, \code{\link{EA.cor.f}}
 }
 \author{
 Daniel Duplisea

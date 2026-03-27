@@ -100,42 +100,87 @@ EA.query.f= function(variables, years, EARs, crosstab=F){
  out
 }
 
-
-#' Plot data time series
+#' Plot ecosystem approach data time series
 #'
-#' @param variables variable vector
-#' @param years year vector
-#' @param EARs EAR vector
-#' @param smoothing if TRUE and n>5, then a smooth.spline is drawn through the data with df=n/3
-#' @param ... arguments to par for plotting
-#' @description  Plots a matrix of variables with EAR as columns and variable as rows. If no data then a blank graph
-#'               is plotted. If there are more than 25 individual plots (5x5) then it will ask for an enter from the
-#'               keyboard before presenting a page of plots.
+#' @param variables character vector of variable names to plot.
+#' @param years numeric vector of years to include, e.g. \code{1900:2030}.
+#' @param EARs numeric vector of Ecosystem Approach Regions (EARs) to plot.
+#' @param smoothing logical. If \code{TRUE} (default) and a series has more than 5
+#'   observations, a smoothing spline (df = n/3) is overlaid on the plot.
+#' @param ... additional arguments passed to \code{\link[graphics]{plot}} for
+#'   controlling point appearance (e.g. \code{type}, \code{pch}, \code{col},
+#'   \code{cex}). Arguments that are not valid for \code{\link[graphics]{lines}}
+#'   (e.g. \code{type}, \code{log}, \code{axes}) are automatically stripped before
+#'   the smoothing spline is drawn.
+#'
+#' @description Plots a matrix of time series with EARs as columns and variables
+#'   as rows. If no data exist for a given variable/EAR combination a blank panel
+#'   is drawn with a "No Data" label. If the total number of panels exceeds 25
+#'   (5x5), plots are displayed page by page and the user is prompted before each
+#'   new page.
+#'
 #' @author Daniel Duplisea
+#' @seealso \code{\link{EA.query.f}}, \code{\link{EA.cor.f}}
 #' @export
 #' @examples
-#' EA.plot.f(variables=c("T150", "ph_bot.fall", "T250"), years=1900:2030, EARs=1:4, type="b",pch=20)
-EA.plot.f= function(variables, years, EARs, smoothing=T, ...){
-  dat= EA.query.f(variables=variables, years=years, EARs=EARs)
-  actual.EARs= sort(as.numeric(dat[,unique(EAR)]))
-  no.plots= length(variables)*length(actual.EARs)
-  if(no.plots>25) {par(mfcol=c(5, 5),mar=c(1.3,2,3.2,1),omi=c(.1,.1,.1,.1), ask=T)}
-  if(no.plots<=25){ par(mfcol=c(length(variables), length(actual.EARs)),mar=c(1.3,2,3.2,1),omi=c(.1,.1,.1,.1))}
-  counter=1
+#' EA.plot.f(variables = c("T150", "ph_bot.fall", "T250"),
+#'           years = 1900:2030, EARs = 1:4, type = "b", pch = 20)
+#'
+#' EA.plot.f(variables = c("T150", "ph_bot.fall", "T250", "ice.max",
+#'                         "chl0_100.annual", "chl0_100.early_summer"),
+#'           years = 1900:2030, EARs = 1:50, type = "b", pch = 20, cex.main = 0.8)
+EA.plot.f = function(variables, years, EARs, smoothing = TRUE, ...) {
+  dat = EA.query.f(variables = variables, years = years, EARs = EARs)
 
-  for(i in actual.EARs){
-    ear.dat= dat[EAR==i]
-    for(ii in 1:length(variables)){
-      var.dat= ear.dat[variable==variables[ii]]
-      if(nrow(var.dat)<1) plot(0, xlab="", ylab="", xaxt="n",yaxt="n",main=paste("EAR",i,variables[ii]), ...)
-      if(nrow(var.dat)>0) plot(var.dat$year, var.dat$value, xlab="", ylab="", main=paste("EAR",i,variables[ii]), ...)
-      if(nrow(var.dat)>5 && smoothing==T) lines(predict(smooth.spline(var.dat$year, var.dat$value,df=length(var.dat$value)/3)), ...)
-      #if(nrow(var.dat)>5 && smoothing==T) lines(lowess(var.dat$year, var.dat$value))
-    }
-    counter= counter+1
+  actual.EARs = sort(as.numeric(dat[, unique(EAR)]))
+  if (length(actual.EARs) == 0) {
+    message("No data found for requested parameters.")
+    return(invisible(NULL))
   }
-  par(mfcol=c(1,1),omi=c(0,0,0,0),mar= c(5.1, 4.1, 4.1, 2.1), ask=F)
+
+  no.plots = length(variables) * length(actual.EARs)
+  if (no.plots > 25) {
+    par(mfcol = c(5, 5), mar = c(1.3, 2, 3.2, 1), omi = c(.1, .1, .1, .1), ask = TRUE)
+  } else {
+    par(mfcol = c(length(variables), length(actual.EARs)), mar = c(1.3, 2, 3.2, 1), omi = c(.1, .1, .1, .1))
+  }
+
+  # Capture ... and separate args that are only valid for plot() vs lines()
+  dots = list(...)
+  lines.exclude = c("type", "log", "axes", "frame.plot", "asp", "xaxs", "yaxs")
+  lines.dots = dots[!names(dots) %in% lines.exclude]
+
+  for (i in actual.EARs) {
+    ear.dat = dat[EAR == i]
+    for (ii in seq_along(variables)) {
+      var.dat = ear.dat[variable == variables[ii]]
+
+      if (nrow(var.dat) < 1) {
+        plot(1, type = "n", xlab = "", ylab = "", xaxt = "n", yaxt = "n",
+             main = paste("EAR", i, variables[ii]))
+        text(1, 1, "No Data", col = "red", cex = 1.2)
+      } else {
+        do.call(plot, c(list(x = var.dat$year, y = var.dat$value,
+                             xlab = "", ylab = "",
+                             main = paste("EAR", i, variables[ii])), dots))
+        if (nrow(var.dat) > 5 && smoothing) {
+          spline.fit = predict(smooth.spline(var.dat$year, var.dat$value,
+                                             df = length(var.dat$value) / 3))
+          do.call(lines, c(list(spline.fit), lines.dots))
+        }
+      }
+    }
+  }
+
+  par(mfcol = c(1, 1), omi = c(0, 0, 0, 0), mar = c(5.1, 4.1, 4.1, 2.1), ask = FALSE)
 }
+
+
+
+
+
+
+
 
 #' Compute and plot the cross correlation with lags between two E variables
 #'

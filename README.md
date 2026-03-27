@@ -1,3 +1,18 @@
+# What’s new, March 2026
+
+- A lot of new data and variables:
+  - fish data from the southern Gulf survey
+  - ecological indicators from the northern and southern Gulf surveys
+  - new trophic guild definitions and data from both regions of the Gulf
+  - harp seal and grey seal abundance
+  - stock status, biomass, landings, limit reference points
+  - bluefin tuna abundance
+  - gannet breedpair numbers
+  - fish leCren condition factors
+  - alkalinity, dissolved organic carbon, aragonite
+- New EARs which needed to be developed to accommodate data that does
+  not necessarily come from a fixed region but from a survey
+
 # What is it?
 
 An R package to house Gulf of St Lawrence environment and ecosystem data
@@ -5,10 +20,6 @@ to promote ecosystem research and analysis in the Gulf of St Lawrence
 and move us closer to an ecosystem approach to fisheries. It should be
 readily understandable to a large swath of the research community who
 have extensive or minimal R skills.
-
-Currently version 0.1 - beta. It will not be fixed until version 1
-afterwhich updates should not break existing analyses. That could still
-happen now with updates.
 
 # Quick start
 
@@ -102,7 +113,8 @@ in the database (coded with EAR=-1) such as the North Atlantic
 Osciallation. We have presently reserved EAR=0 for GSL scale indices
 even though there are none in the database yet.
 
-<img src="README_files/figure-markdown_strict/gslmap.plain-1.png" style="width:100.0%" />
+<img src="README_files/figure-markdown_strict/gslmap.plain-1.png"
+style="width:100.0%" />
 
 # Design and development philosophy
 
@@ -126,28 +138,28 @@ and should not break existing analyses when updated (I hope).
 
 ## List of development goals and guidelines
 
--   The package needs to be technically accessible to as wide a swath of
-    the envisioned end user community as possible (see Purpose section
-    for an explanation of who this is).
--   It must not require permissions to access and use the data and using
-    it should be possible within minutes
--   It must be fast to access and have minimal dependencies
--   It must be operating system agnostic
--   It should easily integrate into people’s work flow and analysis
--   Data updates or functionality updates should not break existing
-    analyses
--   It should have only minimal data exploration functionality
--   It must conform to Transparent, Traceable and Transferable (TTT)
-    ideas (Edwards et al. 2018)
--   It must create a clear flow from data supplier to user and make it
-    easy to acknowledge and contact data suppliers
--   It must be relatively easily updatable, updated often and not go
-    data-stale
--   It is a secondary data product and is not a primary relational
-    database, i.e. it should not contain data that is not available or
-    derivable from other existing databases. This also means that
-    quality control in gslea is not on the data itself but only specific
-    derived products.
+- The package needs to be technically accessible to as wide a swath of
+  the envisioned end user community as possible (see Purpose section for
+  an explanation of who this is).
+- It must not require permissions to access and use the data and using
+  it should be possible within minutes
+- It must be fast to access and have minimal dependencies
+- It must be operating system agnostic
+- It should easily integrate into people’s work flow and analysis
+- Data updates or functionality updates should not break existing
+  analyses
+- It should have only minimal data exploration functionality
+- It must conform to Transparent, Traceable and Transferable (TTT) ideas
+  (Edwards et al. 2018)
+- It must create a clear flow from data supplier to user and make it
+  easy to acknowledge and contact data suppliers
+- It must be relatively easily updatable, updated often and not go
+  data-stale
+- It is a secondary data product and is not a primary relational
+  database, i.e. it should not contain data that is not available or
+  derivable from other existing databases. This also means that quality
+  control in gslea is not on the data itself but only specific derived
+  products.
 
 These guidelines should be followed closely to prevent “mission creep”
 which is likely to lead to failure of the usability of matrix at a later
@@ -296,10 +308,10 @@ entire content of the variable.description table.
     metadata.f(verbosity="low")
 
     ## $Number.of.variables
-    ## [1] 426
+    ## [1] 948
     ## 
     ## $Number.of.EARS
-    ## [1] 14
+    ## [1] 43
     ## 
     ## $Number.of.years
     ## [1] 243
@@ -308,7 +320,7 @@ entire content of the variable.description table.
     ## [1] 1854 2096
     ## 
     ## $Number.of.observations
-    ## [1] 146031
+    ## [1] 422680
 
 Another perhaps more useful way to know what the database contains is
 with the function <b>var.f</b>. <b>var.f</b> accepts as an argument one
@@ -342,6 +354,981 @@ units
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:right;">
+a.ge20.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature greater than 20
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.ge20.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature greater
+than 20
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt0.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than 0
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt0.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than 0
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt0.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than 0
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt1.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than 1
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt1.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than 1
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt1.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than 1
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt10.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than 10
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt10.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than 10
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt10.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than 10
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt11.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than 11
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt11.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than 11
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt11.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than 11
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt12.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than 12
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt12.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than 12
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt12.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than 12
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt13.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than 13
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt13.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than 13
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt13.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than 13
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt14.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than 14
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt14.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than 14
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt14.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than 14
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt15.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than 15
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt15.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than 15
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt15.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than 15
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt16.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than 16
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt16.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than 16
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt16.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than 16
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt17.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than 17
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt17.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than 17
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt17.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than 17
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt18.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than 18
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt18.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than 18
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt18.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than 18
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt19.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than 19
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt19.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than 19
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt19.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than 19
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt2.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than 2
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt2.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than 2
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt2.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than 2
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt20.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than 20
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt20.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than 20
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt20.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than 20
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt3.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than 3
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt3.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than 3
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt3.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than 3
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt4.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than 4
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt4.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than 4
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt4.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than 4
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt5.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than 5
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt5.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than 5
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt5.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than 5
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt6.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than 6
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt6.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than 6
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt6.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than 6
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt7.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than 7
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt7.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than 7
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt7.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than 7
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt8.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than 8
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt8.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than 8
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt8.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than 8
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt9.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than 9
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt9.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than 9
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.lt9.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than 9
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.ltminus1.deep.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of deep water (&gt;100m) with temperature less than -1
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.ltminus1.shallow.august
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) with temperature less than -1
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+a.ltminus1.shallow.june
+</td>
+<td style="text-align:right;">
+physical
+</td>
+<td style="text-align:right;">
+area (km2) of shallow water (&lt;100m) in June with temperature less
+than -1
+</td>
+<td style="text-align:right;">
+km squared
+</td>
+</tr>
 <tr>
 <td style="text-align:right;">
 cil.vol.lt.1
@@ -602,7 +1589,7 @@ t.deep
 physical
 </td>
 <td style="text-align:right;">
-Bottom temperature in waters &gt; 200m deep
+Bottom temperature in waters &gt; 200m deep august survey interpolated
 </td>
 <td style="text-align:right;">
 degrees celsius
@@ -616,7 +1603,7 @@ t.shallow
 physical
 </td>
 <td style="text-align:right;">
-Bottom temperature in waters &lt; 200m deep
+Bottom temperature in waters &lt; 200m deep august survey interpolated
 </td>
 <td style="text-align:right;">
 degrees celsius
@@ -686,7 +1673,7 @@ tmax200.400
 physical
 </td>
 <td style="text-align:right;">
-Maximum temperature between 200 and 400m
+Maximum temperature between 200 and 400m interpolated temperature
 </td>
 <td style="text-align:right;">
 degrees celsius
@@ -703,13 +1690,72 @@ that term in their description.
 
     find.vars.f(search.term= "200")
 
-    ##  [1] "j.gsnw.q1"   "j.gsnw.q2"   "j.gsnw.q3"   "j.gsnw.q4"   "t.deep"     
-    ##  [6] "t.shallow"   "t200"        "tmax200.400" "amo.month1"  "amo.month10"
-    ## [11] "amo.month11" "amo.month12" "amo.month2"  "amo.month3"  "amo.month4" 
-    ## [16] "amo.month5"  "amo.month6"  "amo.month7"  "amo.month8"  "amo.month9" 
-    ## [21] "pdo.month1"  "pdo.month10" "pdo.month11" "pdo.month12" "pdo.month2" 
-    ## [26] "pdo.month3"  "pdo.month4"  "pdo.month5"  "pdo.month6"  "pdo.month7" 
-    ## [31] "pdo.month8"  "pdo.month9"
+    ##  [1] "alk_canesm2_rcp8.5_t26_rcp8.5_t26_bottom.above.200"             
+    ##  [2] "alk_canesm2_rcp8.5_t26_rcp8.5_t26_bottom.deep.auguster.200"     
+    ##  [3] "alk_hadgem2-es_rcp8.5_t26_rcp8.5_t26_bottom.above.200"          
+    ##  [4] "alk_hadgem2-es_rcp8.5_t26_rcp8.5_t26_bottom.deep.auguster.200"  
+    ##  [5] "alk_mpi-esm-lr_rcp8.5_t26_rcp8.5_t26_bottom.above.200"          
+    ##  [6] "alk_mpi-esm-lr_rcp8.5_t26_rcp8.5_t26_bottom.deep.auguster.200"  
+    ##  [7] "j.gsnw.q1"                                                      
+    ##  [8] "j.gsnw.q2"                                                      
+    ##  [9] "j.gsnw.q3"                                                      
+    ## [10] "j.gsnw.q4"                                                      
+    ## [11] "nh4_canesm2_rcp8.5_t26_rcp8.5_t26_200m"                         
+    ## [12] "nh4_canesm2_rcp8.5_t26_rcp8.5_t26_bottom.above.200"             
+    ## [13] "nh4_hadgem2-es_rcp8.5_t26_rcp8.5_t26_200m"                      
+    ## [14] "nh4_hadgem2-es_rcp8.5_t26_rcp8.5_t26_bottom.above.200"          
+    ## [15] "nh4_mpi-esm-lr_rcp8.5_t26_rcp8.5_t26_200m"                      
+    ## [16] "nh4_mpi-esm-lr_rcp8.5_t26_rcp8.5_t26_bottom.above.200"          
+    ## [17] "no3_canesm2_rcp8.5_t26_rcp8.5_t26_200m"                         
+    ## [18] "no3_canesm2_rcp8.5_t26_rcp8.5_t26_bottom.above.200"             
+    ## [19] "no3_hadgem2-es_rcp8.5_t26_rcp8.5_t26_200m"                      
+    ## [20] "no3_hadgem2-es_rcp8.5_t26_rcp8.5_t26_bottom.above.200"          
+    ## [21] "no3_mpi-esm-lr_rcp8.5_t26_rcp8.5_t26_200m"                      
+    ## [22] "no3_mpi-esm-lr_rcp8.5_t26_rcp8.5_t26_bottom.above.200"          
+    ## [23] "o2_canesm2_rcp8.5_t26_rcp8.5_t26_200m"                          
+    ## [24] "o2_canesm2_rcp8.5_t26_rcp8.5_t26_bottom.above.200"              
+    ## [25] "o2_hadgem2-es_rcp8.5_t26_rcp8.5_t26_200m"                       
+    ## [26] "o2_hadgem2-es_rcp8.5_t26_rcp8.5_t26_bottom.above.200"           
+    ## [27] "o2_mpi-esm-lr_rcp8.5_t26_rcp8.5_t26_200m"                       
+    ## [28] "o2_mpi-esm-lr_rcp8.5_t26_rcp8.5_t26_bottom.above.200"           
+    ## [29] "o2sat_canesm2_rcp8.5_t26_rcp8.5_t26_bottom.above.200"           
+    ## [30] "o2sat_canesm2_rcp8.5_t26_rcp8.5_t26_bottom.deep.auguster.200"   
+    ## [31] "o2sat_hadgem2-es_rcp8.5_t26_rcp8.5_t26_bottom.above.200"        
+    ## [32] "o2sat_hadgem2-es_rcp8.5_t26_rcp8.5_t26_bottom.deep.auguster.200"
+    ## [33] "o2sat_mpi-esm-lr_rcp8.5_t26_rcp8.5_t26_bottom.above.200"        
+    ## [34] "o2sat_mpi-esm-lr_rcp8.5_t26_rcp8.5_t26_bottom.deep.auguster.200"
+    ## [35] "t.deep"                                                         
+    ## [36] "t.shallow"                                                      
+    ## [37] "t200"                                                           
+    ## [38] "tmax200.400"                                                    
+    ## [39] "s.200.spatial"                                                  
+    ## [40] "s.interp.200"                                                   
+    ## [41] "t.interp.200"                                                   
+    ## [42] "t.interp.max200to400"                                           
+    ## [43] "amo.month1"                                                     
+    ## [44] "amo.month10"                                                    
+    ## [45] "amo.month11"                                                    
+    ## [46] "amo.month12"                                                    
+    ## [47] "amo.month2"                                                     
+    ## [48] "amo.month3"                                                     
+    ## [49] "amo.month4"                                                     
+    ## [50] "amo.month5"                                                     
+    ## [51] "amo.month6"                                                     
+    ## [52] "amo.month7"                                                     
+    ## [53] "amo.month8"                                                     
+    ## [54] "amo.month9"                                                     
+    ## [55] "pdo.month1"                                                     
+    ## [56] "pdo.month10"                                                    
+    ## [57] "pdo.month11"                                                    
+    ## [58] "pdo.month12"                                                    
+    ## [59] "pdo.month2"                                                     
+    ## [60] "pdo.month3"                                                     
+    ## [61] "pdo.month4"                                                     
+    ## [62] "pdo.month5"                                                     
+    ## [63] "pdo.month6"                                                     
+    ## [64] "pdo.month7"                                                     
+    ## [65] "pdo.month8"                                                     
+    ## [66] "pdo.month9"
 
 You will see that t.deep and t.shallow come up in this because in their
 descriptions, the distinction between shallow and deep waters is 200m.
@@ -730,87 +1776,115 @@ Extracting the data is done with a single function called
 variable, an integer vector or scalar for year and an integer vector or
 scalar for EAR:
 
-    EA.query.f(years=1999:2012, variables=c("t150", "ph_bot.fall", "t250"), EARs=1:2)
+    EA.query.f(years=1999:2012, variables=c("t150", "t200", "t250"), EARs=1:2)
 
-    ##     year EAR    variable    value
-    ##  1: 2009   1 ph_bot.fall 7.665480
-    ##  2: 2011   1 ph_bot.fall 7.650002
-    ##  3: 2011   2 ph_bot.fall 7.699617
-    ##  4: 1999   1        t150 3.170000
-    ##  5: 2000   1        t150 3.100000
-    ##  6: 2001   1        t150 3.290000
-    ##  7: 2002   1        t150 3.320000
-    ##  8: 2003   1        t150 2.880000
-    ##  9: 2004   1        t150 3.030000
-    ## 10: 2005   1        t150 3.030000
-    ## 11: 2006   1        t150 3.580000
-    ## 12: 2007   1        t150 2.970000
-    ## 13: 2008   1        t150 2.920000
-    ## 14: 2009   1        t150 2.920000
-    ## 15: 2010   1        t150 2.710000
-    ## 16: 2011   1        t150 3.140000
-    ## 17: 2012   1        t150 3.380000
-    ## 18: 1999   2        t150 3.100000
-    ## 19: 2000   2        t150 2.880000
-    ## 20: 2001   2        t150 2.480000
-    ## 21: 2002   2        t150 2.780000
-    ## 22: 2003   2        t150 2.060000
-    ## 23: 2004   2        t150 2.100000
-    ## 24: 2005   2        t150 2.450000
-    ## 25: 2006   2        t150 3.110000
-    ## 26: 2007   2        t150 2.320000
-    ## 27: 2008   2        t150 1.930000
-    ## 28: 2009   2        t150 2.140000
-    ## 29: 2010   2        t150 2.650000
-    ## 30: 2011   2        t150 2.690000
-    ## 31: 2012   2        t150 3.150000
-    ## 32: 1999   1        t250 5.060000
-    ## 33: 2000   1        t250 4.960000
-    ## 34: 2001   1        t250 5.050000
-    ## 35: 2002   1        t250 5.130000
-    ## 36: 2003   1        t250 5.170000
-    ## 37: 2004   1        t250 5.220000
-    ## 38: 2005   1        t250 5.220000
-    ## 39: 2006   1        t250 5.260000
-    ## 40: 2007   1        t250 5.200000
-    ## 41: 2008   1        t250 5.050000
-    ## 42: 2009   1        t250 5.000000
-    ## 43: 2010   1        t250 4.870000
-    ## 44: 2011   1        t250 4.980000
-    ## 45: 2012   1        t250 5.090000
-    ## 46: 1999   2        t250 5.390000
-    ## 47: 2000   2        t250 5.580000
-    ## 48: 2001   2        t250 5.590000
-    ## 49: 2002   2        t250 5.750000
-    ## 50: 2003   2        t250 5.750000
-    ## 51: 2004   2        t250 5.700000
-    ## 52: 2005   2        t250 5.510000
-    ## 53: 2006   2        t250 5.640000
-    ## 54: 2007   2        t250 5.730000
-    ## 55: 2008   2        t250 5.340000
-    ## 56: 2009   2        t250 5.060000
-    ## 57: 2010   2        t250 5.140000
-    ## 58: 2011   2        t250 5.520000
-    ## 59: 2012   2        t250 5.890000
-    ##     year EAR    variable    value
+    ##      year    EAR variable value
+    ##     <num> <char>   <char> <num>
+    ##  1:  1999      1     t150  3.27
+    ##  2:  1999      1     t200  4.43
+    ##  3:  1999      1     t250  4.99
+    ##  4:  1999      2     t150  2.97
+    ##  5:  1999      2     t200  4.61
+    ##  6:  1999      2     t250  5.37
+    ##  7:  2000      1     t150  2.94
+    ##  8:  2000      1     t200  4.26
+    ##  9:  2000      1     t250  4.88
+    ## 10:  2000      2     t150  2.88
+    ## 11:  2000      2     t200  4.75
+    ## 12:  2000      2     t250  5.59
+    ## 13:  2001      1     t150  3.25
+    ## 14:  2001      1     t200  4.40
+    ## 15:  2001      1     t250  4.97
+    ## 16:  2001      2     t150  2.19
+    ## 17:  2001      2     t200  4.56
+    ## 18:  2001      2     t250  5.53
+    ## 19:  2002      1     t150  3.27
+    ## 20:  2002      1     t200  4.42
+    ## 21:  2002      1     t250  5.04
+    ## 22:  2002      2     t150  2.68
+    ## 23:  2002      2     t200  4.86
+    ## 24:  2002      2     t250  5.74
+    ## 25:  2003      1     t150  2.95
+    ## 26:  2003      1     t200  4.44
+    ## 27:  2003      1     t250  5.10
+    ## 28:  2003      2     t150  2.56
+    ## 29:  2003      2     t200  4.75
+    ## 30:  2003      2     t250  5.79
+    ## 31:  2004      1     t150  2.64
+    ## 32:  2004      1     t200  4.09
+    ## 33:  2004      1     t250  4.91
+    ## 34:  2004      2     t150  1.68
+    ## 35:  2004      2     t200  3.75
+    ## 36:  2004      2     t250  5.49
+    ## 37:  2005      1     t150  2.84
+    ## 38:  2005      1     t200  4.22
+    ## 39:  2005      1     t250  5.02
+    ## 40:  2005      2     t150  2.29
+    ## 41:  2005      2     t200  4.16
+    ## 42:  2005      2     t250  5.46
+    ## 43:  2006      1     t150  3.23
+    ## 44:  2006      1     t200  4.35
+    ## 45:  2006      1     t250  4.97
+    ## 46:  2006      2     t150  3.16
+    ## 47:  2006      2     t200  5.02
+    ## 48:  2006      2     t250  5.65
+    ## 49:  2007      1     t150  3.31
+    ## 50:  2007      1     t200  4.42
+    ## 51:  2007      1     t250  5.01
+    ## 52:  2007      2     t150  1.74
+    ## 53:  2007      2     t200  4.54
+    ## 54:  2007      2     t250  5.63
+    ## 55:  2008      1     t150  2.99
+    ## 56:  2008      1     t200  4.28
+    ## 57:  2008      1     t250  4.95
+    ## 58:  2008      2     t150  1.45
+    ## 59:  2008      2     t200  3.83
+    ## 60:  2008      2     t250  5.37
+    ## 61:  2009      1     t150  2.64
+    ## 62:  2009      1     t200  3.99
+    ## 63:  2009      1     t250  4.77
+    ## 64:  2009      2     t150  2.06
+    ## 65:  2009      2     t200  3.92
+    ## 66:  2009      2     t250  5.04
+    ## 67:  2010      1     t150  2.46
+    ## 68:  2010      1     t200  3.76
+    ## 69:  2010      1     t250  4.54
+    ## 70:  2010      2     t150  2.42
+    ## 71:  2010      2     t200  4.20
+    ## 72:  2010      2     t250  5.14
+    ## 73:  2011      1     t150  2.78
+    ## 74:  2011      1     t200  3.94
+    ## 75:  2011      1     t250  4.61
+    ## 76:  2011      2     t150  2.56
+    ## 77:  2011      2     t200  4.41
+    ## 78:  2011      2     t250  5.39
+    ## 79:  2012      1     t150  3.41
+    ## 80:  2012      1     t200  4.34
+    ## 81:  2012      1     t250  4.89
+    ## 82:  2012      2     t150  2.86
+    ## 83:  2012      2     t200  4.82
+    ## 84:  2012      2     t250  5.71
+    ##      year    EAR variable value
+    ##     <num> <char>   <char> <num>
 
 You need to name all the variables you want to extract but you can
 access all the years or all the EARs by putting a wide range on them
 
-    EA.query.f(years=1900:2021, variables=c("t150", "ph_bot.fall", "t250"), EARs=1:99)
+    EA.query.f(years=1900:2021, variables=c("t150", "t200", "t250"), EARs=1:99)
 
-    ##      year EAR    variable    value
-    ##   1: 2009  10 ph_bot.fall 7.612320
-    ##   2: 2011  10 ph_bot.fall 7.595473
-    ##   3: 2014  10 ph_bot.fall 7.597316
-    ##   4: 2015  10 ph_bot.fall 7.583178
-    ##   5: 2016  10 ph_bot.fall 7.567549
-    ##  ---                              
-    ## 405: 2017   3        t250 6.530000
-    ## 406: 2018   3        t250 6.510000
-    ## 407: 2019   3        t250 6.730000
-    ## 408: 2020   3        t250 6.970000
-    ## 409: 2021   3        t250 7.030000
+    ##        year    EAR variable value
+    ##       <num> <char>   <char> <num>
+    ##    1:  1915      2     t150 -0.21
+    ##    2:  1915      2     t200  1.29
+    ##    3:  1915      2     t250  3.75
+    ##    4:  1915      3     t150  0.57
+    ##    5:  1915      3     t200  2.46
+    ##   ---                            
+    ## 1695:  2021     30     t200  6.09
+    ## 1696:  2021     30     t250  6.86
+    ## 1697:  2021     31     t150  4.19
+    ## 1698:  2021     31     t200  6.54
+    ## 1699:  2021     31     t250  7.36
 
 You may want to save the results of a query to an object and then export
 it to csv (<b>fwrite</b>) or some other format.
@@ -819,69 +1893,99 @@ it to csv (<b>fwrite</b>) or some other format.
 
 The data are in long format (tidyverse speak = “tidy data”) which is the
 common way to store data in databases. It means that for a variable x
-year x EAR comination where there is no observation, there is not a row
+year x EAR combination where there is no observation, there is not a row
 in the database either. If you want tabular data (wide) to show when say
 and observation was not made for a particular year and variable and EAR,
 then you can widen the data using the “dcast” function from data.table
 
-    dat= EA.query.f(years=1900:2021, variables=c("t150","ph_bot.fall","ice.max","o2.late_summer.sat.mean50_100"), EARs=1)
+    dat= EA.query.f(years=1900:2021, variables=c("t150","ice.max","sst"), EARs=1)
     dcast(dat, year~ variable)
 
-    ##     year ice.max o2.late_summer.sat.mean50_100 ph_bot.fall t150
-    ##  1: 1969    4.25                            NA          NA 2.64
-    ##  2: 1970    6.61                            NA          NA 2.95
-    ##  3: 1971   13.20                            NA          NA 3.35
-    ##  4: 1972   10.96                            NA          NA   NA
-    ##  5: 1973    9.37                            NA          NA   NA
-    ##  6: 1974    8.82                            NA          NA 2.97
-    ##  7: 1975    7.60                            NA          NA   NA
-    ##  8: 1976    7.54                            NA          NA   NA
-    ##  9: 1977    9.61                            NA          NA   NA
-    ## 10: 1978   10.87                            NA          NA   NA
-    ## 11: 1979   16.86                            NA          NA 4.33
-    ## 12: 1980    4.43                            NA          NA   NA
-    ## 13: 1981    9.05                            NA          NA   NA
-    ## 14: 1982    5.60                            NA          NA   NA
-    ## 15: 1983    7.84                            NA          NA   NA
-    ## 16: 1984    8.44                            NA          NA   NA
-    ## 17: 1985    6.17                            NA          NA   NA
-    ## 18: 1986    5.97                            NA          NA   NA
-    ## 19: 1987    7.95                            NA          NA 3.12
-    ## 20: 1988   10.11                            NA          NA 3.36
-    ## 21: 1989    5.77                            NA          NA   NA
-    ## 22: 1990    6.85                            NA          NA 2.76
-    ## 23: 1991    5.73                            NA          NA 1.71
-    ## 24: 1992   10.52                            NA          NA 2.11
-    ## 25: 1993   11.73                            NA          NA 2.21
-    ## 26: 1994    7.60                            NA          NA 2.86
-    ## 27: 1995   11.42                            NA          NA 2.23
-    ## 28: 1996    8.84                            NA          NA 2.21
-    ## 29: 1997    7.34                            NA          NA 2.62
-    ## 30: 1998    5.13                            NA          NA 2.98
-    ## 31: 1999    5.27                            NA          NA 3.17
-    ## 32: 2000    4.64                            NA          NA 3.10
-    ## 33: 2001    4.66                            NA          NA 3.29
-    ## 34: 2002    7.43                      74.85196          NA 3.32
-    ## 35: 2003    4.53                      77.94120          NA 2.88
-    ## 36: 2004    4.91                      79.46163          NA 3.03
-    ## 37: 2005    7.67                      75.37610          NA 3.03
-    ## 38: 2006    3.22                      69.55593          NA 3.58
-    ## 39: 2007    2.31                      79.41540          NA 2.97
-    ## 40: 2008    9.61                      80.21454          NA 2.92
-    ## 41: 2009    5.48                      77.44965    7.665480 2.92
-    ## 42: 2010    1.85                      79.23001          NA 2.71
-    ## 43: 2011    1.99                      78.86014    7.650002 3.14
-    ## 44: 2012    3.94                      76.54409          NA 3.38
-    ## 45: 2013    2.44                      80.88125          NA 3.26
-    ## 46: 2014    7.47                      83.09693    7.647305 3.34
-    ## 47: 2015    9.12                      76.90995    7.664455 4.19
-    ## 48: 2016    3.06                      73.39238    7.629347 4.26
-    ## 49: 2017    3.81                      75.99841    7.611966 3.81
-    ## 50: 2018    6.08                      82.23750    7.638834 3.24
-    ## 51: 2019    5.06                      80.52226    7.638646 3.43
-    ## 52: 2020    4.36                            NA          NA 3.56
-    ## 53: 2021    1.35                            NA          NA 4.24
-    ##     year ice.max o2.late_summer.sat.mean50_100 ph_bot.fall t150
+    ## Key: <year>
+    ##      year ice.max   sst  t150
+    ##     <num>   <num> <num> <num>
+    ##  1:  1932      NA    NA  1.65
+    ##  2:  1933      NA    NA  1.33
+    ##  3:  1934      NA    NA  1.73
+    ##  4:  1935      NA    NA  2.08
+    ##  5:  1937      NA    NA  1.44
+    ##  6:  1946      NA    NA  2.07
+    ##  7:  1947      NA    NA  1.72
+    ##  8:  1948      NA    NA  2.05
+    ##  9:  1950      NA    NA  2.16
+    ## 10:  1951      NA    NA  2.18
+    ## 11:  1952      NA    NA  2.45
+    ## 12:  1953      NA    NA  2.68
+    ## 13:  1954      NA    NA  2.98
+    ## 14:  1955      NA    NA  2.53
+    ## 15:  1956      NA    NA  1.53
+    ## 16:  1957      NA    NA  2.19
+    ## 17:  1958      NA    NA  2.49
+    ## 18:  1959      NA    NA  2.10
+    ## 19:  1960      NA    NA  2.33
+    ## 20:  1961      NA    NA  1.59
+    ## 21:  1962      NA    NA  1.81
+    ## 22:  1963      NA    NA  1.54
+    ## 23:  1964      NA    NA  1.94
+    ## 24:  1965      NA    NA  2.52
+    ## 25:  1966      NA    NA  2.34
+    ## 26:  1967      NA    NA  2.16
+    ## 27:  1968      NA    NA  2.34
+    ## 28:  1969    4.25    NA  2.51
+    ## 29:  1970    6.61    NA  3.14
+    ## 30:  1971   13.20    NA  3.02
+    ## 31:  1972   10.96    NA  2.12
+    ## 32:  1973    9.37    NA  3.01
+    ## 33:  1974    8.82    NA  2.56
+    ## 34:  1975      NA    NA  2.07
+    ## 35:  1976    7.54    NA  2.78
+    ## 36:  1977    9.61    NA  2.28
+    ## 37:  1978   10.87    NA  3.52
+    ## 38:  1979   16.86    NA  3.41
+    ## 39:  1980    4.43    NA  3.19
+    ## 40:  1981    9.05    NA  4.11
+    ## 41:  1982    5.60  7.08  3.47
+    ## 42:  1983    7.84  7.68  2.90
+    ## 43:  1984    8.44  7.94  3.05
+    ## 44:  1985    6.17  7.73  3.44
+    ## 45:  1986    5.97  7.29  2.31
+    ## 46:  1987    7.95  7.38  2.98
+    ## 47:  1988   10.11  7.86  3.05
+    ## 48:  1989    5.77  7.11  3.31
+    ## 49:  1990    6.85  7.16  2.03
+    ## 50:  1991    5.73  7.50  1.42
+    ## 51:  1992   10.52  7.12  2.04
+    ## 52:  1993   11.73  8.36  2.20
+    ## 53:  1994    7.60  8.97  2.56
+    ## 54:  1995   11.42  8.78  2.32
+    ## 55:  1996    8.84  8.69  2.37
+    ## 56:  1997    7.34  8.20  2.89
+    ## 57:  1998    5.13  8.84  2.54
+    ## 58:  1999    5.27  8.97  3.27
+    ## 59:  2000    4.64  8.25  2.94
+    ## 60:  2001    4.66  8.44  3.25
+    ## 61:  2002    7.43  7.77  3.27
+    ## 62:  2003    4.53  8.29  2.95
+    ## 63:  2004    4.91  8.11  2.64
+    ## 64:  2005    7.67  8.76  2.84
+    ## 65:  2006    3.22  9.12  3.23
+    ## 66:  2007    2.31  8.04  3.31
+    ## 67:  2008    9.61  9.34  2.99
+    ## 68:  2009    5.48  8.42  2.64
+    ## 69:  2010    1.85  9.19  2.46
+    ## 70:  2011    1.99  9.18  2.78
+    ## 71:  2012    3.94  9.53  3.41
+    ## 72:  2013    2.44  8.22  2.83
+    ## 73:  2014    7.47  9.53  3.16
+    ## 74:  2015    9.12  8.60  4.09
+    ## 75:  2016    3.06  9.19  3.66
+    ## 76:  2017    3.81  8.27  3.50
+    ## 77:  2018    6.08  7.66  3.09
+    ## 78:  2019    5.06  8.57  3.53
+    ## 79:  2020    4.36  8.48  3.46
+    ## 80:  2021    1.35 10.02  4.01
+    ##      year ice.max   sst  t150
+    ##     <num>   <num> <num> <num>
 
 This puts each variable as a separate column, it preserves all the years
 where at least one of the variables had an observation and it puts NA
@@ -898,65 +2002,46 @@ however, cast multidimension data into a table but it will repeat the
 columns for each EAR (note that “EAR” is now in the right hand side of
 the formula)
 
-    dat= EA.query.f(years=2015:2021, variables=c("t150","ph_bot.fall","ice.max","o2.late_summer.sat.mean50_100"), EARs=1:100)
+    dat= EA.query.f(years=2015:2021, variables=c("t150","ice.max","sst"), EARs=1:100)
     dcast(dat, year~ variable+EAR)
 
-    ##    year ice.max_1 ice.max_2 ice.max_3 ice.max_4 ice.max_5 ice.max_6 ice.max_7
-    ## 1: 2015      9.12     15.42     12.98      7.39     29.53      4.76     11.42
-    ## 2: 2016      3.06      2.21      1.21      1.90      8.27      1.26      0.03
-    ## 3: 2017      3.81      5.98      1.41     12.17      9.91      2.73      0.99
-    ## 4: 2018      6.08      4.62      5.67      5.04     16.18      2.76      1.29
-    ## 5: 2019      5.06     18.94     13.83      4.93     27.17      3.63      4.14
-    ## 6: 2020      4.36      9.86      5.57      7.81     17.06      2.75      1.71
-    ## 7: 2021      1.35      0.41      0.12      1.80      6.80      1.41      0.31
-    ##    ice.max_10 ice.max_11 ice.max_30 ice.max_31 ice.max_50
-    ## 1:       1.85       7.28       9.99       4.71       1.32
-    ## 2:       0.74       2.32       1.20       0.02       0.54
-    ## 3:       0.94       2.88       1.20       0.21       0.79
-    ## 4:       1.25       4.83       4.83       0.84       1.10
-    ## 5:       1.15       4.02       9.28       6.20       1.14
-    ## 6:       1.19       3.47       4.15       1.42       1.35
-    ## 7:       0.88       0.52       0.05       0.07       0.65
-    ##    o2.late_summer.sat.mean50_100_1 o2.late_summer.sat.mean50_100_2
-    ## 1:                        76.90995                        88.23709
-    ## 2:                        73.39238                        89.03141
-    ## 3:                        75.99841                        88.90779
-    ## 4:                        82.23750                        91.21643
-    ## 5:                        80.52226                        90.17201
-    ## 6:                              NA                              NA
-    ## 7:                              NA                              NA
-    ##    o2.late_summer.sat.mean50_100_3 o2.late_summer.sat.mean50_100_4
-    ## 1:                        86.03116                        90.18816
-    ## 2:                        86.97931                        90.85565
-    ## 3:                        87.49978                        89.81340
-    ## 4:                        89.17018                        93.43198
-    ## 5:                        88.93582                        90.39068
-    ## 6:                              NA                              NA
-    ## 7:                              NA                              NA
-    ##    o2.late_summer.sat.mean50_100_10 o2.late_summer.sat.mean50_100_11
-    ## 1:                         78.15062                         76.62354
-    ## 2:                         71.00473                         73.94409
-    ## 3:                         77.45907                         75.66042
-    ## 4:                         82.16858                         82.25341
-    ## 5:                         78.43210                         81.00553
-    ## 6:                               NA                               NA
-    ## 7:                               NA                               NA
-    ##    ph_bot.fall_1 ph_bot.fall_2 ph_bot.fall_3 ph_bot.fall_5 ph_bot.fall_10
-    ## 1:      7.664455      7.800129      7.764251      7.744036       7.583178
-    ## 2:      7.629347      7.752494      7.744871      7.805870       7.567549
-    ## 3:      7.611966      7.725187      7.753973      7.797726       7.558538
-    ## 4:      7.638834      7.719959      7.765986      7.840955       7.588689
-    ## 5:      7.638646      7.718430      7.747536      7.760601       7.590770
-    ## 6:            NA            NA            NA            NA             NA
-    ## 7:            NA            NA            NA            NA             NA
-    ##    ph_bot.fall_11 t150_1 t150_2 t150_3 t150_4 t150_10
-    ## 1:       7.728533   4.19   3.69   4.01   0.33    4.06
-    ## 2:       7.668149   4.26   3.60   4.03  -0.21    4.11
-    ## 3:       7.646781   3.81   2.16   3.35  -0.92    3.46
-    ## 4:       7.668735   3.24   2.32   2.72  -0.19    3.10
-    ## 5:       7.666020   3.43   2.84   3.26  -0.32    3.50
-    ## 6:             NA   3.56   3.59   4.05   1.17    3.49
-    ## 7:             NA   4.24   4.24   3.98   1.82    4.22
+    ## Key: <year>
+    ##     year ice.max_1 ice.max_10 ice.max_11 ice.max_2 ice.max_3 ice.max_30
+    ##    <num>     <num>      <num>      <num>     <num>     <num>      <num>
+    ## 1:  2015      9.12       1.85       7.28     15.42     12.98       9.99
+    ## 2:  2016      3.06       0.74       2.32      2.21      1.21       1.20
+    ## 3:  2017      3.81       0.94       2.88      5.98      1.41       1.20
+    ## 4:  2018      6.08       1.25       4.83      4.62      5.67       4.83
+    ## 5:  2019      5.06       1.15       4.02     18.94     13.83       9.28
+    ## 6:  2020      4.36       1.19       3.47      9.86      5.57       4.15
+    ## 7:  2021      1.35       0.88       0.52      0.41      0.12       0.05
+    ##    ice.max_31 ice.max_4 ice.max_5 ice.max_50 ice.max_6 ice.max_7 sst_1 sst_10
+    ##         <num>     <num>     <num>      <num>     <num>     <num> <num>  <num>
+    ## 1:       4.71      7.39     29.53       1.32      4.76     11.42  8.60   7.89
+    ## 2:       0.02      1.90      8.27       0.54      1.26      0.03  9.19   8.42
+    ## 3:       0.21     12.17      9.91       0.79      2.73      0.99  8.27   7.51
+    ## 4:       0.84      5.04     16.18       1.10      2.76      1.29  7.66   7.05
+    ## 5:       6.20      4.93     27.17       1.14      3.63      4.14  8.57   7.61
+    ## 6:       1.42      7.81     17.06       1.35      2.75      1.71  8.48   7.81
+    ## 7:       0.07      1.80      6.80       0.65      1.41      0.31 10.02   9.06
+    ##    sst_11 sst_2 sst_3 sst_30 sst_31 sst_4 sst_5 sst_50 sst_6 sst_7 t150_1
+    ##     <num> <num> <num>  <num>  <num> <num> <num>  <num> <num> <num>  <num>
+    ## 1:   8.79  9.17  9.80   9.69  10.04  7.09 11.64  12.10 13.27 10.74   4.09
+    ## 2:   9.38  9.22 10.13   9.98  10.48  6.91 11.67  12.12 13.59 11.05   3.66
+    ## 3:   8.46  9.12 10.35  10.10  10.95  6.96 11.92  11.63 13.73 11.26   3.50
+    ## 4:   7.82  8.55  9.37   9.11  10.04  6.84 11.22  11.33 13.05 10.58   3.09
+    ## 5:   8.81  8.55  9.41   9.33   9.57  6.68 11.25  11.54 13.21 10.19   3.53
+    ## 6:   8.65  8.95  9.90   9.70  10.41  7.75 11.80  11.81 13.78 11.01   3.46
+    ## 7:  10.26 10.51 11.17  11.01  11.53  8.29 12.42  12.93 14.26 11.81   4.01
+    ##    t150_10 t150_11 t150_2 t150_3 t150_30 t150_31 t150_4
+    ##      <num>   <num>  <num>  <num>   <num>   <num>  <num>
+    ## 1:    3.84    4.20   4.01   4.01    4.02    3.96  -0.11
+    ## 2:    3.61    3.83   3.15   3.62    3.71    3.78  -0.40
+    ## 3:    3.46    3.45   2.01   2.85    2.98    2.75  -1.02
+    ## 4:    3.06    3.03   2.83   2.95    3.19    2.49  -0.85
+    ## 5:    3.57    3.68   2.94   3.52    3.31    3.46  -0.85
+    ## 6:    3.51    3.57   3.59   3.92    3.81    4.38   0.17
+    ## 7:    3.95    4.23   4.13   4.16    4.17    4.19   0.98
 
 This wide data now has as many rows as years and as many columns as
 variable x EAR. The columns are named with the variable followed by
@@ -969,7 +2054,7 @@ with <b>EA.query.f</b> and then plots them. It puts all the plots on one
 page as a matrix of plots with each row being a variable and each column
 being an EAR:
 
-    EA.plot.f(years=1900:2021, variables=c("t150", "ph_bot.fall", "t250"), EARs=1:4, smoothing=T)
+    EA.plot.f(years=1900:2021, variables=c("t150","t250"), EARs=1:4, smoothing=T)
 
 ![](README_files/figure-markdown_strict/plotting1-1.png)
 
@@ -980,20 +2065,12 @@ put them all in one pdf in your working directory.
 Another example of the plot without smoothing and different graphical
 parameters:
 
-    EA.plot.f(years=1900:2021, variables=c("t150", "ph_bot.fall", "t250"), EARs=1:4, smoothing=F, pch=20, lwd=2, col="blue", type="b")
+    EA.plot.f(years=1900:2021, variables=c("t150", "t.deep", "t250"), EARs=1:4, smoothing=F, pch=20, lwd=2, col="blue", type="b")
 
 ![](README_files/figure-markdown_strict/plotting2-1.png)
 
 You can see that if there are no data for the variable by EAR
 combination, a blank plot is produced in the plot matrix.
-
-You may want to plot all variables of a particular type. You can do this
-by selecting the variables with the vars.f function and selecting just
-the <b>variable</b> column from its output using “$”
-
-    EA.plot.f(years=1900:2021, variables=vars.f(variable.type="chemical")$variable, EARs=1:2, smoothing=T)
-
-![](README_files/figure-markdown_strict/plotting3-1.png)![](README_files/figure-markdown_strict/plotting3-2.png)![](README_files/figure-markdown_strict/plotting3-3.png)![](README_files/figure-markdown_strict/plotting3-4.png)![](README_files/figure-markdown_strict/plotting3-5.png)![](README_files/figure-markdown_strict/plotting3-6.png)![](README_files/figure-markdown_strict/plotting3-7.png)
 
 ## Finding variables and data
 
@@ -1040,7 +2117,7 @@ EAR=-1) but you are not sure what time lag might be most appropriate.
 Here you are assuming NAO is the independent variable and, SST is the
 dependent variable
 
-    EA.plot.f(variables=c("h.nao","sst"), years=1900:2021, EARs=c(-1,3), smoothing=T,pch=20)
+    EA.plot.f(variables=c("h.nao","sst"), years=1900:2021, EARs=c(-1,1), smoothing=T,pch=20)
 
 ![](README_files/figure-markdown_strict/crosscor1-1.png)
 
@@ -1126,19 +2203,19 @@ done.
     ## 
     ## Residuals:
     ##      Min       1Q   Median       3Q      Max 
-    ## -0.48193 -0.18107 -0.05456  0.16981  0.60764 
+    ## -0.58423 -0.20219 -0.09002  0.16261  0.79366 
     ## 
     ## Coefficients:
     ##                      Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept)           3.49852    0.24716   14.15 1.42e-15 ***
-    ## ann.mean.t.med.rcp45  0.62607    0.08483    7.38 1.78e-08 ***
+    ## (Intercept)           3.16055    0.27115  11.656 6.00e-14 ***
+    ## ann.mean.t.med.rcp45  0.76053    0.09019   8.433 3.85e-10 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
-    ## Residual standard error: 0.2715 on 33 degrees of freedom
-    ##   (111 observations deleted due to missingness)
-    ## Multiple R-squared:  0.6227, Adjusted R-squared:  0.6113 
-    ## F-statistic: 54.47 on 1 and 33 DF,  p-value: 1.779e-08
+    ## Residual standard error: 0.3269 on 37 degrees of freedom
+    ##   (107 observations deleted due to missingness)
+    ## Multiple R-squared:  0.6578, Adjusted R-squared:  0.6485 
+    ## F-statistic: 71.11 on 1 and 37 DF,  p-value: 3.848e-10
 
       tmp2$t.deep.pred= predict(pred.lm,newdata=tmp2)
       plot(tmp2$ann.mean.t.med.rcp45,tmp2$t.deep.pred,type="l",col="blue",lwd=3,
@@ -1168,7 +2245,7 @@ give you the name and or link to the person or organisation responsible
 for the data represented by that variable. It will also provide the main
 citation for that variable.
 
-    formattable::formattable(sources.f(c("t.200","h.nao","o2.fall.doxy2.bottom")))
+    formattable::formattable(sources.f(c("t200","h.nao")))
 
 <table class="table table-condensed">
 <thead>
@@ -1200,16 +2277,16 @@ and relationships to regional temperature and precipitation. Science
 </tr>
 <tr>
 <td style="text-align:right;">
-o2.fall.doxy2.bottom
+t200
 </td>
 <td style="text-align:right;">
-Marjolaine Blais (<marjolaine.blais@dfo-mpo.gc.ca>)
+Peter Galbraith (<peter.galbraith@dfo-mpo.gc.ca>)
 </td>
 <td style="text-align:right;">
-Blais, M., Galbraith, P.S., Plourde, S., Devine, L. and Lehoux, C. 2021.
-Chemical and Biological Oceanographic Conditions in the Estuary and Gulf
-of St. Lawrence during 2019. DFO Can. Sci. Advis. Sec. Res. Doc.
-2021/002. iv + 66 p. 
+Galbraith, P.S., Chassé, J., Caverhill, C., Nicot, P., Gilbert, D.,
+Lefaivre, D. and Lafleur, C. 2018. Physical Oceanographic Conditions in
+the Gulf of St. Lawrence during 2017. DFO Can. Sci. Advis. Sec. Res.
+Doc. 2018/050. v + 79 p. 
 </td>
 </tr>
 </tbody>
@@ -1220,13 +2297,13 @@ responsible and main reference for all variables in the database.
 
 # Forget the R-package, I just want the data
 
-You are not obliged to use this R-package if you want the data. The data
-table and variable description table have been merged and written to an
-excel file sheet. The field descriptions have been written to another
-sheet in the same excel file. This will be downloaded as part of the R
-package from github but you can access just that file directly from the
-gslea github root directory if you do not want to download the R
-package. It is call “<b>EAdata.dump.xlsx</b>”. You might just download
+You are not obliged to use this R-package if you just want the data. The
+data table and variable description table have been merged and written
+to an excel file sheet. The field descriptions have been written to
+another sheet in the same excel file. This will be downloaded as part of
+the R package from github but you can access just that file directly
+from the gslea github root directory if you do not want to download the
+R package. It is call “<b>EAdata.dump.xlsx</b>”. You might just download
 it and filter the variable column or other columns to choose the data
 you want from excel. This file is automatically updated everytime the
 gslea library is updated so there should be no discrepency in the data
@@ -1235,218 +2312,15 @@ from the two places.
 Please do not forget to acknowledge the sources of the data and cite the
 appropriate references that are included in the excel file.
 
-# Work using gslea and links to associated code
-
-## Where gslea has been used in research and advice
-
--   Conditioning advice for Gulf of St. Lawrence shrimp based on an
-    assessment of environment and palusible future climate scenarios.
-    January 2020.
--   Risk of climate change impacts on the Gulf of St. Lawrence turbot
-    fishery. February 2020.
--   4R herring assessment. November 2020
-
-## Code and packages that have drawn up gslea
-
-### [Andrew Smith](https://github.com/adsmithca) created a script as a [github gist](https://gist.github.com/adsmithca/8c00a360292e127cfaef4564df0a7b1d) that makes some nice maps drawing on the data in the package using several of the tidyverse libraries.
-
-### Climate stripes
-
-You can use a package by the same author to make climate stripes plots
-from data in this package. They have intentionally been kept separate in
-order to keep gslea as minimal and streamlined as possible. Here we use
-SST from the central GSL, and then a longer series using the down-scaled
-atmospheric climate projections for RCP 8.5 surface temperature
-
-    # to install the climate stripes package
-    # devtools::install_github("duplisea/climatestripes")
-    library(climatestripes)
-
-    ## Loading required package: mgcv
-
-    ## Loading required package: nlme
-
-    ## This is mgcv 1.8-38. For overview type 'help("mgcv-package")'.
-
-    ## Loading required package: scales
-
-    ## 
-    ## Attaching package: 'climatestripes'
-
-    ## The following object is masked from 'package:datasets':
-    ## 
-    ##     sunspots
-
-    tempdata= EA.query.f(var="ann.mean.t.med.rcp85", EAR=3, years=1900:2100)
-    title.name= "RCP 8.5 surface temperature Magdalen Islands"
-    climate.col.stripes.f(time.vector=tempdata$year,temperature.vector=tempdata$value, colour.vec=c("navyblue","lightblue","white","red","darkred"),title=title.name,legend=T)
-    superimpose.data.f(time.vector=tempdata$year,temperature.vector=tempdata$value, data.colour="yellow", spline=T, spline.colour="white",lwd=4)
-
-![](README_files/figure-markdown_strict/climatestripes-1.png)
-
-# A shiny implementation
-
-You can run this as a shiny application on your webbrowser. You will
-need to install the package shiny from CRAN and then use the command
-
-    if (!require('shiny')) install.packages('shiny'); library('shiny')
-    if (!require('shinybusy')) install.packages('shinybusy')
-    if (!require('devtools')) install.packages('devtools')
-    if (!require('gslea')) devtools::install_github('duplisea/gslea')
-    runGitHub(repo="gslea", username="duplisea", subdir="shiny")
-
-# Development plan and data inclusion
-
-Presently, the development is occuring in Quebec Region but this will be
-expanded to include data that are stored and processed by researchers in
-the Gulf Region (Moncton) of DFO. Our goal is to get a good example from
-Quebec Region and then approach Gulf Region with specific examples that
-they could follow. A joint meeting in the Spring of 2020 was the first
-step in this cross region data sharing in the matrix.
-
-## Multispecies fish and invertebrate survey data
-
-We have added a preliminary extraction of Quebec Region multispecies
-fish and invertebrate biomass data but these will require more quality
-control and checking before we will consider them verified. We have
-applied species filtering criteria and identified 19 core species that
-are well represented by the survey and biomass by ecosystem approach
-region and year has been extracted for each of these. We have further
-identified 9 commercial species that are in a subset of the core species
-and we have further extracted their biomass in juvenile and adult
-categories. Finally, we have taken all species caught in the survey and
-lumped them into various functional guilds and extracted biomass by
-guild.
-
-## Fishing pressure indicators
-
-We have begun working on developing indicators of fishing pressure in
-each region which will have multiple measures such as biomass extracted
-by fishing as well as effort of various gear types in each of the
-regions for as many years as possible. There are many issues with some
-of these data such as improper location assignment. We are presently
-working on this to try to develop useful pressure indicators related to
-fishery removals and effort.
-
-## Down-scaled oceanographic projections
-
-Down-scaled oceanographic variable (physical, chemical, biological)
-projections under different ICCP RCP scenarios and ensembles means and
-variances will also be provided in the matrix eventually. We have been
-in discussion with our regional oceanographers and are developing a plan
-to include this information in a future update of the matrix.
-
-## Other data
-
-There have been considerations of including coastal data, stock
-assessment results, fine-scaled information. These may be possible to
-include in the current structure of gslea and we have also considered
-that this kind of information might be better suited to another similar
-kind of library but specifically aimed at this information. We need to
-keep a consistent approach to the development philoshophy and goals
-which can help us decide this.
-
-# Updating the package
-
-<mark>Unless you need to update this database, you do not need to read
-this</mark>
-
-It is important that the database can be updated consistently and
-quickly. This is done through a series of system calls to bash while
-running R in linux using text processing programs like awk and sed and
-then manipulation in R.
-
-To update the package you will need the standard packages for doing it
-like roxygen and devtools.
-
-## Computing requirements for updating
-
-This package requires linux to update. The reason linux is needed is
-because it uses BASH system calls and programs like awk and sed to
-pre-process data to make names consisitent, e.g. “Year” to “year” or
-other inconsistencies between how raw data is provided by different
-people. If data gets provided by people differently between updates then
-this will require updating of these scripts.
-
-Once the data are processed and brought into the R package, then it
-should be useable by any platform that runs R but I would not know how
-to process the raw data in windows. You may be able to do this in
-windows10 powershell but I have never tried it so I cannot say it will
-work. I do note that powershell does not have “sed” installed by default
-and you cannot run R from powershell so I am not sure you could send R
-systemcalls to the powershell and if you can the script will fail
-without “sed”.
-
-## Raw data
-
-Raw data has been provided in various forms by individual data
-providers. Sometimes it is in tabular format while other times it is in
-a long format. We need to turn it all into long format and this also
-involves standardising variable names.
-
-## Running the update script
-
-The update script is XXXX (I will make a vignette on this including the
-data but I have not done this yet) which is run from R. It makes system
-calls to the working directory you set. That working directory can be
-anywhere on your machine and you need to make sure there are
-sub-directories of that which are named by the data provider. So Peter
-Galbraith has supplied the physical oceanographic data and therefore the
-subdirectory is called galbraith. His raw .dat files are located there.
-These are text files of a sort that Peter extracts with commented (#)
-header lines describing the data and finishing with the data itself.
-Marjolaine Blais has supplied the chemical, planktonic and phenological
-variables is various forms. The subdirectory blais also has
-subdirectories for zooplankton, oxygen, pH etc. Aside from the data
-itself, the two other tables need to be imported into R. These sheets in
-an excel file describing the data. At first I was pulling this
-information from the headers but there were a lot of differences and
-this was creating very one-off fragile scripts that I knew would likely
-break on each update. Therefore, the excel sheets have been created to
-keep this information. You will need to edit them in excel. The good
-thing is that all you will have to alter for a simple update is the
-extraction date. If you add new variables though, you will need to add a
-new line with all the information about that variable.
-
-If this is all in order on your machine, you just need to run the update
-script in the R command line. The script will manipulate the data and
-save each data.table as an .rda file in your data directory for the R
-package.
-
-I doubt it will go this smoothly but I hope so.
-
-## Updating the R package
-
-### Compiling documentation
-
-If you changed the documentation for the datasets or functions, you need
-to recompile the documentation using roxygen2.
-
-### Making the R package
-
-Clean and rebuild
-
-# Project participants (past and present)
-
-Jérôme Beaulieu, Hugues Benoît, Marjolaine Blais, Hugo Bourdages, Daniel
-Duplisea, Peter Galbraith, Mike Hammill, Cédric Juillet, David Merette,
-Stéphane Plourde, Marie-Julie Roux, Bernard Sainte-Marie, Antoine
-Rivierre, Virginie Roy
-
-# If you have issues
-
-For comments, questions, bugs etc, you can send this to the package
-maintainer, Daniel Duplisea, by email (<daniel.duplisea@gmail.com>,
-<daniel.duplisea@dfo-mpo.gc.ca>) or file a bug report or issue on
-github.
-
-Pull requests conforming to the development philosophy are welcome.
-
 # Citation for this package
 
-Duplisea, DE. Merette, D., Roux, M-J., Benoît, H., Blais, M., Galbraith,
-P., Plourde, S. 2020. gslea: the Gulf of St Lawrence ecosystem approach
-data matrix R-package. R package version 0.1
+Daniel E Duplisea, Marie-Julie Roux, Stéphane Plourde, Peter S
+Galbraith, Marjolaine Blais, Hugues P Benoît, Bernard Sainte-Marie,
+Diane Lavoie, Hugo Bourdages, Facilitating an ecosystem approach through
+open data and information packaging, ICES Journal of Marine Science,
+Volume 81, Issue 4, May 2024, Pages 724–732,
+<https://doi.org/10.1093/icesjms/fsae024>
+
 <https://github.com/duplisea/gslea>.
 
 # References
