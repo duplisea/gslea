@@ -11,7 +11,10 @@
   - fish leCren condition factors
   - alkalinity, dissolved organic carbon, aragonite
 - New EARs which needed to be developed to accommodate data that does
-  not necessarily come from a fixed region but from a survey
+  not necessarily come from a fixed region but from a survey. See the
+  dataset EAR.lookup when you load the package. The convention is that
+  EAR=0 is the GSL, negative EAR are larger regions up to the global
+  scale while sub-regions are values &gt;0.
 
 # What is it?
 

@@ -1,40 +1,33 @@
-#' Metadata with three levels of verbosity
-#'
-#' @param verbosity "low","med","high".
-#' @description  Pulls out metadata from the various datasets to give an overview. "med" and "high" verbosity level data
-#'               may need further display formatting to get a good overview. Try the library 'formattable' and run that
-#'               function on the higher verbosity metadata to get a nicer looking table that you can make sense of.
-#' @author Daniel Duplisea
-#' @export
-#' @examples
-#' metadata.f("low")
-#' data.desc= metadata.f("med"); library(formattable); formattable(data.desc$Descriptions, align="l")
-#' metadata.f("vangogh")
 metadata.f= function(verbosity="low"){
-  if(verbosity=="low"){
-    desc= list(
-      Number.of.variables= EA.data[,uniqueN(variable)],
-      Number.of.EARS= EA.data[,uniqueN(EAR)],
-      Number.of.years= EA.data[,uniqueN(year)],
-      First.and.last.year= range(EA.data$year),
-      Number.of.observations= nrow(EA.data))
-  }
-  if(verbosity=="med"){
-      Unique.variables= data.table(variable=EA.data[,unique(variable)],key="variable")
-      Variables.with.descriptions= Unique.variables[variable.description[,.(variable, description, units)]]
-#      formattable(Variables.with.descriptions,align="l")
-      desc= list(Unique.Variables= Unique.variables,Descriptions=Variables.with.descriptions)
-  }
-  if(verbosity=="high"){
-      Unique.variables= data.table(variable=EA.data[,unique(variable)],key="variable")
-      Variables.with.descriptions= Unique.variables[variable.description[,.(variable, description, units)]]
-#      formattable(Variables.with.descriptions,align="l")
-      desc= list(Unique.Variables= Unique.variables,Descriptions=Variables.with.descriptions)
-  }
-  if(verbosity=="vangogh"){
-    desc= list(Number.of.EARS= 1)
-  }
-  desc
+  switch(verbosity,
+    low= list(
+      Number.of.variables=  EA.data[, uniqueN(variable)],
+      Number.of.EARS=       EA.data[, uniqueN(EAR)],
+      Number.of.years=      EA.data[, uniqueN(year)],
+      First.and.last.year=  range(EA.data$year)),
+    med= , high= {
+      uv= data.table(variable= EA.data[, unique(variable)], key="variable")
+      desc= list(
+        Number.of.variables=    EA.data[, uniqueN(variable)],
+        Number.of.EARS=         EA.data[, uniqueN(EAR)],
+        Number.of.years=        EA.data[, uniqueN(year)],
+        First.and.last.year=    range(EA.data$year),
+        Number.of.observations= nrow(EA.data),
+        Variable.types=         variable.description[, unique(type)],
+        EAR.categories=         EAR.lookup[, unique(category)])
+      if(verbosity=="high")
+        desc= c(desc, list(
+          Most.recent.year.per.variable= EA.data[, .(most.recent.year= max(year)), by=variable][order(most.recent.year)],
+          EARs.per.variable=             EA.data[, .(n.EARs= uniqueN(EAR)), by=variable][order(n.EARs)],
+          Value.ranges=                  EA.data[, .(min=  round(min(value,  na.rm=TRUE), 3),
+                                                     mean= round(mean(value, na.rm=TRUE), 3),
+                                                     max=  round(max(value,  na.rm=TRUE), 3)),
+                                                  by=variable][order(variable)],
+          EAR.metadata=                  EAR.lookup[EAR.lookup$EAR %in% EA.data[, unique(EAR)]]))
+      desc
+    },
+    vangogh= list(Number.of.EARS= 1)
+  )
 }
 
 #' Show  variables available in the data set
@@ -249,29 +242,6 @@ EA.cor.f= function(x, y, years, x.EAR, y.EAR, diff=F, ...){
 #EA.plot.f(years=1900:2030, variables=c("T150", "ph_bot.fall", "T250","ice.max","chl0_100.annual","chl0_100.early_summer"),EARs=1:50, type="b",pch=20,cex.main=.8)
 
 
-# Join ecoregion descriptions and locations to EA.data
-#' Plot data time series
-#'
-#' @description  Joins the English names of the ecoregions to the EA.data to aid graph descriptions. It also joins
-#'               columns for  the longitude (- degrees from prime meridian) and latitude (+ degrees from equator)
-#'               of the centre of each ecoregion polygon.
-#' @author Daniel Duplisea
-#' @export
-#' @examples EA.data2= EAR.name.location.f()
-EAR.name.location.f=function(){
-  tmp= EA.data
-  tmp[EAR==1, ":=" (EAR.name="Northwest", EAR.lon= -66.35653, EAR.lat= 49.48379)]
-  tmp[EAR==2, ":=" (EAR.name = "Northeast", EAR.lon= -59.98879, EAR.lat= 49.79361)]
-  tmp[EAR==3, ":=" (EAR.name = "Centre", EAR.lon= -60.81041, EAR.lat= 48.38774)]
-  tmp[EAR==4, ":=" (EAR.name = "Mecatina", EAR.lon= -57.68665, EAR.lat= 51.23615)]
-  tmp[EAR==5, ":=" (EAR.name = "Magdallen Shallows", EAR.lon= -63.54881, EAR.lat= 47.51097)]
-  tmp[EAR==6, ":=" (EAR.name = "Northumberland Strait", EAR.lon= -63.60993, EAR.lat= 46.21545)]
-  tmp[EAR==7, ":=" (EAR.name = "Laurentian-Heritage", EAR.lon= -58.41857, EAR.lat= 46.86941)]
-  tmp[EAR==10, ":=" (EAR.name = "Estuary", EAR.lon= -68.52829, EAR.lat= 48.69118)]
-  tmp[EAR==50, ":=" (EAR.name = "Baie-des-Chaleurs", EAR.lon= -65.78367, EAR.lat= 48.02761)]
-  tmp
-}
-
 #' Sources and references for each variable
 #' @description  creates a three column data.table with variable, source and reference columns. Please cite the authors if you use their data.
 #' @author Daniel Duplisea
@@ -287,3 +257,25 @@ sources.f= function(variable.name=NULL){
   v
 }
 
+
+
+
+#' Look up EAR metadata
+#'
+#' @param EARs numeric vector of EAR codes to look up. If \code{NULL} (default)
+#'   all rows in \code{EAR.lookup} are returned.
+#' @description Returns metadata columns from \code{EAR.lookup} for the
+#'   requested EAR codes. Columns include region name, category, spatial
+#'   precision, hierarchy level, parent EAR, centroid coordinates, bounding box,
+#'   area, jurisdiction and notes.
+#' @seealso \code{\link{EAR.name.location.f}}, \code{EAR.lookup}
+#' @author Daniel Duplisea
+#' @export
+#' @examples
+#' EAR.lookup.f(0)
+#' EAR.lookup.f(c(0, 1, 2, 3))
+#' EAR.lookup.f()
+EAR.lookup.f= function(EARs=NULL){
+  if(is.null(EARs)) EAR.lookup[]
+  else              EAR.lookup[EAR %in% EARs]
+}
